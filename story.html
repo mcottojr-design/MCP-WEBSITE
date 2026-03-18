@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>News Story | Miguel Cotto Promotions</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d72323",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#120909",
+                        "surface": "#201212",
+                        "border-muted": "#452626",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display"><!-- Top Navigation -->
+<header class="sticky top-0 z-50 w-full border-b border-border-muted bg-background-dark/95 backdrop-blur-md px-6 md:px-12 py-4">
+<div class="max-w-7xl mx-auto flex items-center justify-between">
+<div class="flex items-center gap-8">
+<a class="flex items-center" href="index.html">
+<img src="assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[58px] md:h-[69px] w-auto object-contain" />
+</a>
+<nav class="hidden lg:flex items-center gap-6">
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="events.html" style="">Events</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="boxers.html" style="">Boxers</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="news.html" style="">News</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Videos</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="about.html" style="">About Us</a>
+</nav>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex items-center bg-surface border border-border-muted rounded px-3 py-1.5">
+<span class="material-symbols-outlined text-slate-400 text-sm" style="">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-sm text-white placeholder-slate-500 w-32 lg:w-48" placeholder="Search fighters..." type="text"/>
+</div>
+<button class="bg-primary hover:bg-red-700 text-white text-xs font-bold py-2.5 px-6 rounded transition-all uppercase tracking-wider" onclick="window.location.href='events.html'" style="">
+                    Tickets
+                </button>
+<button class="bg-surface border border-border-muted hover:bg-border-muted text-white text-xs font-bold py-2.5 px-4 rounded transition-all" style="">
+<span class="material-symbols-outlined text-base align-middle" style="">play_circle</span>
+</button>
+</div>
+</div>
+</header>
+<main class="flex-grow bg-background-light dark:bg-background-dark">
+    <!-- Article Hero -->
+    <section class="relative w-full h-[60vh] min-h-[400px] flex items-end justify-center overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 bg-cover bg-center" style="background-image: linear-gradient(to top, rgba(18,9,9,1) 0%, rgba(18,9,9,0.4) 50%, rgba(18,9,9,0) 100%), url('https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80');"></div>
+        
+        <div class="relative z-10 w-full max-w-4xl px-6 pb-12 text-center md:text-left">
+            <div class="flex flex-wrap items-center justify-center md:justify-start gap-3 mb-6">
+                <span class="bg-primary text-white text-[10px] md:text-xs font-bold uppercase tracking-widest px-3 py-1 rounded-sm">Featured Story</span>
+                <span class="text-slate-300 text-xs md:text-sm font-medium tracking-wider flex items-center gap-1"><span class="material-symbols-outlined text-[16px]">calendar_today</span> October 24, 2026</span>
+            </div>
+            <h1 class="text-4xl md:text-5xl lg:text-7xl font-black text-white uppercase italic tracking-tighter leading-tight drop-shadow-lg mb-6">
+                Inside The Camp: The Final Preparation
+            </h1>
+            <div class="flex items-center justify-center md:justify-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-border-muted overflow-hidden border-2 border-primary">
+                    <img src="https://ui-avatars.com/api/?name=Admin+Author&background=d72323&color=fff" alt="Author">
+                </div>
+                <div class="text-left">
+                    <p class="text-white text-sm font-bold uppercase tracking-widest leading-none">MCP Editorial</p>
+                    <p class="text-slate-400 text-xs mt-1">5 Min Read</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content Layout -->
+    <section class="py-16 md:py-24 px-6 relative w-full flex justify-center">
+        <!-- Left Social Sidebar (Desktop) -->
+        <div class="hidden lg:flex flex-col gap-6 absolute left-[10%] xl:left-[15%] top-24 sticky-socials">
+            <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest writing-vertical-rl mb-4">Share Story</p>
+            <button class="w-10 h-10 rounded-full border border-border-muted flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white hover:border-primary transition-all">
+                <span class="material-symbols-outlined text-[18px]">share</span>
+            </button>
+            <button class="w-10 h-10 rounded-full border border-border-muted flex items-center justify-center text-slate-400 hover:bg-[#1DA1F2] hover:text-white hover:border-[#1DA1F2] transition-all">
+                <span class="material-symbols-outlined text-[18px]">tag</span>
+            </button>
+            <button class="w-10 h-10 rounded-full border border-border-muted flex items-center justify-center text-slate-400 hover:bg-primary hover:text-white hover:border-primary transition-all">
+                <span class="material-symbols-outlined text-[18px]">link</span>
+            </button>
+        </div>
+
+        <!-- Typography / Main Body -->
+        <article class="w-full max-w-3xl">
+            <p class="text-xl md:text-2xl text-slate-300 font-light leading-relaxed mb-10 border-l-4 border-primary pl-6 py-2">
+                "The gym is where the fight is won. The ring is just where you go to pick up the trophy." As the Aibonito mega-event draws closer, the intensity behind closed doors reaches an all-time high.
+            </p>
+
+            <div class="space-y-8 text-base md:text-lg text-slate-400 font-medium leading-relaxed">
+                <p>
+                    Preparation is the invisible foundation of every victory. For the upcoming ITF event taking place at Coliseo "Marrón" Aponte, athletes have been pushing their physical and mental limits to prepare for war. The training camps established throughout Puerto Rico have seen grueling 5 AM roadwork sessions, endless sparring rounds, and meticulous strategic planning.
+                </p>
+                
+                <h2 class="text-2xl md:text-4xl text-white font-black uppercase tracking-tighter mt-12 mb-6 text-left">The Science of Sparring</h2>
+                
+                <p>
+                    There is an art to bringing a fighter to their absolute peak. Too much sparring, and an athlete risks peaking early and leaving their best performance in the gym. Too little, and the timing isn't sharp enough to deal with the chaos under the bright lights of the stadium.
+                </p>
+
+                <div class="my-12 w-full aspect-video rounded-xl overflow-hidden shadow-2xl relative">
+                    <img src="https://images.unsplash.com/photo-1590480922416-62181d9f8df5?auto=format&fit=crop&q=80" alt="Boxer practicing" class="w-full h-full object-cover">
+                </div>
+
+                <p>
+                    Local contenders featured on the Aibonito card have focused heavily on situational preparation. Coaches simulate pressure-fighting scenarios, high altitude conditioning, and technical counter-punching sequences. The goal is to hardwire instinct so that when the bell rings, there is no hesitation—only execution.
+                </p>
+
+                <div class="bg-surface border border-border-muted p-8 md:p-12 rounded-xl mt-12 shadow-inner">
+                    <span class="material-symbols-outlined text-4xl text-primary mb-4 opacity-50">format_quote</span>
+                    <p class="text-2xl text-white font-bold italic tracking-tight leading-snug">
+                        "The atmosphere in this camp has been electric. Every single fighter knows what is at stake on April 18th. They aren't just fighting for a win; they are fighting to cement their legacy on the island."
+                    </p>
+                    <p class="text-sm text-primary uppercase font-bold tracking-widest mt-6">- Head Coach, Cotto Promotions</p>
+                </div>
+            </div>
+        </article>
+    </section>
+
+    <!-- More Stories Section -->
+    <section class="py-20 bg-surface border-t border-border-muted">
+        <div class="max-w-7xl mx-auto px-6 md:px-12">
+            <h3 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter mb-10 text-center">Read Next</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Card 1 -->
+                <a href="#" class="group block overflow-hidden rounded-xl bg-background-dark border border-border-muted hover:border-primary/50 transition-all">
+                    <div class="aspect-video w-full overflow-hidden">
+                        <img src="assets/hero_banner.jpg" alt="Related Story" class="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-primary text-[10px] font-bold uppercase tracking-widest mb-2 block">Events</span>
+                        <h4 class="text-xl font-bold text-white uppercase leading-tight group-hover:text-primary transition-colors">Everything You Need to Know: ITF Aibonito</h4>
+                    </div>
+                </a>
+                <!-- Card 2 -->
+                <a href="#" class="group block overflow-hidden rounded-xl bg-background-dark border border-border-muted hover:border-primary/50 transition-all">
+                    <div class="aspect-video w-full overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80" alt="Related Story" class="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-primary text-[10px] font-bold uppercase tracking-widest mb-2 block">Fighters</span>
+                        <h4 class="text-xl font-bold text-white uppercase leading-tight group-hover:text-primary transition-colors">Rising Stars to Watch This Season</h4>
+                    </div>
+                </a>
+                <!-- Card 3 -->
+                <a href="#" class="group block overflow-hidden rounded-xl bg-background-dark border border-border-muted hover:border-primary/50 transition-all">
+                    <div class="aspect-video w-full overflow-hidden absolute lg:static invisible lg:visible hidden lg:block">
+                        <img src="https://images.unsplash.com/photo-1590480922416-62181d9f8df5?auto=format&fit=crop&q=80" alt="Related Story" class="w-full h-full object-cover grayscale transition-all duration-500 group-hover:grayscale-0 group-hover:scale-105">
+                    </div>
+                    <div class="p-6">
+                        <span class="text-primary text-[10px] font-bold uppercase tracking-widest mb-2 block">Training</span>
+                        <h4 class="text-xl font-bold text-white uppercase leading-tight group-hover:text-primary transition-colors">The conditioning secrets of Champions</h4>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="mt-12 text-center">
+                <button class="border border-primary text-primary hover:bg-primary hover:text-white transition-all text-xs font-bold uppercase tracking-widest px-8 py-4 rounded" onclick="window.location.href='news.html'">
+                    View All News
+                </button>
+            </div>
+        </div>
+    </section>
+</main>
+<!-- Footer -->
+<footer class="bg-surface py-20 border-t border-border-muted">
+<div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
+<div class="flex items-center justify-center mb-10">
+<img src="assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[69px] md:h-[92px] w-auto object-contain" />
+</div>
+<nav class="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-12">
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="events.html" style="">Events</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="boxers.html" style="">Boxers</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="news.html" style="">News</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Contact</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Shop</a>
+<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Partners</a>
+</nav>
+<div class="flex gap-6 mb-12">
+<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
+<span class="material-symbols-outlined text-sm" style="">alternate_email</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
+<span class="material-symbols-outlined text-sm" style="">smart_display</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
+<span class="material-symbols-outlined text-sm" style="">photo_camera</span>
+</a>
+<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
+<span class="material-symbols-outlined text-sm" style="">share</span>
+</a>
+</div>
+<div class="text-center">
+<p class="text-slate-500 text-[10px] tracking-widest uppercase mb-2" style="">© 2024 Miguel Cotto Promotions. All rights reserved.</p>
+<div class="flex gap-4 justify-center text-[10px] tracking-widest uppercase font-bold text-slate-400">
+<a class="hover:text-primary" href="index.html" style="">Privacy Policy</a>
+<a class="hover:text-primary" href="index.html" style="">Terms of Service</a>
+</div>
+</div>
+</div>
+</footer>
+</body></html>
