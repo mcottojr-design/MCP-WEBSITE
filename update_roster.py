@@ -32,23 +32,26 @@ roster_data = [
 placeholder_img = "https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80"
 
 # Pre-list images for easier matching
-boxer_assets_dir = 'assets/boxers/'
+boxer_assets_dir = 'src/assets/boxers/'
 available_images = os.listdir(boxer_assets_dir) if os.path.exists(boxer_assets_dir) else []
 
-def normalize_text(text):
-    return unicodedata.normalize('NFD', text).encode('ascii', 'ignore').decode('utf-8').upper()
+def slugify(text):
+    text = text.replace(' ', '-').lower()
+    text = unicodedata.normalize('NFD', text).encode('ascii', 'ignore').decode('utf-8')
+    return f'{text}.png'
 
 def find_best_image(name):
-    norm_name = normalize_text(name)
-    # Special cases
-    if "RYAN" in norm_name and "RODRIGUEZ" in norm_name:
-        return "RYAN RODRÍGUEZ.png"
+    slug_name = slugify(name)
+    # Special handle for Ryan Enoch Rodriguez -> ryan-rodriguez.png
+    if "ryan-enoch" in slug_name:
+        slug_name = "ryan-rodriguez.png"
     
+    if slug_name in available_images:
+        return slug_name
+        
+    # Partial match
     for img in available_images:
-        norm_img = normalize_text(img).replace('.PNG', '').replace('.JPG', '')
-        if norm_name == norm_img:
-            return img
-        if norm_name in norm_img or norm_img in norm_name:
+        if slug_name.replace('.png', '') in img:
             return img
     return None
 
@@ -63,12 +66,12 @@ def get_boxer_card_boxers_page(boxer):
         name_display = boxer['name']
 
     img_file = find_best_image(boxer['name'])
-    final_img = f"assets/boxers/{img_file}" if img_file else placeholder_img
+    # Use absolute path for Vercel /assets/...
+    final_img = f"/assets/boxers/{img_file}" if img_file else placeholder_img
     
-    # Custom framing for the tall photo of Yadiel Alomar
     img_classes = "absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
-    if img_file and "YADIEL ALOMAR" in img_file.upper():
-        img_classes = "absolute inset-0 bg-cover bg-top scale-90 group-hover:scale-95 transition-transform duration-500" # FIXED FRAMING AND SCALE
+    if img_file and "yadiel-alomar" in img_file:
+        img_classes = "absolute inset-0 bg-cover bg-top scale-90 group-hover:scale-95 transition-transform duration-500"
 
     return f"""
 <div class="group flex flex-col bg-primary/5 border border-primary/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 shadow-xl">
@@ -89,7 +92,7 @@ def get_boxer_card_boxers_page(boxer):
 <span class="text-slate-100 font-bold">--</span>
 </div>
 </div>
-<a class="mt-4 flex items-center justify-center w-full bg-primary/20 hover:bg-primary text-slate-100 font-bold py-3 rounded text-xs uppercase tracking-widest transition-all" href="boxers.html">
+<a class="mt-4 flex items-center justify-center w-full bg-primary/20 hover:bg-primary text-slate-100 font-bold py-3 rounded text-xs uppercase tracking-widest transition-all" href=\"boxers.html\">
                                 View Profile
                             </a>
 </div>
@@ -99,18 +102,17 @@ def get_boxer_card_index_page(boxer):
     name_display = boxer['name']
     alias_display = f'"{boxer["alias"]}"' if boxer['alias'] else ""
     img_file = find_best_image(boxer['name'])
-    final_img = f"assets/boxers/{img_file}" if img_file else placeholder_img
+    final_img = f"/assets/boxers/{img_file}" if img_file else placeholder_img
     
-    # Custom framing for Yadiel Alomar
     object_fit_class = "object-center"
     scale_class = ""
-    if img_file and "YADIEL ALOMAR" in img_file.upper():
+    if img_file and "yadiel-alomar" in img_file:
         object_fit_class = "object-top"
         scale_class = "scale-90"
 
     return f"""
 <div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted">
-<img class="w-full h-full object-cover grayscale {object_fit_class} {scale_class} transition-all duration-500 group-hover:scale-95 group-hover:grayscale-0" data-alt="Image for {name_display}" src="{final_img}" style=""/>
+<img class="w-full h-full object-cover grayscale {object_fit_class} {scale_class} transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for {name_display}" src="{final_img}" style=""/>
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90 pointer-events-none"></div>
 <div class="absolute bottom-0 left-0 right-0 p-6">
 <p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1" style="">{boxer['division']}</p>
@@ -125,7 +127,6 @@ def update_file(path):
     with open(path, 'r', encoding='utf-8') as f:
         content = f.read()
 
-    # Boxers Page Update
     if 'boxers.html' in path:
         new_boxers_grid = "\n".join([get_boxer_card_boxers_page(b) for b in roster_data])
         content = re.sub(
@@ -135,7 +136,6 @@ def update_file(path):
             flags=re.DOTALL
         )
 
-    # Index Page Update
     if 'index.html' in path:
         featured_boxers_grid = "\n".join([get_boxer_card_index_page(b) for b in roster_data[:4]])
         content = re.sub(
@@ -147,7 +147,7 @@ def update_file(path):
 
     with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
-    print(f"Rescaled and Updated {path}")
+    print(f"Purged, Slugified and Updated {path}")
 
 update_file('src/boxers.html')
 update_file('src/index.html')
