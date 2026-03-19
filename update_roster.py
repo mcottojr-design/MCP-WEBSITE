@@ -42,14 +42,10 @@ def slugify(text):
 
 def find_best_image(name):
     slug_name = slugify(name)
-    # Special handle for Ryan Enoch Rodriguez -> ryan-rodriguez.png
     if "ryan-enoch" in slug_name:
         slug_name = "ryan-rodriguez.png"
-    
     if slug_name in available_images:
         return slug_name
-        
-    # Partial match
     for img in available_images:
         if slug_name.replace('.png', '') in img:
             return img
@@ -57,18 +53,9 @@ def find_best_image(name):
 
 def get_boxer_card_boxers_page(boxer):
     parts = boxer['name'].split(' ')
-    if boxer['alias']:
-        if len(parts) > 1:
-            name_display = f"{parts[0]} \"{boxer['alias']}\" {' '.join(parts[1:])}"
-        else:
-            name_display = f"{boxer['name']} \"{boxer['alias']}\""
-    else:
-        name_display = boxer['name']
-
+    name_display = f"{parts[0]} \"{boxer['alias']}\" {' '.join(parts[1:])}" if boxer['alias'] and len(parts) > 1 else (f"{boxer['name']} \"{boxer['alias']}\"" if boxer['alias'] else boxer['name'])
     img_file = find_best_image(boxer['name'])
-    # Use absolute path for Vercel /assets/...
     final_img = f"/assets/boxers/{img_file}" if img_file else placeholder_img
-    
     img_classes = "absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
     if img_file and "yadiel-alomar" in img_file:
         img_classes = "absolute inset-0 bg-cover bg-top scale-90 group-hover:scale-95 transition-transform duration-500"
@@ -92,7 +79,7 @@ def get_boxer_card_boxers_page(boxer):
 <span class="text-slate-100 font-bold">--</span>
 </div>
 </div>
-<a class="mt-4 flex items-center justify-center w-full bg-primary/20 hover:bg-primary text-slate-100 font-bold py-3 rounded text-xs uppercase tracking-widest transition-all" href=\"boxers.html\">
+<a class="mt-4 flex items-center justify-center w-full bg-primary/20 hover:bg-primary text-slate-100 font-bold py-3 rounded text-xs uppercase tracking-widest transition-all" href="boxers.html">
                                 View Profile
                             </a>
 </div>
@@ -103,15 +90,15 @@ def get_boxer_card_index_page(boxer):
     alias_display = f'"{boxer["alias"]}"' if boxer['alias'] else ""
     img_file = find_best_image(boxer['name'])
     final_img = f"/assets/boxers/{img_file}" if img_file else placeholder_img
-    
     object_fit_class = "object-center"
     scale_class = ""
     if img_file and "yadiel-alomar" in img_file:
         object_fit_class = "object-top"
         scale_class = "scale-90"
 
+    # Added 'snap-center shrink-0 w-[280px] md:w-auto' for carousel behavior
     return f"""
-<div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted">
+<div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted snap-center shrink-0 w-[280px] md:w-auto">
 <img class="w-full h-full object-cover grayscale {object_fit_class} {scale_class} transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for {name_display}" src="{final_img}" style=""/>
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90 pointer-events-none"></div>
 <div class="absolute bottom-0 left-0 right-0 p-6">
@@ -137,17 +124,23 @@ def update_file(path):
         )
 
     if 'index.html' in path:
-        featured_boxers_grid = "\n".join([get_boxer_card_index_page(b) for b in roster_data[:4]])
+        featured_boxers_grid = "\n".join([get_boxer_card_index_page(b) for b in roster_data[:6]]) # 6 for 3 columns x 2 rows or just 3 across
+        # Update Container for Desktop Bigger Cards + Mobile Carousel
         content = re.sub(
             r'<!-- Boxers Directory -->.*?<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">.*?</div>\s*<div class="mt-16 text-center">',
-            f'<!-- Boxers Directory -->\n<section class="py-24 bg-surface">\n<div class="max-w-7xl mx-auto px-6 md:px-12">\n<h2 class="text-center text-primary text-sm font-bold tracking-[0.4em] uppercase mb-2">Roster</h2>\n<h3 class="text-center text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-16">Our Boxers</h3>\n<div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">\n{featured_boxers_grid}\n</div>\n<div class="mt-16 text-center">',
+            f'<!-- Boxers Directory -->\n<section class="py-24 bg-surface">\n<div class="max-w-7xl mx-auto px-6 md:px-12">\n<h2 class="text-center text-primary text-sm font-bold tracking-[0.4em] uppercase mb-2">Roster</h2>\n<h3 class="text-center text-4xl md:text-5xl font-black text-white uppercase tracking-tighter mb-16">Our Boxers</h3>\n<div class="flex flex-nowrap md:grid overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8 md:pb-0">\n{featured_boxers_grid}\n</div>\n<div class="mt-16 text-center">',
             content,
             flags=re.DOTALL
         )
+        
+        # Add no-scrollbar CSS if not present
+        if 'no-scrollbar::-webkit-scrollbar' not in content:
+            style_tag = "<style>.no-scrollbar::-webkit-scrollbar { display: none; } .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }</style>"
+            content = content.replace('</head>', f'{style_tag}\n</head>')
 
     with open(path, 'w', encoding='utf-8') as f:
         f.write(content)
-    print(f"Purged, Slugified and Updated {path}")
+    print(f"Bigger Desktop Cards & Mobile Carousel Updated for {path}")
 
 update_file('src/boxers.html')
 update_file('src/index.html')
