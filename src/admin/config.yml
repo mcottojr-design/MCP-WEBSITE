@@ -2,117 +2,82 @@ backend:
   name: github
   repo: mcottojr-design/MCP-WEBSITE
   branch: main
-  base_url: https://mcp-website-dun.vercel.app
-  auth_endpoint: /api/auth
+  auth_type: pkce
+  app_id: Ov23liyrhZxlzEajmRXR
 
-# Enable editorial workflow (Drafts → In Review → Ready → Published)
 publish_mode: editorial_workflow
 
-# Where uploaded media files will be stored in the repo
-media_folder: "src/assets/news"
+media_folder: src/assets/news
+public_folder: /assets/news
 
-# Where those files will be served from on the live site
-public_folder: "/assets/news"
-
-# Site URL
 site_url: https://mcp-website-dun.vercel.app
 display_url: https://mcp-website-dun.vercel.app
 logo_url: https://mcp-website-dun.vercel.app/assets/logo.svg
 
-# Content Collections
 collections:
-  - name: "news"
+  - name: news
     label: "📰 News Posts"
-    label_singular: "News Post"
-    folder: "src/news"
+    label_singular: News Post
+    folder: src/news
     create: true
     slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
     preview_path: "/news/{{slug}}"
     summary: "{{title}} — {{date}}"
-    sortable_fields: ["date", "title", "author"]
-    view_filters:
-      - label: "Announcements"
-        field: category
-        pattern: "Announcement"
-      - label: "Fight Results"
-        field: category
-        pattern: "Fight Result"
-      - label: "Press Releases"
-        field: category
-        pattern: "Press Release"
     fields:
-      - label: "Layout"
-        name: "layout"
-        widget: "hidden"
-        default: "layouts/post.njk"
+      - label: Layout
+        name: layout
+        widget: hidden
+        default: layouts/post.njk
 
-      - label: "Tags"
-        name: "tags"
-        widget: "hidden"
-        default: "post"
+      - label: Tags
+        name: tags
+        widget: hidden
+        default: post
 
-      - label: "Post Title"
-        name: "title"
-        widget: "string"
+      - label: Post Title
+        name: title
+        widget: string
         hint: "E.g. COLLAZO VS. HARO — CHAMPIONSHIP SHOWDOWN"
 
-      - label: "Publish Date"
-        name: "date"
-        widget: "datetime"
-        date_format: "YYYY-MM-DD"
+      - label: Publish Date
+        name: date
+        widget: datetime
+        date_format: YYYY-MM-DD
         time_format: false
-        default: ""
 
-      - label: "Author"
-        name: "author"
-        widget: "select"
+      - label: Author
+        name: author
+        widget: select
         options:
-          - "Miguel Cotto"
-          - "Héctor Soto"
-          - "MCP Staff"
-          - "Communications Team"
-        default: "MCP Staff"
+          - Miguel Cotto
+          - Héctor Soto
+          - MCP Staff
+          - Communications Team
+        default: MCP Staff
 
-      - label: "Category"
-        name: "category"
-        widget: "select"
+      - label: Category
+        name: category
+        widget: select
         options:
-          - "Announcement"
-          - "Fight Result"
-          - "Press Release"
-          - "Interview"
-          - "Event Recap"
-          - "Fighter Update"
-        default: "Announcement"
+          - Announcement
+          - Fight Result
+          - Press Release
+          - Interview
+          - Event Recap
+          - Fighter Update
+        default: Announcement
 
-      - label: "Featured Image"
-        name: "image"
-        widget: "image"
-        hint: "Upload the main fight poster or article image"
-        media_library:
-          config:
-            multiple: false
+      - label: Featured Image
+        name: image
+        widget: image
+        hint: Upload the main fight poster or article image
 
-      - label: "Excerpt / Summary"
-        name: "excerpt"
-        widget: "text"
-        hint: "A short 1–2 sentence summary shown on the news page cards and homepage. Keep it punchy!"
+      - label: Excerpt / Summary
+        name: excerpt
+        widget: text
+        hint: "Short 1-2 sentence summary shown on news cards."
 
-      - label: "Article Body"
-        name: "body"
-        widget: "markdown"
-        hint: "Write the full story here. Use the toolbar to add bold, headings, quotes, and images."
-        modes: ["rich_text", "raw"]
-        buttons:
-          - bold
-          - italic
-          - link
-          - heading-one
-          - heading-two
-          - heading-three
-          - quote
-          - bulleted-list
-          - numbered-list
-          - code
-        editor_components:
-          - image
+      - label: Article Body
+        name: body
+        widget: markdown
+        hint: Write the full story here using the rich text editor.

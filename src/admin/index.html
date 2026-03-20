@@ -6,59 +6,9 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>MCP News Admin | Miguel Cotto Promotions</title>
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
 </head>
 <body>
-  <script type="module">
-    import CMS from 'https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js';
-
-    CMS.init({
-      config: {
-        backend: {
-          name: 'github',
-          repo: 'mcottojr-design/MCP-WEBSITE',
-          branch: 'main',
-          auth_type: 'pkce',
-          app_id: 'Ov23liyrhZxlzEajmRXR'
-        },
-        publish_mode: 'editorial_workflow',
-        media_folder: 'src/assets/news',
-        public_folder: '/assets/news',
-        site_url: 'https://mcp-website-dun.vercel.app',
-        logo_url: 'https://mcp-website-dun.vercel.app/assets/logo.svg',
-        collections: [
-          {
-            name: 'news',
-            label: '📰 News Posts',
-            label_singular: 'News Post',
-            folder: 'src/news',
-            create: true,
-            slug: '{{year}}-{{month}}-{{day}}-{{slug}}',
-            preview_path: '/news/{{slug}}',
-            summary: '{{title}} — {{date}}',
-            sortable_fields: ['date', 'title', 'author'],
-            fields: [
-              { label: 'Layout', name: 'layout', widget: 'hidden', default: 'layouts/post.njk' },
-              { label: 'Tags', name: 'tags', widget: 'hidden', default: 'post' },
-              { label: 'Post Title', name: 'title', widget: 'string', hint: 'E.g. COLLAZO VS. HARO — CHAMPIONSHIP SHOWDOWN' },
-              { label: 'Publish Date', name: 'date', widget: 'datetime', date_format: 'YYYY-MM-DD', time_format: false },
-              {
-                label: 'Author', name: 'author', widget: 'select',
-                options: ['Miguel Cotto', 'Héctor Soto', 'MCP Staff', 'Communications Team'],
-                default: 'MCP Staff'
-              },
-              {
-                label: 'Category', name: 'category', widget: 'select',
-                options: ['Announcement', 'Fight Result', 'Press Release', 'Interview', 'Event Recap', 'Fighter Update'],
-                default: 'Announcement'
-              },
-              { label: 'Featured Image', name: 'image', widget: 'image', hint: 'Upload the main fight poster or article image' },
-              { label: 'Excerpt / Summary', name: 'excerpt', widget: 'text', hint: 'Short 1-2 sentence summary for news cards.' },
-              { label: 'Article Body', name: 'body', widget: 'markdown', hint: 'Write the full story here.' }
-            ]
-          }
-        ]
-      }
-    });
-  </script>
+  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
 </body>
 </html>
