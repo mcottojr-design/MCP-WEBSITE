@@ -1038,10 +1038,31 @@
 
     </main>
 
-    <!-- Event Panel -->
     <main class="editor-panel" id="event-panel" style="display:none">
        <div class="section-label">Next Event Management</div>
        <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.5rem;">This content appears on the Homepage Hero (Slide 1) and Upcoming Events section.</p>
+       
+       <!-- Event Preview Card -->
+       <div id="event-preview-container" style="margin-bottom:2rem;">
+         <div class="field-group"><label>Current Live Preview</label></div>
+         <div id="event-live-card" class="post-card featured" style="max-width:400px; cursor:default;">
+           <!-- Dynamic content -->
+           <div class="card-image-wrap">
+             <img id="prev-ev-img" src="" alt="" style="height:180px; object-fit:cover;" />
+             <span class="card-status live">🟢 Live on Home</span>
+             <span class="card-featured-label">⭐ Main Event</span>
+           </div>
+           <div class="card-body">
+             <div class="card-category" id="prev-ev-loc">Location</div>
+             <div class="card-title" id="prev-ev-title">Event Title</div>
+             <div class="card-footer">
+               <span class="card-date" id="prev-ev-date">Date</span>
+             </div>
+           </div>
+         </div>
+       </div>
+
+       <div class="section-label" style="font-size:0.75rem; opacity:0.6; margin-top:2rem;">Edit Event Details</div>
        
        <div class="field-group">
          <label>Event Title</label>
@@ -1697,8 +1718,17 @@
         document.getElementById('ev-image').value = data.image || '';
         document.getElementById('ev-ticket').value = data.ticket_link || '';
         document.getElementById('ev-watch').value = data.watch_link || '';
+        
+        updateEventPreview(data);
       }
     } catch (e) { console.error('Failed to load event data', e); }
+  }
+
+  function updateEventPreview(data) {
+    document.getElementById('prev-ev-img').src = data.image || '/assets/hero_banner.jpg';
+    document.getElementById('prev-ev-title').textContent = data.title || 'No Title';
+    document.getElementById('prev-ev-date').textContent = data.date_display || 'No Date';
+    document.getElementById('prev-ev-loc').textContent = data.location || 'No Location';
   }
 
   async function saveEvent() {
@@ -1724,6 +1754,7 @@
       const data = await res.json();
       if (data.success) {
         showToast('✅ Next event updated! Site will rebuild in a minute.', 'success');
+        updateEventPreview(payload);
       } else {
         showToast('Error: ' + data.error, 'error');
       }
