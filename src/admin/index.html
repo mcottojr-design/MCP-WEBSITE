@@ -1050,6 +1050,9 @@
   let uploadedImagePath = '';
   let focalPoint = '50% 50%';
   let galleryPaths = []; // array of /assets/news/... paths
+  let currentPosts = [];
+  let editingPath = '';
+  let editingSha = '';
 
   // ===== INIT =====
   const quill = new Quill('#editor', {
@@ -1161,13 +1164,14 @@
         headers: { 'Authorization': `Bearer ${sessionToken}` }
       });
       const data = await res.json();
+      currentPosts = data.posts || [];
 
-      if (!data.posts || data.posts.length === 0) {
+      if (currentPosts.length === 0) {
         grid.innerHTML = '<div class="cards-empty"><span>📭</span><p>No posts yet. Write your first one!</p></div>';
         document.getElementById('posts-count').textContent = '';
       } else {
-        document.getElementById('posts-count').textContent = `(${data.posts.length})`;
-        grid.innerHTML = data.posts.map((post, i) => {
+        document.getElementById('posts-count').textContent = `(${currentPosts.length})`;
+        grid.innerHTML = currentPosts.map((post, i) => {
           const imgHtml = post.image
             ? `<img src="${post.image}" alt="" loading="lazy" />`
             : `<div class="card-no-image">🥊</div>`;
@@ -1185,7 +1189,10 @@
               ${post.excerpt ? `<div class="card-excerpt">${post.excerpt}</div>` : ''}
               <div class="card-footer">
                 <span class="card-date">${post.date || '—'}</span>
-                <button class="card-delete-btn" onclick="askCardDelete(${i})">🗑️ Delete</button>
+                <div style="display:flex; gap:0.4rem;">
+                  <button class="card-delete-btn" onclick="editPost(${i})" style="color:var(--text);border-color:var(--border);">✏️ Edit</button>
+                  <button class="card-delete-btn" onclick="askCardDelete(${i})">🗑️ Delete</button>
+                </div>
               </div>
             </div>
             <div class="card-confirm" id="card-confirm-${i}">
@@ -1238,6 +1245,75 @@
       showToast('Network error.', 'error');
     }
   }
+
+  function editPost(idx) {
+    const post = currentPosts[idx];
+    if (!post) return;
+    
+    // Clear first to reset any previous state (avoid the "Ready for new post" toast)
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-excerpt').value = '';
+    document.getElementById('f-date').valueAsDate = new Date();
+    document.getElementById('f-category').selectedIndex = 0;
+    document.getElementById('upload-placeholder').style.display = 'block';
+    document.getElementById('upload-area').style.display = 'block';
+    document.getElementById('image-card').classList.remove('visible');
+    document.getElementById('image-thumb').src = '';
+    document.getElementById('modal-img').src = '';
+    document.getElementById('image-input').value = '';
+    uploadedImagePath = '';
+    focalPoint = '50% 50%';
+    updateModalDot(50, 50);
+    document.getElementById('focal-badge').textContent = '🎯 Focus: Center (50% 50%)';
+    galleryPaths = [];
+    document.getElementById('gallery-grid').innerHTML = '';
+    document.getElementById('gallery-input').value = '';
+    quill.setContents([]);
+    
+    editingPath = post.path;
+    editingSha = post.sha;
+    
+    // Switch to editor tab
+    switchTab('editor');
+    
+    // Populate fields
+    document.getElementById('f-title').value = post.title || '';
+    document.getElementById('f-excerpt').value = post.excerpt || '';
+    document.getElementById('f-date').value = post.date || '';
+    document.getElementById('f-category').value = post.category || 'Announcement';
+    
+    if (post.image) {
+      uploadedImagePath = post.image;
+      focalPoint = post.image_focus || '50% 50%';
+      document.getElementById('upload-placeholder').style.display = 'none';
+      document.getElementById('upload-area').style.display = 'none';
+      document.getElementById('image-thumb').src = post.image;
+      document.getElementById('modal-img').src = post.image;
+      document.getElementById('image-filename').textContent = post.image.split('/').pop();
+      document.getElementById('image-card').classList.add('visible');
+      
+      const parts = focalPoint.split(' ');
+      const fx = parseInt(parts[0]) || 50;
+      const fy = parseInt(parts[1]) || 50;
+      updateModalDot(fx, fy);
+      document.getElementById('focal-badge').textContent = `🎯 Focus: ${focalPoint}`;
+    }
+    
+    if (post.gallery && Array.isArray(post.gallery)) {
+      galleryPaths = [...post.gallery];
+      const grid = document.getElementById('gallery-grid');
+      grid.innerHTML = galleryPaths.map((p, i) => `
+        <div class="gallery-item">
+          <img src="${p}" alt="Gallery photo" />
+          <button class="gallery-remove" onclick="removeGalleryItem(${i}, this.parentElement)">✕</button>
+        </div>
+      `).join('');
+    }
+    
+    quill.root.innerHTML = post.body || '';
+    showToast(`✏️ Editing: ${post.title}`, 'info');
+  }
+
 
   // ===== IMAGE UPLOAD =====
   document.getElementById('image-input').addEventListener('change', async (e) => {
@@ -1367,7 +1443,8 @@
       excerpt: document.getElementById('f-excerpt').value.trim(),
       gallery: galleryPaths,
       body: markdown,
-      draft
+      draft,
+      editingPath // Pass this for potential rename/delete
     };
 
     try {
@@ -1414,6 +1491,9 @@
     document.getElementById('gallery-grid').innerHTML = '';
     document.getElementById('gallery-input').value = '';
     quill.setContents([]);
+    editingPath = '';
+    editingSha = '';
+    showToast('Ready for new post.', 'info');
   }
 
   // ===== GALLERY UPLOAD =====

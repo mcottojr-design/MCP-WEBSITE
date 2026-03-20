@@ -67,7 +67,7 @@
 {% set featured = collections.post | reverse | first %}
 <!-- Hero Section -->
 <section class="relative w-full aspect-[21/9] min-h-[500px] flex items-end overflow-hidden cursor-pointer" onclick="window.location.href='{{ featured.url }}'">
-<div class="absolute inset-0 bg-cover bg-top" style="background-image: linear-gradient(to top, #201212 0%, rgba(32, 18, 18, 0.4) 50%, rgba(32, 18, 18, 0.1) 100%), url('{{ featured.data.image }}');"></div>
+<div class="absolute inset-0 bg-cover" style="background-position: {{ featured.data.image_focus | default('center') }}; background-image: linear-gradient(to top, #201212 0%, rgba(32, 18, 18, 0.4) 50%, rgba(32, 18, 18, 0.1) 100%), url('{{ featured.data.image }}');"></div>
 <div class="container mx-auto px-4 lg:px-10 pb-16 relative z-10">
 <div class="max-w-3xl space-y-6">
 <span class="inline-block px-3 py-1 bg-primary text-white text-xs font-bold uppercase tracking-widest rounded">Featured Story</span>
@@ -116,7 +116,7 @@
 {% for post in collections.post | reverse %}
 <article class="group cursor-pointer" onclick="window.location.href='{{ post.url }}'">
 <div class="relative overflow-hidden aspect-video rounded-lg mb-4">
-<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="{{ post.data.title }}" src="{{ post.data.image }}"/>
+<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="{{ post.data.title }}" src="{{ post.data.image }}" style="object-position: {{ post.data.image_focus | default('center') }};"/>
 <span class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">{{ post.data.category }}</span>
 </div>
 <div class="space-y-2">

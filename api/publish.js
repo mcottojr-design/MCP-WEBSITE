@@ -104,6 +104,24 @@ ${body}`;
   const result = await githubRequest("PUT", `/repos/${REPO}/contents/${filePath}`, commitBody);
 
   if (result.status === 200 || result.status === 201) {
+    // If we renamed the post (path changed), delete the old file
+    const { editingPath } = req.body;
+    if (editingPath && editingPath !== filePath) {
+      try {
+        // Get SHA of old file
+        const oldFile = await githubRequest("GET", `/repos/${REPO}/contents/${editingPath}?ref=${BRANCH}`);
+        if (oldFile.status === 200) {
+          await githubRequest("DELETE", `/repos/${REPO}/contents/${editingPath}`, {
+            message: `♻️ Rename/Move post to: ${filename}`,
+            sha: oldFile.body.sha,
+            branch: BRANCH
+          });
+        }
+      } catch (e) {
+        console.error("Cleanup failed:", e);
+      }
+    }
+
     return res.status(200).json({
       success: true,
       draft,

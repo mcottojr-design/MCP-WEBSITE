@@ -91,7 +91,10 @@ module.exports = async function handler(req, res) {
                 date: fm.date || "",
                 category: fm.category || "",
                 image: fm.image || "",
+                image_focus: fm.image_focus || "50% 50%",
                 excerpt: fm.excerpt || "",
+                gallery: fm.gallery || [],
+                body: markdown.split("---").slice(2).join("---").trim(),
                 draft: isDraft,
               };
             }
