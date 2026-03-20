@@ -919,6 +919,7 @@
       <div class="tab-switcher">
         <button class="tab-btn active" id="tab-editor" onclick="switchTab('editor')">✏️ <span class="tab-label">Editor</span></button>
         <button class="tab-btn" id="tab-posts" onclick="switchTab('posts')">📋 <span class="tab-label">All Posts</span></button>
+        <button class="tab-btn" id="tab-event" onclick="switchTab('event')">🥊 <span class="tab-label">Next Event</span></button>
       </div>
     </div>
     <div class="topbar-right">
@@ -1037,6 +1038,48 @@
 
     </main>
 
+    <!-- Event Panel -->
+    <main class="editor-panel" id="event-panel" style="display:none">
+       <div class="section-label">Next Event Management</div>
+       <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.5rem;">This content appears on the Homepage Hero (Slide 1) and Upcoming Events section.</p>
+       
+       <div class="field-group">
+         <label>Event Title</label>
+         <input type="text" id="ev-title" placeholder="E.g. ITF ES LA PELEA: AIBONITO" />
+       </div>
+       
+       <div class="fields-row">
+         <div class="field-group">
+           <label>Date Display Text</label>
+           <input type="text" id="ev-date" placeholder="E.g. April 18th" />
+         </div>
+         <div class="field-group">
+           <label>Location</label>
+           <input type="text" id="ev-location" placeholder="E.g. Coliseo Marr\u00f3n Aponte" />
+         </div>
+       </div>
+
+       <div class="field-group">
+         <label>Banner Image URL (from uploads or external)</label>
+         <input type="text" id="ev-image" placeholder="/assets/hero_banner.jpg" />
+       </div>
+
+       <div class="fields-row">
+         <div class="field-group">
+           <label>Ticket Link</label>
+           <input type="text" id="ev-ticket" placeholder="https://..." />
+         </div>
+         <div class="field-group">
+           <label>Watch Live Link</label>
+           <input type="text" id="ev-watch" placeholder="https://youtube.com/..." />
+         </div>
+       </div>
+
+       <div style="margin-top:2rem;">
+         <button class="btn-publish" onclick="saveEvent()" id="ev-save-btn">💾 Update Hero Event</button>
+       </div>
+    </main>
+
     <!-- ===== ALL POSTS VIEW ===== -->
     <div id="posts-view">
       <div class="posts-view-header">
@@ -1130,26 +1173,25 @@
     loadPosts();
   }
 
-  // ===== TAB SWITCHER =====
-  function switchTab(tab) {
-    const editorPanel = document.getElementById('editor-panel');
-    const postsView = document.getElementById('posts-view');
-    const tabEditor = document.getElementById('tab-editor');
-    const tabPosts = document.getElementById('tab-posts');
+  function switchTab(tabId) {
+    currentTab = tabId;
+    document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+    document.getElementById(`tab-${tabId}`).classList.add('active');
+
+    document.getElementById('editor-panel').style.display = (tabId === 'editor') ? 'block' : 'none';
+    document.getElementById('event-panel').style.display = (tabId === 'event') ? 'block' : 'none';
+    document.getElementById('posts-view').style.display = (tabId === 'posts') ? 'block' : 'none';
+    
+    // Manage visibility of topbar-right (publish/save buttons)
     const topbarRight = document.querySelector('.topbar-right');
-    if (tab === 'posts') {
-      editorPanel.style.display = 'none';
-      postsView.classList.add('active');
-      tabEditor.classList.remove('active');
-      tabPosts.classList.add('active');
-      topbarRight.style.visibility = 'hidden';
-      loadPosts();
+    if (tabId === 'editor') {
+      topbarRight.style.visibility = 'visible';
     } else {
-      postsView.classList.remove('active');
-      editorPanel.style.display = '';
-      tabEditor.classList.add('active');
-      tabPosts.classList.remove('active');
-      topbarRight.style.visibility = '';
+      topbarRight.style.visibility = 'hidden';
+    }
+
+    if (tabId === 'posts') {
+      loadPosts();
     }
   }
 
@@ -1643,6 +1685,56 @@
       .trim();
     return md;
   }
+  // ===== EVENT MANAGEMENT =====
+  async function loadEvent() {
+    try {
+      const res = await fetch('/api/event');
+      const data = await res.json();
+      if (data && !data.error) {
+        document.getElementById('ev-title').value = data.title || '';
+        document.getElementById('ev-date').value = data.date_display || '';
+        document.getElementById('ev-location').value = data.location || '';
+        document.getElementById('ev-image').value = data.image || '';
+        document.getElementById('ev-ticket').value = data.ticket_link || '';
+        document.getElementById('ev-watch').value = data.watch_link || '';
+      }
+    } catch (e) { console.error('Failed to load event data', e); }
+  }
+
+  async function saveEvent() {
+    const payload = {
+      title: document.getElementById('ev-title').value,
+      date_display: document.getElementById('ev-date').value,
+      location: document.getElementById('ev-location').value,
+      image: document.getElementById('ev-image').value,
+      ticket_link: document.getElementById('ev-ticket').value,
+      watch_link: document.getElementById('ev-watch').value
+    };
+
+    const btn = document.getElementById('ev-save-btn');
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+
+    try {
+      const res = await fetch('/api/event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast('✅ Next event updated! Site will rebuild in a minute.', 'success');
+      } else {
+        showToast('Error: ' + data.error, 'error');
+      }
+    } catch (e) { showToast('Network error.', 'error'); }
+    
+    btn.disabled = false;
+    btn.textContent = '💾 Update Hero Event';
+  }
+
+  // Initial load
+  loadEvent();
 </script>
 </body>
 </html>

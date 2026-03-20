@@ -88,21 +88,24 @@
     
     <!-- Slide 1: Upcoming Event -->
     <div class="hero-slide active" data-slide="0">
-      <img src="/assets/hero_banner.jpg" alt="Aibonito Fight Event Banner" class="absolute inset-0 w-full h-full object-cover object-[center_top] md:object-center">
+      <img src="{{ event.image }}" alt="{{ event.title }}" class="absolute inset-0 w-full h-full object-cover object-[center_top] md:object-center">
       <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none"></div>
       <div class="absolute bottom-0 left-0 w-full z-20 p-4 md:p-12 lg:p-20">
         <div class="max-w-4xl space-y-2 md:space-y-4">
           <div class="inline-block bg-primary px-3 py-1 text-white text-[10px] md:text-xs font-bold uppercase tracking-widest rounded-sm mb-2">Main Event</div>
           <h1 class="text-white text-3xl md:text-6xl font-black leading-tight tracking-tight uppercase italic drop-shadow-md">
-            ITF ES LA PELEA:<br/>AIBONITO
+            {{ event.title | safe | nl2br }}
           </h1>
           <div class="flex flex-col md:flex-row flex-wrap gap-2 md:gap-6 text-slate-200 text-sm md:text-xl font-medium mt-2">
-            <span class="flex items-center gap-2 drop-shadow-md"><span class="material-symbols-outlined text-primary">calendar_today</span> April 18th</span>
-            <span class="flex items-center gap-2 drop-shadow-md"><span class="material-symbols-outlined text-primary">location_on</span> Coliseo "Marrón" Aponte, Aibonito</span>
+            <span class="flex items-center gap-2 drop-shadow-md"><span class="material-symbols-outlined text-primary">calendar_today</span> {{ event.date_display }}</span>
+            <span class="flex items-center gap-2 drop-shadow-md"><span class="material-symbols-outlined text-primary">location_on</span> {{ event.location }}</span>
           </div>
           <div class="pt-6 flex flex-wrap gap-4">
-            <button class="bg-primary hover:bg-red-700 text-white font-black py-3 md:py-4 px-8 md:px-10 rounded-lg flex items-center gap-2 transition-all uppercase tracking-widest text-sm md:text-base shadow-2xl" onclick="window.open('https://boletos.prticket.com/events/en/itf-aibonito', '_blank')">
+            <button class="bg-primary hover:bg-red-700 text-white font-black py-3 md:py-4 px-8 md:px-10 rounded-lg flex items-center gap-2 transition-all uppercase tracking-widest text-sm md:text-base shadow-2xl" onclick="window.open('{{ event.ticket_link }}', '_blank')">
               Buy Tickets <span class="material-symbols-outlined">confirmation_number</span>
+            </button>
+            <button class="bg-black/60 hover:bg-black/80 backdrop-blur-md text-white font-black py-3 md:py-4 px-8 md:px-10 rounded-lg border border-white/20 transition-all uppercase tracking-widest text-sm md:text-base shadow-xl" onclick="window.open('{{ event.watch_link }}', '_blank')">
+              Watch Live <span class="material-symbols-outlined">smart_display</span>
             </button>
           </div>
         </div>
@@ -151,16 +154,16 @@
 <div class="flex justify-center">
 <div class="w-full max-w-5xl group relative overflow-hidden rounded-xl bg-surface border border-border-muted flex flex-col md:flex-row h-full shadow-2xl">
 <div class="w-full md:w-1/2 overflow-hidden h-64 md:h-auto">
-<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" src="/assets/hero_banner.jpg" style=""/>
+<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" src="{{ event.image }}" style=""/>
 </div>
 <div class="p-8 flex flex-col justify-between flex-1">
 <div>
 <div class="flex items-center gap-2 mb-4">
 <span class="material-symbols-outlined text-primary" style="">calendar_today</span>
-<span class="text-slate-400 font-bold uppercase tracking-widest text-xs" style="">April 18</span>
+<span class="text-slate-400 font-bold uppercase tracking-widest text-xs" style="">{{ event.date_display }}</span>
 </div>
-<h4 class="text-3xl font-black text-white uppercase leading-tight mb-4" style="">ITF ES LA PELEA: <br/> Aibonito</h4>
-<p class="text-slate-400 text-sm mb-6 leading-relaxed" style="">Witness the raw intensity of ITF Boxing at Coliseo "Marrón" Aponte. An unforgettable night of professional boxing displaying the next generation of champions.</p>
+<h4 class="text-3xl font-black text-white uppercase leading-tight mb-4" style="">{{ event.title | safe | nl2br }}</h4>
+<p class="text-slate-400 text-sm mb-6 leading-relaxed" style="">Witness the raw intensity of professional boxing from the island's hottest upcoming talents. An unforgettable night of fighting displaying the next generation of champions.</p>
 <div class="flex items-center gap-4 text-xs font-bold text-slate-300">
 <span class="bg-primary/20 text-primary px-3 py-1 rounded" style="">MAIN EVENT</span>
 </div>
@@ -168,9 +171,9 @@
 <div class="mt-8 flex items-center justify-between border-t border-border-muted pt-6">
 <div class="flex flex-col">
 <span class="text-[10px] text-slate-500 uppercase tracking-widest" style="">Venue</span>
-<span class="text-white font-bold" style="">Coliseo "Marrón" Aponte</span>
+<span class="text-white font-bold" style="">{{ event.location }}</span>
 </div>
-<button class="bg-primary text-white text-xs font-bold px-6 py-3 rounded-lg uppercase tracking-widest hover:bg-red-700" onclick="window.open('https://boletos.prticket.com/events/en/itf-aibonito')" style="">Get Tickets</button>
+<button class="bg-primary text-white text-xs font-bold px-6 py-3 rounded-lg uppercase tracking-widest hover:bg-red-700" onclick="window.open('{{ event.ticket_link }}')" style="">Get Tickets</button>
 </div>
 </div>
 </div>
