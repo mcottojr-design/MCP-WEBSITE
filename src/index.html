@@ -214,7 +214,7 @@ Watch Live <span class="material-symbols-outlined">smart_display</span>
 {% for post in collections.post | reverse | limit(2) %}
 <article class="group cursor-pointer" onclick="window.location.href='{{ post.url }}'">
 <div class="overflow-hidden rounded-lg mb-4 aspect-video border border-border-muted">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="{{ post.data.title }}" src="{{ post.data.image }}"/>
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="{{ post.data.title }}" src="{{ post.data.image }}" style="object-position: {{ post.data.image_focus | default('center') }};"/>
 </div>
 <span class="text-primary text-[10px] font-bold uppercase tracking-widest">{{ post.data.category }} • {{ post.date | date('MMM DD') }}</span>
 <h4 class="text-xl font-bold text-white mt-2 group-hover:text-primary transition-colors uppercase leading-snug">{{ post.data.title }}</h4>
