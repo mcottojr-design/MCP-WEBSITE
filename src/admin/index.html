@@ -1,14 +1,705 @@
-<!doctype html>
-<html lang="en">
+<!DOCTYPE html>
+<html lang="en" class="dark">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="robots" content="noindex, nofollow" />
-  <title>MCP News Admin | Miguel Cotto Promotions</title>
+  <title>MCP News Admin</title>
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
-  <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url" />
+  <!-- Quill rich text editor -->
+  <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet" />
+  <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #0d0707;
+      --surface: #1a0d0d;
+      --surface2: #261212;
+      --border: #3d1f1f;
+      --primary: #d72323;
+      --primary-hover: #b01c1c;
+      --text: #f1f1f1;
+      --muted: #8a6464;
+      --success: #22c55e;
+      --warning: #f59e0b;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ===== LOGIN ===== */
+    #login-screen {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    .login-box {
+      width: 100%;
+      max-width: 400px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      text-align: center;
+    }
+
+    .login-box img { height: 64px; margin-bottom: 1.5rem; }
+    .login-box h1 { font-size: 1.25rem; font-weight: 700; margin-bottom: 0.5rem; }
+    .login-box p { color: var(--muted); font-size: 0.85rem; margin-bottom: 2rem; }
+
+    .login-box input[type="password"] {
+      width: 100%;
+      padding: 0.875rem 1rem;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .login-box input:focus { border-color: var(--primary); }
+
+    .btn-primary {
+      width: 100%;
+      padding: 0.875rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.1s;
+    }
+
+    .btn-primary:hover { background: var(--primary-hover); }
+    .btn-primary:active { transform: scale(0.98); }
+
+    .error-msg {
+      color: var(--primary);
+      font-size: 0.8rem;
+      margin-top: 0.75rem;
+      display: none;
+    }
+
+    /* ===== DASHBOARD ===== */
+    #dashboard { display: none; min-height: 100vh; }
+
+    .topbar {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .topbar-left { display: flex; align-items: center; gap: 1rem; }
+    .topbar img { height: 36px; }
+    .topbar h1 { font-size: 0.9rem; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--primary); }
+
+    .topbar-right { display: flex; align-items: center; gap: 0.75rem; }
+
+    .btn-secondary {
+      padding: 0.5rem 1.25rem;
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-secondary:hover { border-color: var(--primary); color: var(--primary); }
+
+    .btn-publish {
+      padding: 0.5rem 1.5rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .btn-publish:hover { background: var(--primary-hover); }
+    .btn-publish:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    /* Main layout */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      min-height: calc(100vh - 60px);
+    }
+
+    /* Sidebar */
+    .sidebar {
+      background: var(--surface);
+      border-right: 1px solid var(--border);
+      padding: 1.5rem;
+      overflow-y: auto;
+    }
+
+    .sidebar h2 {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 1rem;
+    }
+
+    .new-post-btn {
+      width: 100%;
+      padding: 0.75rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      cursor: pointer;
+      margin-bottom: 1.5rem;
+      transition: background 0.2s;
+    }
+
+    .new-post-btn:hover { background: var(--primary-hover); }
+
+    .logout-btn {
+      width: 100%;
+      padding: 0.6rem;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.75rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: auto;
+      transition: all 0.2s;
+    }
+
+    .logout-btn:hover { color: var(--primary); border-color: var(--primary); }
+
+    /* Editor panel */
+    .editor-panel {
+      padding: 2rem;
+      overflow-y: auto;
+      max-height: calc(100vh - 60px);
+    }
+
+    .field-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .field-group label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .field-group input[type="text"],
+    .field-group input[type="date"],
+    .field-group select,
+    .field-group textarea {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .field-group input:focus,
+    .field-group select:focus,
+    .field-group textarea:focus {
+      border-color: var(--primary);
+    }
+
+    .field-group select option { background: var(--surface2); }
+    .field-group textarea { resize: vertical; min-height: 80px; line-height: 1.5; }
+
+    .fields-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1rem;
+    }
+
+    /* Image upload */
+    .image-upload-area {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 2rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .image-upload-area:hover { border-color: var(--primary); background: rgba(215,35,35,0.05); }
+    .image-upload-area.has-image { border-style: solid; border-color: var(--primary); }
+
+    .image-upload-area input { display: none; }
+
+    .image-preview {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+      display: none;
+    }
+
+    .upload-placeholder p { color: var(--muted); font-size: 0.85rem; margin-top: 0.5rem; }
+    .upload-placeholder span { font-size: 2rem; }
+
+    /* Quill editor */
+    .quill-wrapper {
+      background: var(--surface2);
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    .ql-toolbar.ql-snow {
+      border: none;
+      border-bottom: 1px solid var(--border) !important;
+      background: var(--surface);
+    }
+
+    .ql-container.ql-snow {
+      border: none !important;
+      font-family: 'Space Grotesk', sans-serif;
+    }
+
+    .ql-editor {
+      min-height: 300px;
+      color: var(--text);
+      font-size: 1rem;
+      line-height: 1.7;
+    }
+
+    .ql-editor.ql-blank::before { color: var(--muted); font-style: normal; }
+    .ql-snow .ql-stroke { stroke: var(--muted); }
+    .ql-snow .ql-fill { fill: var(--muted); }
+    .ql-snow .ql-picker { color: var(--muted); }
+    .ql-snow .ql-picker-options { background: var(--surface2); border-color: var(--border); }
+
+    /* Status toast */
+    #toast {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      padding: 1rem 1.5rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      z-index: 9999;
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      max-width: 360px;
+    }
+
+    #toast.show { transform: translateY(0); opacity: 1; }
+    #toast.success { background: var(--success); color: white; }
+    #toast.error { background: var(--primary); color: white; }
+    #toast.info { background: var(--surface2); color: var(--text); border: 1px solid var(--border); }
+
+    /* Spinner */
+    .spinner {
+      display: inline-block;
+      width: 14px; height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: white;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+      vertical-align: middle;
+      margin-right: 6px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* Section dividers */
+    .section-label {
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--primary);
+      margin-bottom: 1rem;
+      margin-top: 2rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .section-label:first-child { margin-top: 0; }
+  </style>
 </head>
 <body>
-  <script src="https://unpkg.com/@sveltia/cms/dist/sveltia-cms.js" type="module"></script>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div id="login-screen">
+  <div class="login-box">
+    <img src="/assets/logo.svg" alt="MCP Logo" onerror="this.style.display='none'" />
+    <h1>News Admin Dashboard</h1>
+    <p>Miguel Cotto Promotions — Internal Use Only</p>
+    <input type="password" id="password-input" placeholder="Enter admin password" autocomplete="current-password" />
+    <button class="btn-primary" id="login-btn">Log In</button>
+    <p class="error-msg" id="login-error">❌ Incorrect password. Try again.</p>
+  </div>
+</div>
+
+<!-- ===== DASHBOARD ===== -->
+<div id="dashboard">
+  <div class="topbar">
+    <div class="topbar-left">
+      <img src="/assets/logo.svg" alt="MCP" onerror="this.style.display='none'" />
+      <h1>News Admin</h1>
+    </div>
+    <div class="topbar-right">
+      <button class="btn-secondary" id="draft-btn">💾 Save Draft</button>
+      <button class="btn-publish" id="publish-btn">📰 Publish Post</button>
+    </div>
+  </div>
+
+  <div class="main-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <button class="new-post-btn" id="clear-btn">✏️ New Post</button>
+      <h2>Quick Tips</h2>
+      <ul style="color: var(--muted); font-size: 0.8rem; line-height: 2; list-style: none;">
+        <li>📸 Upload fight posters as Featured Image</li>
+        <li>📝 Paste press releases into the body</li>
+        <li>💾 Draft = saved but not on website</li>
+        <li>📰 Publish = goes live in ~60 seconds</li>
+        <li>🌐 View live site at the main URL</li>
+      </ul>
+      <br/><br/>
+      <button class="logout-btn" id="logout-btn">Log Out</button>
+    </aside>
+
+    <!-- Editor -->
+    <main class="editor-panel">
+      <div class="section-label">Post Details</div>
+
+      <div class="field-group">
+        <label>Post Title *</label>
+        <input type="text" id="f-title" placeholder="E.g. COLLAZO VS. HARO — CHAMPIONSHIP SHOWDOWN" />
+      </div>
+
+      <div class="fields-row">
+        <div class="field-group">
+          <label>Category</label>
+          <select id="f-category">
+            <option>Announcement</option>
+            <option>Fight Result</option>
+            <option>Press Release</option>
+            <option>Interview</option>
+            <option>Event Recap</option>
+            <option>Fighter Update</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Author</label>
+          <select id="f-author">
+            <option>MCP Staff</option>
+            <option>Miguel Cotto</option>
+            <option>Héctor Soto</option>
+            <option>Communications Team</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Publish Date</label>
+          <input type="date" id="f-date" />
+        </div>
+      </div>
+
+      <div class="field-group">
+        <label>Excerpt / Summary (shown on news cards)</label>
+        <textarea id="f-excerpt" rows="2" placeholder="A short punchy 1-2 sentence summary of the story..."></textarea>
+      </div>
+
+      <div class="section-label">Featured Image</div>
+
+      <div class="image-upload-area" id="upload-area" onclick="document.getElementById('image-input').click()">
+        <input type="file" id="image-input" accept="image/*" />
+        <div class="upload-placeholder" id="upload-placeholder">
+          <span>🖼️</span>
+          <p>Click to upload a fight poster or promo image</p>
+          <p style="font-size:0.75rem; margin-top:0.25rem;">JPG, PNG, WebP — Max 5MB</p>
+        </div>
+        <img id="image-preview" class="image-preview" alt="Preview" />
+      </div>
+
+      <div class="section-label">Article Body *</div>
+
+      <div class="quill-wrapper">
+        <div id="editor"></div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  const API = '';
+  let sessionToken = localStorage.getItem('mcp_admin_token') || '';
+  let uploadedImagePath = '';
+
+  // ===== INIT =====
+  const quill = new Quill('#editor', {
+    theme: 'snow',
+    placeholder: 'Write the full press release or news story here...',
+    modules: {
+      toolbar: [
+        [{ 'header': [1, 2, 3, false] }],
+        ['bold', 'italic', 'underline'],
+        ['link', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],
+        ['clean']
+      ]
+    }
+  });
+
+  // Set today's date
+  document.getElementById('f-date').valueAsDate = new Date();
+
+  // If already logged in
+  if (sessionToken) showDashboard();
+
+  // ===== LOGIN =====
+  document.getElementById('login-btn').addEventListener('click', login);
+  document.getElementById('password-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') login();
+  });
+
+  async function login() {
+    const pw = document.getElementById('password-input').value.trim();
+    if (!pw) return;
+    const btn = document.getElementById('login-btn');
+    btn.textContent = 'Checking...';
+    btn.disabled = true;
+
+    // Test the password against the API
+    try {
+      const res = await fetch('/api/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${pw}` },
+        body: JSON.stringify({ title: '__auth_check__', body: '', draft: true, _authCheck: true })
+      });
+      // If 400 (bad request but auth passed) or 200, auth is correct
+      if (res.status === 400 || res.status === 200 || res.status === 201) {
+        sessionToken = pw;
+        localStorage.setItem('mcp_admin_token', pw);
+        showDashboard();
+      } else if (res.status === 401) {
+        document.getElementById('login-error').style.display = 'block';
+      } else {
+        // Any other status might still mean auth worked
+        sessionToken = pw;
+        localStorage.setItem('mcp_admin_token', pw);
+        showDashboard();
+      }
+    } catch (err) {
+      showToast('Connection error. Check if the site is deployed.', 'error');
+    }
+    btn.textContent = 'Log In';
+    btn.disabled = false;
+  }
+
+  function showDashboard() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('dashboard').style.display = 'block';
+  }
+
+  document.getElementById('logout-btn').addEventListener('click', () => {
+    localStorage.removeItem('mcp_admin_token');
+    sessionToken = '';
+    location.reload();
+  });
+
+  // ===== IMAGE UPLOAD =====
+  document.getElementById('image-input').addEventListener('change', async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    if (file.size > 5 * 1024 * 1024) return showToast('Image too large. Max 5MB.', 'error');
+
+    showToast('Uploading image...', 'info');
+
+    const reader = new FileReader();
+    reader.onload = async (ev) => {
+      const base64 = ev.target.result.split(',')[1];
+      const ext = file.name.split('.').pop();
+      const safeName = `${Date.now()}-upload.${ext}`;
+
+      try {
+        const res = await fetch('/api/upload', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
+          body: JSON.stringify({ filename: safeName, content: base64 })
+        });
+        const data = await res.json();
+        if (data.success) {
+          uploadedImagePath = data.path;
+          document.getElementById('image-preview').src = ev.target.result;
+          document.getElementById('image-preview').style.display = 'block';
+          document.getElementById('upload-placeholder').style.display = 'none';
+          document.getElementById('upload-area').classList.add('has-image');
+          showToast('✅ Image uploaded!', 'success');
+        } else {
+          showToast('Upload failed: ' + (data.error || 'Unknown error'), 'error');
+        }
+      } catch (err) {
+        showToast('Upload error: ' + err.message, 'error');
+      }
+    };
+    reader.readAsDataURL(file);
+  });
+
+  // ===== PUBLISH / DRAFT =====
+  document.getElementById('publish-btn').addEventListener('click', () => submitPost(false));
+  document.getElementById('draft-btn').addEventListener('click', () => submitPost(true));
+
+  async function submitPost(draft) {
+    const title = document.getElementById('f-title').value.trim();
+    const body = quill.root.innerHTML;
+    const markdown = htmlToMarkdown(body);
+
+    if (!title) return showToast('Please enter a post title.', 'error');
+    if (!markdown || markdown.length < 10) return showToast('Please write the article body.', 'error');
+
+    const btn = draft ? document.getElementById('draft-btn') : document.getElementById('publish-btn');
+    btn.disabled = true;
+    btn.innerHTML = `<span class="spinner"></span>${draft ? 'Saving...' : 'Publishing...'}`;
+
+    const payload = {
+      title,
+      date: document.getElementById('f-date').value || new Date().toISOString().slice(0,10),
+      author: document.getElementById('f-author').value,
+      category: document.getElementById('f-category').value,
+      image: uploadedImagePath || '',
+      excerpt: document.getElementById('f-excerpt').value.trim(),
+      body: markdown,
+      draft
+    };
+
+    try {
+      const res = await fetch('/api/publish', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (data.success) {
+        showToast(data.message, 'success');
+        if (!draft) clearForm();
+      } else {
+        showToast('Error: ' + (data.error || 'Something went wrong'), 'error');
+      }
+    } catch (err) {
+      showToast('Network error: ' + err.message, 'error');
+    }
+
+    btn.disabled = false;
+    btn.textContent = draft ? '💾 Save Draft' : '📰 Publish Post';
+  }
+
+  // ===== CLEAR FORM =====
+  document.getElementById('clear-btn').addEventListener('click', clearForm);
+
+  function clearForm() {
+    document.getElementById('f-title').value = '';
+    document.getElementById('f-excerpt').value = '';
+    document.getElementById('f-date').valueAsDate = new Date();
+    document.getElementById('f-author').selectedIndex = 0;
+    document.getElementById('f-category').selectedIndex = 0;
+    document.getElementById('image-preview').style.display = 'none';
+    document.getElementById('upload-placeholder').style.display = 'block';
+    document.getElementById('upload-area').classList.remove('has-image');
+    document.getElementById('image-input').value = '';
+    uploadedImagePath = '';
+    quill.setContents([]);
+  }
+
+  // ===== TOAST =====
+  function showToast(msg, type = 'info') {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.className = `show ${type}`;
+    clearTimeout(t._timer);
+    t._timer = setTimeout(() => { t.className = type; }, 4000);
+  }
+
+  // ===== SIMPLE HTML → MARKDOWN =====
+  function htmlToMarkdown(html) {
+    let md = html
+      .replace(/<h1[^>]*>(.*?)<\/h1>/gi, '# $1\n\n')
+      .replace(/<h2[^>]*>(.*?)<\/h2>/gi, '## $1\n\n')
+      .replace(/<h3[^>]*>(.*?)<\/h3>/gi, '### $1\n\n')
+      .replace(/<strong[^>]*>(.*?)<\/strong>/gi, '**$1**')
+      .replace(/<b[^>]*>(.*?)<\/b>/gi, '**$1**')
+      .replace(/<em[^>]*>(.*?)<\/em>/gi, '*$1*')
+      .replace(/<i[^>]*>(.*?)<\/i>/gi, '*$1*')
+      .replace(/<a[^>]*href="([^"]*)"[^>]*>(.*?)<\/a>/gi, '[$2]($1)')
+      .replace(/<blockquote[^>]*>(.*?)<\/blockquote>/gis, '> $1\n\n')
+      .replace(/<li[^>]*>(.*?)<\/li>/gi, '- $1\n')
+      .replace(/<\/?(ul|ol)[^>]*>/gi, '\n')
+      .replace(/<br\s*\/?>/gi, '\n')
+      .replace(/<p[^>]*>(.*?)<\/p>/gis, (_, content) => content.trim() ? content.trim() + '\n\n' : '')
+      .replace(/<[^>]+>/g, '')
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/\n{3,}/g, '\n\n')
+      .trim();
+    return md;
+  }
+</script>
 </body>
 </html>
