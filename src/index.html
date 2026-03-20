@@ -211,22 +211,15 @@ Watch Live <span class="material-symbols-outlined">smart_display</span>
 </button>
 </div>
 <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8">
-<!-- News Item 1 -->
-<article class="group">
+{% for post in collections.post | reverse | limit(2) %}
+<article class="group cursor-pointer" onclick="window.location.href='{{ post.url }}'">
 <div class="overflow-hidden rounded-lg mb-4 aspect-video border border-border-muted">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Atmospheric boxing match crowd background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDftskpMhE38R_BeWevwp0IQUraDZUW7Ulxb3IW58UVwlKoJLO7OSNGTuO1k1hgFGAbJmgmtSiypufI6nNTYX36M_NM0bqnIAKPqVc30EkFKf8KcUOmhJlA10BcxcZLUog_6-lYaFIujSKLbcJVnneBkXJC58IPFzZiUT_IU8KPTLiI-7UixzcsjmJ6HRsSgG0d2r2j5x3UuezRCvUb7Uhspm9Nf9Qe0BWzoDz4j3Uy_IxWWZEXYN9RAoYJ6eASvksqxeOJaA_CDyQ" style=""/>
+<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="{{ post.data.title }}" src="{{ post.data.image }}"/>
 </div>
-<span class="text-primary text-[10px] font-bold uppercase tracking-widest" style="">Results • Oct 10</span>
-<h4 class="text-xl font-bold text-white mt-2 group-hover:text-primary transition-colors uppercase leading-snug" style="">Rivera Triumphs in Thrilling 10-Round War at Madison Square Garden</h4>
+<span class="text-primary text-[10px] font-bold uppercase tracking-widest">{{ post.data.category }} • {{ post.date | date('MMM DD') }}</span>
+<h4 class="text-xl font-bold text-white mt-2 group-hover:text-primary transition-colors uppercase leading-snug">{{ post.data.title }}</h4>
 </article>
-<!-- News Item 2 -->
-<article class="group">
-<div class="overflow-hidden rounded-lg mb-4 aspect-video border border-border-muted">
-<img class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" data-alt="Empty boxing training gym at night" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs5ri4LWzcyYIWimGWOu3dvXz_imzGJZVe8AI_n83mV4_TIDLrnke6VssTl0_9Q-DvaEirdz6pLYvgqBgeK1SCyVNmgfZWew7HYQZ-wX1H92GMiIMt_5u10rzzhaaD0Zf4iN-x3-L-IM1F4ztqBboibkLbLytihTVu0RNckvO8SJPVPVmMRdb-YEJcV9LO1VLrkOlvySYAmo36TpCIXinqCpEV5DO6EBo6k2fs7Mvc28c4qtebT-S5vdbHUni8eG8lcauWO5KBzos" style=""/>
-</div>
-<span class="text-primary text-[10px] font-bold uppercase tracking-widest" style="">Training • Oct 08</span>
-<h4 class="text-xl font-bold text-white mt-2 group-hover:text-primary transition-colors uppercase leading-snug" style="">Inside the Camp: Silva Prepares for Biggest Challenge Yet in Puerto Rico</h4>
-</article>
+{% endfor %}
 </div>
 </div>
 </div>

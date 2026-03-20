@@ -113,96 +113,22 @@
 <span class="text-sm text-slate-400">Showing 12 Articles</span>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
-<!-- Card 1 -->
-<article class="group cursor-pointer">
+{% for post in collections.post | reverse %}
+<article class="group cursor-pointer" onclick="window.location.href='{{ post.url }}'">
 <div class="relative overflow-hidden aspect-video rounded-lg mb-4">
-<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="Two boxers squaring off in the ring" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFwNmnwI5pGHEZFtEm41WLdsHpYPonRGZcIzrfZfU_nhRyNuDi0FI-lNKdR3Hb4pxpIRCxPc2MkayS9Rs_7yov2P6_Bv7VGt3gKgBdb2QcjuTN_9a_gLtEfPrskaxz9mRvOqnGngFmILFpww6tU-C1b9bRqoBPLObkEK9lG1KlwolnrEfFk-fq18U6ISUiOw3jClGligjiiAb6zvbre6FA07Zhz90rc51YYhbw01uJrtrQNaJ-zEuPPOHXJnx-Q2zGiUDHo8Haq6o"/>
-<span class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">Fight Result</span>
+<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="{{ post.data.title }}" src="{{ post.data.image }}"/>
+<span class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">{{ post.data.category }}</span>
 </div>
 <div class="space-y-2">
-<time class="text-xs text-primary font-medium">October 24, 2023</time>
-<h3 class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">Ruiz Dominates Undercard in Puerto Rico Showcase</h3>
-<p class="text-slate-400 text-sm line-clamp-2 font-light">A masterclass performance from the hometown favorite leaves the crowd in awe after a stunning third-round knockout.</p>
-<a class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-primary transition-colors pt-2" href="index.html">
+<time class="text-xs text-primary font-medium">{{ post.date | date('MMMM D, YYYY') }}</time>
+<h3 class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">{{ post.data.title }}</h3>
+<p class="text-slate-400 text-sm line-clamp-2 font-light">{{ post.data.excerpt }}</p>
+<a class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-primary transition-colors pt-2" href="{{ post.url }}">
                                         Read Story <span class="material-symbols-outlined text-sm">open_in_new</span>
 </a>
 </div>
 </article>
-<!-- Card 2 -->
-<article class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-video rounded-lg mb-4">
-<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="Professional boxer posing during a press conference" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCbEKsBLKPihFSA7_lHuK5XUl512TDt53-L1JM9IZDCAT_CIEZrsVD8SpX0VmcG0kVWpO7i14NjIIYfUak_tAeruiPoyvZW5fDD3KuRmZPdrArURwd6rB1RfoMY4RIjuHJDR_7a28vsKJ__r_DQ88UJ8Rr6r3BVMZjjXq4LN2nMdGwRxNfeAprzEHqrOP3X5qLNtb6q_MRyTqTXRkC6_A9D06Itvbp8tagJ7_VA03i5a5BHrLOR6uEgSt3KpPG5mBGCulrbBu8HvlA"/>
-<span class="absolute top-3 left-3 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">Press Release</span>
-</div>
-<div class="space-y-2">
-<time class="text-xs text-primary font-medium">October 22, 2023</time>
-<h3 class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">New Championship Undercard Added to July 15th</h3>
-<p class="text-slate-400 text-sm line-clamp-2 font-light">The stacked card gets even heavier as two top-10 ranked featherweights agree to terms for a title eliminator.</p>
-<a class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-primary transition-colors pt-2" href="index.html">
-                                        Read Story <span class="material-symbols-outlined text-sm">open_in_new</span>
-</a>
-</div>
-</article>
-<!-- Card 3 -->
-<article class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-video rounded-lg mb-4">
-<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="Tired boxer sitting in corner of the ring" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0IWHaiSsUKyiZl_GmWWMHWo9afCrjiwUf218PMk-xEl2yK4W1iN72rRvGdKbrJE-SXWDW9aVaSCZATR937BmWWYA96dr7oYlbjKRpIP7Ax5peyg2uuSD9hAGjmeFddMg9i5bMIygPrd-hmea7PA4laXaMQTrqQy0IhsRFHT6p4mEqR0CqJl4eoHdamJrIzEy6we6U45DuZ7OBKJ4iA1PYp9acAoN_p0CJgGk2sfxrordVjGz9vy4xLruVOQkThzF7zghPfZBJNvs"/>
-<span class="absolute top-3 left-3 bg-primary/40 text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">Announcement</span>
-</div>
-<div class="space-y-2">
-<time class="text-xs text-primary font-medium">October 18, 2023</time>
-<h3 class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">Cotto Promotions Signs Olympic Top Prospect</h3>
-<p class="text-slate-400 text-sm line-clamp-2 font-light">The next generation of boxing talent joins the elite roster at Miguel Cotto Promotions this fall.</p>
-<a class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-primary transition-colors pt-2" href="index.html">
-                                        Read Story <span class="material-symbols-outlined text-sm">open_in_new</span>
-</a>
-</div>
-</article>
-<!-- Card 4 -->
-<article class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-video rounded-lg mb-4">
-<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="Gym equipment and boxing gloves in training center" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBqXM38GA6S0we0KXS2uRqH8_HKH88GRaHOQuHKA4tgLTiAZBvdsQlxeLsA9gFRwb6Y3_WPHyydNoT3RnpdZNyp4T12RHUc3tYNRu2yG41SzeXSbNTGdL1UzxzmbYzdFpDKyowIHW7jqbipn6BzpZfF_VuEnYZygzoz7gSYDbXTUJheEp9lsWP5KLMZ5nkhOXxbUffPJhu1qTq4wziBqgCInRASHHCPN_SgAUBPcMXrIfdysazzcxrogqqi-qonBThTK1Wmj7MChI"/>
-<span class="absolute top-3 left-3 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">Interview</span>
-</div>
-<div class="space-y-2">
-<time class="text-xs text-primary font-medium">October 15, 2023</time>
-<h3 class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">Inside Training Camp: Secrets of the Champ</h3>
-<p class="text-slate-400 text-sm line-clamp-2 font-light">An exclusive look into the rigorous morning routine and diet that fuels the world heavyweight title holder.</p>
-<a class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-primary transition-colors pt-2" href="index.html">
-                                        Read Story <span class="material-symbols-outlined text-sm">open_in_new</span>
-</a>
-</div>
-</article>
-<!-- Card 5 -->
-<article class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-video rounded-lg mb-4">
-<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="Boxing weigh-in event stage" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBORozzsBTJBxGBlUGzJd7GgyNI43_xjxXgTQScbkpPN-s9pNePLjzH89T4bnjHNurS7NjKUjZqU6iYciqJdSO1aLu1L035_nfNCQYeHETGecrTWtCp6wuXEAgnQ3rZpPxVvQaLl3Db6Tq-0PM2ywCoysUn4XMdX-bKk4xpVTcq6A_8UrxL_ioLAdhofk5Be2974cMyCU2A4feF6Red7Ikx5ZoWcJq5VUQmx3dZyUjhNOFGHE9zJGZGSqE-FReJJSlbOqligmi3VVI"/>
-<span class="absolute top-3 left-3 bg-primary/40 text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">Announcement</span>
-</div>
-<div class="space-y-2">
-<time class="text-xs text-primary font-medium">October 12, 2023</time>
-<h3 class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">Official Weigh-in Details for Vegas Event</h3>
-<p class="text-slate-400 text-sm line-clamp-2 font-light">Fans are invited to the open weigh-in at the Grand Plaza this Friday. Doors open at 1 PM local time.</p>
-<a class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-primary transition-colors pt-2" href="index.html">
-                                        Read Story <span class="material-symbols-outlined text-sm">open_in_new</span>
-</a>
-</div>
-</article>
-<!-- Card 6 -->
-<article class="group cursor-pointer">
-<div class="relative overflow-hidden aspect-video rounded-lg mb-4">
-<img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="Group of kids boxing in community outreach program" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDykkaglb92ChLKdVaHbCsXNgK78BoCzro6YmVe31gOWfEeGzVojQWa2yDj_bX62BrShK9RPwQz4R0Zuv8ohfyl6Vq-XRAmSixm76c6k89e7n8_FqL8ZLVodPFX438RQ0vG_5znRs_c0g2yt2GvPRt1ko4Tqz5ZF_5pYvc69vUaZ4138jt1VkGMRdkGs2__Jxnnv1Ye06AZ9B6G3QHWOiWcuXGRWKAoPJylWWwfc8NeclNKKkpUa1wtR9dpr1vHTfidSANaf0iV42g"/>
-<span class="absolute top-3 left-3 bg-slate-800 text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">Community</span>
-</div>
-<div class="space-y-2">
-<time class="text-xs text-primary font-medium">October 05, 2023</time>
-<h3 class="text-lg font-bold leading-tight group-hover:text-primary transition-colors">Boxing for Youth: New Program Launch</h3>
-<p class="text-slate-400 text-sm line-clamp-2 font-light">Cotto Promotions partners with local community centers to provide free training programs for inner-city youth.</p>
-<a class="inline-flex items-center gap-1 text-xs font-bold uppercase tracking-wider text-slate-200 hover:text-primary transition-colors pt-2" href="index.html">
-                                        Read Story <span class="material-symbols-outlined text-sm">open_in_new</span>
-</a>
-</div>
-</article>
+{% endfor %}
 </div>
 <!-- Pagination -->
 <div class="mt-16 flex justify-center gap-2">
