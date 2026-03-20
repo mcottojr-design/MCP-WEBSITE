@@ -5,11 +5,11 @@ title: "OSCAR 'EL PUPILO' COLLAZO VS. JESÚS HARO ESTE SÁBADO POR PUNTO 2"
 date: 2026-03-20
 author: "Miguel Cotto Promotions"
 image: "/assets/news/1774048043721-upload.png"
-image_focus: "50% 22%"
+image_focus: "50% 16%"
 category: "Announcement"
 excerpt: "LA SÉPTIMA DEFENSA SE PODRÁ VER DESDE LAS 8:00PM EN TODO PUERTO RICO"
 gallery:
-  - "/assets/news/1774048050109-gallery-g7ptm.png"
+  []
 ---
 (**18 de marzo de 2026 - Caguas, P.R**) — Los fanáticos del boxeo en Puerto Rico podrán revivir el combate del flamante campeón unificado y estrella puertorriqueña Óscar ‘Pupilo’ Collazo en su séptima defensa de sus campeonatos WBO, WBA y Ring Magazine en la división Junior Mosca (105 libras) contra el mexicano Jesús Haro desde el Honda Center de Anaheim, California. La pelea será retransmitida este sábado 21 de marzo a las 8:00pm por el canal Punto 2.
 
