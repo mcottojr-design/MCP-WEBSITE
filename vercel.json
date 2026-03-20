@@ -3,6 +3,14 @@
   "outputDirectory": "_site",
   "cleanUrls": true,
   "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/admin/config.yml",
+      "headers": [
+        { "key": "Content-Type", "value": "application/yaml" }
+      ]
+    }
+  ],
   "rewrites": [
     { "source": "/index.html", "destination": "/" },
     { "source": "/news.html", "destination": "/news" },
