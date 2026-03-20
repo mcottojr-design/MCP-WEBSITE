@@ -1039,89 +1039,82 @@
     </main>
 
     <main class="editor-panel" id="event-panel" style="display:none">
-       <div class="section-label">Next Event Management</div>
-       <p style="font-size:0.85rem; color:var(--muted); margin-bottom:1.5rem;">This content appears on the Homepage Hero (Slide 1) and Upcoming Events section.</p>
-       
-       <!-- Event Preview Card -->
-       <div id="event-preview-container" style="margin-bottom:2rem;">
-         <div class="field-group"><label>Current Live Preview</label></div>
-         <div id="event-live-card" class="post-card featured" style="max-width:400px; cursor:default;">
-           <!-- Dynamic content -->
-           <div class="card-image-wrap">
-             <img id="prev-ev-img" src="" alt="" style="height:180px; object-fit:cover;" />
-             <span class="card-status live">🟢 Live on Home</span>
-             <span class="card-featured-label">⭐ Main Event</span>
-           </div>
-           <div class="card-body">
-             <div class="card-category" id="prev-ev-loc">Location</div>
-             <div class="card-title" id="prev-ev-title">Event Title</div>
-             <div class="card-footer">
-               <span class="card-date" id="prev-ev-date">Date</span>
-             </div>
-           </div>
-         </div>
-       </div>
+      <div class="section-label">1. Live View (Current Homepage Content)</div>
+      
+      <div id="event-preview-container" style="margin-bottom: 2.5rem; display: flex; justify-content: center; background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border-muted);">
+        <div id="event-live-card" class="post-card featured" style="margin:0; cursor:default; width: 100%; max-width: 440px;">
+          <div class="card-image-wrap">
+            <img id="prev-ev-img" src="" alt="Live Banner" />
+            <span class="card-status live">🟢 Currently Hosting</span>
+            <span class="card-featured-label">⭐ Main Event</span>
+          </div>
+          <div class="card-body">
+            <div class="card-category" id="prev-ev-loc">Location</div>
+            <div class="card-title" id="prev-ev-title">Event Title</div>
+            <div class="card-footer">
+              <span class="card-date" id="prev-ev-date">Date</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-       <div class="section-label" style="font-size:0.75rem; opacity:0.6; margin-top:2rem;">Edit Event Details</div>
-       
-       <div class="field-group">
-         <label>Event Title</label>
-         <input type="text" id="ev-title" placeholder="E.g. ITF ES LA PELEA: AIBONITO" />
-       </div>
-       
-       <div class="fields-row">
-         <div class="field-group">
-           <label>Date Display Text</label>
-           <input type="text" id="ev-date" placeholder="E.g. April 18th" />
-         </div>
-         <div class="field-group">
-           <label>Location</label>
-           <input type="text" id="ev-location" placeholder="E.g. Coliseo Marr\u00f3n Aponte" />
-         </div>
-       </div>
+      <div class="section-label">2. Event Headlines & Meta</div>
+      
+      <div class="field-group">
+        <label>Main Headline</label>
+        <input type="text" id="ev-title" placeholder="E.g. ITF ES LA PELEA: AIBONITO" />
+      </div>
+      
+      <div class="fields-row">
+        <div class="field-group">
+          <label>Schedule Display</label>
+          <input type="text" id="ev-date" placeholder="E.g. April 18th" />
+        </div>
+        <div class="field-group">
+          <label>Venue / Location</label>
+          <input type="text" id="ev-location" placeholder="E.g. Coliseo Marr\u00f3n Aponte" />
+        </div>
+      </div>
 
-       <div class="field-group">
-         <label>Event Poster / Banner</label>
-         <div class="upload-area" id="ev-upload-area" onclick="document.getElementById('ev-image-input').click()">
-           <div id="ev-upload-placeholder">
-             <span class="material-symbols-outlined" style="font-size:3rem; color:var(--primary); margin-bottom:1rem;">add_photo_alternate</span>
-             <p>Event Banner (Recommended: 1200x800)</p>
-             <span style="font-size:0.7rem; color:var(--muted);">PNG, JPG (Max 5MB)</span>
-           </div>
-           <input type="file" id="ev-image-input" accept="image/*" style="display:none;" />
-         </div>
+      <div class="section-label">3. Banner Image</div>
 
-         <div class="image-card" id="ev-image-card">
-           <div class="image-info">
-             <img id="ev-image-thumb" src="" alt="Thumbnail" />
-             <div class="image-details">
-               <span id="ev-image-filename" class="filename">banner.jpg</span>
-               <span class="status" style="color:var(--primary);">✅ Ready to save</span>
-             </div>
-           </div>
-           <div class="image-actions">
-             <button class="remove-btn" id="ev-remove-image-btn" title="Remove image">
-               <span class="material-symbols-outlined">delete_forever</span>
-             </button>
-           </div>
-         </div>
-         <input type="hidden" id="ev-image-url" />
-       </div>
+      <div class="image-upload-area" id="ev-upload-area" onclick="document.getElementById('ev-image-input').click()">
+        <input type="file" id="ev-image-input" accept="image/*" style="display:none;" />
+        <div class="upload-placeholder" id="ev-upload-placeholder">
+          <span>🖼️</span>
+          <p>Click to upload a new event banner</p>
+          <p style="font-size:0.75rem; margin-top:0.25rem;">JPG, PNG, WebP — Max 5MB</p>
+        </div>
+      </div>
 
-       <div class="fields-row">
-         <div class="field-group">
-           <label>Ticket Link</label>
-           <input type="text" id="ev-ticket" placeholder="https://..." />
-         </div>
-         <div class="field-group">
-           <label>Watch Live Link</label>
-           <input type="text" id="ev-watch" placeholder="https://youtube.com/..." />
-         </div>
-       </div>
+      <div class="image-card" id="ev-image-card">
+        <img class="image-thumb" id="ev-image-thumb" alt="Event Banner" />
+        <div class="image-card-info">
+          <p id="ev-image-filename" style="margin-bottom: 0.25rem; font-weight: 700;">banner.jpg</p>
+          <div class="focal-badge" style="background: var(--primary); color: white;">✅ Live Selection</div>
+        </div>
+        <div class="image-card-actions">
+          <button class="btn-remove-img" id="ev-remove-image-btn" style="width: 100%;">✕ Change Image</button>
+        </div>
+        <input type="hidden" id="ev-image-url" />
+      </div>
 
-       <div style="margin-top:2rem;">
-         <button class="btn-publish" onclick="saveEvent()" id="ev-save-btn">💾 Update Hero Event</button>
-       </div>
+      <div class="section-label">4. Conversion Links</div>
+
+      <div class="fields-row">
+        <div class="field-group">
+          <label>Ticket Sales URL</label>
+          <input type="text" id="ev-ticket" placeholder="https://..." />
+        </div>
+        <div class="field-group">
+          <label>Stream / Broadcast URL</label>
+          <input type="text" id="ev-watch" placeholder="https://youtube.com/..." />
+        </div>
+      </div>
+
+      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-muted);">
+        <button class="btn-publish" onclick="saveEvent()" id="ev-save-btn" style="width: 100%; height: 4rem; font-size: 1.1rem;">🚀 Update Homepage Event</button>
+      </div>
     </main>
 
     <!-- ===== ALL POSTS VIEW ===== -->
