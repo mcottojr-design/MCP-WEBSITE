@@ -563,6 +563,68 @@
     }
 
     .section-label:first-child { margin-top: 0; }
+
+    /* ===== GALLERY ===== */
+    .gallery-upload-zone {
+      border: 2px dashed var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .gallery-upload-zone:hover { border-color: var(--primary); background: rgba(215,35,35,0.05); }
+    .gallery-upload-zone p { color: var(--muted); font-size: 0.85rem; margin-top: 0.4rem; }
+    .gallery-upload-zone span.icon { font-size: 1.8rem; }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+      gap: 0.75rem;
+      margin-top: 1rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      aspect-ratio: 1;
+      border-radius: 6px;
+      overflow: hidden;
+      background: var(--bg);
+      border: 1px solid var(--border);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .gallery-item .uploading-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .gallery-remove {
+      position: absolute;
+      top: 4px; right: 4px;
+      width: 22px; height: 22px;
+      background: rgba(215,35,35,0.9);
+      color: white;
+      border: none;
+      border-radius: 50%;
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      line-height: 1;
+      transition: background 0.2s;
+    }
+    .gallery-remove:hover { background: var(--primary-hover); }
   </style>
 </head>
 <body>
@@ -689,7 +751,16 @@
         <div id="editor"></div>
       </div>
 
-    </main>
+      <div class="section-label">📸 Photo Gallery <span style="font-weight:400;color:var(--muted);text-transform:none;letter-spacing:0;">(optional — shown at the bottom of the post)</span></div>
+
+      <div class="gallery-upload-zone" id="gallery-zone" onclick="document.getElementById('gallery-input').click()">
+        <input type="file" id="gallery-input" accept="image/*" multiple style="display:none" />
+        <span class="icon">📷</span>
+        <p>Click to add photos — select multiple at once</p>
+        <p style="font-size:0.72rem;">JPG, PNG, WebP — Max 5MB each</p>
+      </div>
+      <div class="gallery-grid" id="gallery-grid"></div>
+
   </div>
 </div>
 
@@ -700,6 +771,7 @@
   let sessionToken = localStorage.getItem('mcp_admin_token') || '';
   let uploadedImagePath = '';
   let focalPoint = '50% 50%';
+  let galleryPaths = []; // array of /assets/news/... paths
 
   // ===== INIT =====
   const quill = new Quill('#editor', {
@@ -899,6 +971,7 @@
       image: uploadedImagePath || '',
       image_focus: focalPoint,
       excerpt: document.getElementById('f-excerpt').value.trim(),
+      gallery: galleryPaths,
       body: markdown,
       draft
     };
@@ -942,7 +1015,74 @@
     focalPoint = '50% 50%';
     updateModalDot(50, 50);
     document.getElementById('focal-badge').textContent = '🎯 Focus: Center (50% 50%)';
+    // Clear gallery
+    galleryPaths = [];
+    document.getElementById('gallery-grid').innerHTML = '';
+    document.getElementById('gallery-input').value = '';
     quill.setContents([]);
+  }
+
+  // ===== GALLERY UPLOAD =====
+  document.getElementById('gallery-input').addEventListener('change', async (e) => {
+    const files = Array.from(e.target.files);
+    if (!files.length) return;
+
+    const oversized = files.filter(f => f.size > 5 * 1024 * 1024);
+    if (oversized.length) return showToast(`${oversized.length} file(s) too large. Max 5MB each.`, 'error');
+
+    showToast(`Uploading ${files.length} photo(s)...`, 'info');
+
+    for (const file of files) {
+      // Add placeholder tile with spinner
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      item.innerHTML = `<div class="uploading-overlay"><span class="spinner" style="border-top-color:var(--primary);"></span></div>`;
+      document.getElementById('gallery-grid').appendChild(item);
+
+      await new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = async (ev) => {
+          const base64 = ev.target.result.split(',')[1];
+          const ext = file.name.split('.').pop();
+          const safeName = `${Date.now()}-gallery-${Math.random().toString(36).slice(2,7)}.${ext}`;
+          try {
+            const res = await fetch('/api/upload', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
+              body: JSON.stringify({ filename: safeName, content: base64 })
+            });
+            const data = await res.json();
+            if (data.success) {
+              galleryPaths.push(data.path);
+              const idx = galleryPaths.length - 1;
+              item.innerHTML = `
+                <img src="${ev.target.result}" alt="Gallery photo" />
+                <button class="gallery-remove" onclick="removeGalleryItem(${idx}, this.parentElement)">✕</button>
+              `;
+            } else {
+              item.remove();
+              showToast('Failed to upload: ' + file.name, 'error');
+            }
+          } catch (err) {
+            item.remove();
+          }
+          resolve();
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+    showToast(`✅ ${files.length} photo(s) added to gallery!`, 'success');
+    document.getElementById('gallery-input').value = '';
+  });
+
+  function removeGalleryItem(idx, el) {
+    galleryPaths.splice(idx, 1);
+    el.remove();
+    // Re-index remaining remove buttons
+    document.querySelectorAll('#gallery-grid .gallery-item').forEach((item, i) => {
+      const btn = item.querySelector('.gallery-remove');
+      if (btn) btn.setAttribute('onclick', `removeGalleryItem(${i}, this.parentElement)`);
+    });
   }
 
   // ===== TOAST =====
