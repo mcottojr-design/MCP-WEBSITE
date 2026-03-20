@@ -841,6 +841,54 @@
     }
     .cards-loading span, .cards-empty span { font-size: 2.5rem; display: block; margin-bottom: 1rem; }
     .cards-empty p { font-size: 0.85rem; }
+
+    /* ===== MOBILE RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .topbar { padding: 0 1rem; height: 50px; }
+      .topbar-title { display: none; }
+      .tab-switcher { margin-left: 0.75rem !important; gap: 0.35rem !important; }
+      .tab-label, .btn-label { display: none; }
+      .tab-btn, .btn-secondary, .btn-publish { padding: 0.5rem 0.75rem; font-size: 0.9rem; }
+      
+      .main-layout { grid-template-columns: 1fr; }
+      
+      .sidebar {
+        position: fixed;
+        bottom: 0; left: 0; right: 0;
+        height: 60px;
+        flex-direction: row;
+        z-index: 1000;
+        background: var(--surface);
+        border-right: none;
+        border-top: 1px solid var(--border);
+        padding: 0 1rem;
+        align-items: center;
+        justify-content: space-around;
+      }
+      .sidebar-top { padding: 0; border-bottom: none; width: auto; }
+      .sidebar-bottom { padding: 0; border-top: none; width: auto; }
+      .new-post-btn { margin-bottom: 0; padding: 0.5rem 1rem; font-size: 0.75rem; }
+      .logout-btn { padding: 0.5rem 1rem; font-size: 0.75rem; }
+
+      .editor-panel, #posts-view { padding: 1.25rem; padding-bottom: 80px; max-height: none; overflow: visible; }
+      .fields-row { grid-template-columns: 1fr; gap: 0; }
+      .section-label { margin-top: 1.5rem; }
+      
+      .cards-grid { grid-template-columns: 1fr; }
+      
+      .image-card { flex-direction: column; align-items: stretch; text-align: center; }
+      .image-thumb { width: 100%; height: 160px; }
+      .image-card-actions { flex-direction: row; }
+      .image-card-actions button { flex: 1; }
+
+      .modal-header { margin-bottom: 0.5rem; }
+      .modal-title { font-size: 0.65rem; }
+      .modal-image-wrap img { max-height: 60vh; }
+      .modal-footer { flex-direction: column; gap: 0.75rem; }
+      .btn-modal-done { width: 100%; }
+
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
   </style>
 </head>
 <body>
@@ -862,16 +910,16 @@
   <div class="topbar">
     <div class="topbar-left">
       <img src="/assets/logo.svg" alt="MCP" onerror="this.style.display='none'" />
-      <h1>News Admin</h1>
+      <h1 class="topbar-title">News Admin</h1>
       <!-- Tab switcher -->
-      <div style="display:flex;gap:0.5rem;margin-left:1.5rem;">
-        <button class="tab-btn active" id="tab-editor" onclick="switchTab('editor')">✏️ Editor</button>
-        <button class="tab-btn" id="tab-posts" onclick="switchTab('posts')">📋 All Posts</button>
+      <div class="tab-switcher">
+        <button class="tab-btn active" id="tab-editor" onclick="switchTab('editor')">✏️ <span class="tab-label">Editor</span></button>
+        <button class="tab-btn" id="tab-posts" onclick="switchTab('posts')">📋 <span class="tab-label">All Posts</span></button>
       </div>
     </div>
     <div class="topbar-right">
-      <button class="btn-secondary" id="draft-btn">💾 Save Draft</button>
-      <button class="btn-publish" id="publish-btn">📰 Publish Post</button>
+      <button class="btn-secondary" id="draft-btn">💾 <span class="btn-label">Save Draft</span></button>
+      <button class="btn-publish" id="publish-btn">📰 <span class="btn-label">Publish</span></button>
     </div>
   </div>
 
