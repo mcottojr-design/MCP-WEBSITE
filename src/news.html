@@ -101,11 +101,12 @@
 <div>
 <h3 class="text-xs font-bold uppercase tracking-widest text-primary mb-4">Categories</h3>
 <ul class="space-y-2">
-<li><button class="w-full text-left py-2 px-3 bg-primary/20 text-primary border-l-2 border-primary font-bold">All News</button></li>
-<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100">Announcements</button></li>
-<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100">Fight Results</button></li>
-<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100">Press Releases</button></li>
-<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100">Interviews</button></li>
+<li><button class="w-full text-left py-2 px-3 bg-primary/20 text-primary border-l-2 border-primary font-bold cat-filter" data-cat="all">All News</button></li>
+<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100 cat-filter" data-cat="Announcement">Announcements</button></li>
+<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100 cat-filter" data-cat="Fight Results">Fight Results</button></li>
+<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100 cat-filter" data-cat="Press Release">Press Releases</button></li>
+<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100 cat-filter" data-cat="Interview">Interviews</button></li>
+<li><button class="w-full text-left py-2 px-3 hover:bg-primary/10 transition-colors text-slate-400 hover:text-slate-100 cat-filter" data-cat="Fighter Update">Fighter Updates</button></li>
 </ul>
 </div>
 <div class="p-6 bg-primary/5 rounded border border-primary/20">
@@ -118,11 +119,11 @@
 <div class="flex-1">
 <div class="flex items-center justify-between mb-8 border-b border-primary/20 pb-4">
 <h2 class="text-2xl font-bold uppercase tracking-tight">Latest Headlines</h2>
-<span class="text-sm text-slate-400">Showing 12 Articles</span>
+<span class="text-sm text-slate-400" id="articles-counter">Showing {{ collections.post | length }} Articles</span>
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 {% for post in collections.post | reverse %}
-<article class="group cursor-pointer" onclick="window.location.href='{{ post.url }}'">
+<article class="group cursor-pointer post-article" data-cat="{{ post.data.category }}" onclick="window.location.href='{{ post.url }}'">
 <div class="relative overflow-hidden aspect-video rounded-lg mb-4">
 <img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="{{ post.data.title }}" src="{{ post.data.image }}" style="object-position: {{ post.data.image_focus | default('center') }};"/>
 <span class="absolute top-3 left-3 bg-primary text-white text-[10px] font-bold px-2 py-1 uppercase rounded-sm">{{ post.data.category }}</span>
@@ -210,4 +211,38 @@
 </div>
 </footer>
 </div>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const filters = document.querySelectorAll('.cat-filter');
+    const articles = document.querySelectorAll('.post-article');
+    const counter = document.getElementById('articles-counter');
+
+    filters.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cat = btn.getAttribute('data-cat');
+        
+        // Update labels/active state
+        filters.forEach(f => {
+          f.classList.remove('bg-primary/20', 'text-primary', 'border-l-2', 'border-primary', 'font-bold');
+          f.classList.add('text-slate-400', 'hover:text-slate-100');
+        });
+        btn.classList.remove('text-slate-400', 'hover:text-slate-100');
+        btn.classList.add('bg-primary/20', 'text-primary', 'border-l-2', 'border-primary', 'font-bold');
+
+        let count = 0;
+        articles.forEach(art => {
+          const artCat = art.getAttribute('data-cat');
+          if (cat === 'all' || artCat === cat) {
+            art.style.display = 'block';
+            count++;
+          } else {
+            art.style.display = 'none';
+          }
+        });
+
+        counter.textContent = `Showing ${count} Article${count !== 1 ? 's' : ''}`;
+      });
+    });
+  });
+</script>
 </body></html>
