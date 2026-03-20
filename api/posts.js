@@ -90,6 +90,7 @@ module.exports = async function handler(req, res) {
                 title: fm.title || file.name.replace(".md", ""),
                 date: fm.date || "",
                 category: fm.category || "",
+                featured: fm.featured === "true",
                 image: fm.image || "",
                 image_focus: fm.image_focus || "50% 50%",
                 excerpt: fm.excerpt || "",

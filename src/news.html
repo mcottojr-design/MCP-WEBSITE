@@ -64,7 +64,15 @@
 </div>
 </header>
 <main class="flex-1">
-{% set featured = collections.post | reverse | first %}
+{% set featured = null %}
+{% for p in collections.post | reverse %}
+  {% if not featured and p.data.featured %}
+    {% set featured = p %}
+  {% endif %}
+{% endfor %}
+{% if not featured %}
+  {% set featured = collections.post | reverse | first %}
+{% endif %}
 <!-- Hero Section -->
 <section class="relative w-full aspect-[21/9] min-h-[500px] flex items-end overflow-hidden cursor-pointer" onclick="window.location.href='{{ featured.url }}'">
 <div class="absolute inset-0 bg-cover" style="background-position: {{ featured.data.image_focus | default('center') }}; background-image: linear-gradient(to top, #201212 0%, rgba(32, 18, 18, 0.4) 50%, rgba(32, 18, 18, 0.1) 100%), url('{{ featured.data.image }}');"></div>
