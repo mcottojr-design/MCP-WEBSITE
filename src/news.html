@@ -114,7 +114,6 @@
 </div>
 <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
 {% for post in collections.post | reverse %}
-{% if not loop.first %}
 <article class="group cursor-pointer" onclick="window.location.href='{{ post.url }}'">
 <div class="relative overflow-hidden aspect-video rounded-lg mb-4">
 <img class="object-cover w-full h-full transition-transform duration-500 group-hover:scale-110" data-alt="{{ post.data.title }}" src="{{ post.data.image }}"/>
@@ -129,7 +128,6 @@
 </a>
 </div>
 </article>
-{% endif %}
 {% endfor %}
 </div>
 <!-- Pagination -->
