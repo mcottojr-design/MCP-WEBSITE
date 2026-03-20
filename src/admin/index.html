@@ -1042,7 +1042,12 @@
       <div class="section-label">1. Live View (Current Homepage Content)</div>
       
       <div id="event-preview-container" style="margin-bottom: 2.5rem; display: flex; justify-content: center; background: rgba(0,0,0,0.2); padding: 2rem; border-radius: 1rem; border: 1px solid var(--border-muted);">
-        <div id="event-live-card" class="post-card featured" style="margin:0; cursor:default; width: 100%; max-width: 440px;">
+        <div id="event-live-card" class="post-card featured" style="margin:0; cursor:default; width: 100%; max-width: 440px; position: relative;">
+          <!-- Quick Delete -->
+          <button title="Stop hosting this event" onclick="deleteEvent()" style="position: absolute; top: 1rem; right: 1rem; z-index: 30; background: #d72323; width: 2.5rem; height: 2.5rem; border-radius: 50%; display: flex; align-items: center; justify-center; color: white; border: none; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); transition: transform 0.2s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+            <span class="material-symbols-outlined" style="font-size: 1.25rem;">delete</span>
+          </button>
+          
           <div class="card-image-wrap">
             <img id="prev-ev-img" src="" alt="Live Banner" />
             <span class="card-status live">🟢 Currently Hosting</span>
@@ -1087,17 +1092,18 @@
         </div>
       </div>
 
-      <div class="image-card" id="ev-image-card">
-        <img class="image-thumb" id="ev-image-thumb" alt="Event Banner" />
-        <div class="image-card-info">
-          <p id="ev-image-filename" style="margin-bottom: 0.25rem; font-weight: 700;">banner.jpg</p>
-          <div class="focal-badge" style="background: var(--primary); color: white;">✅ Live Selection</div>
+        <div class="image-card" id="ev-image-card">
+          <img class="image-thumb" id="ev-image-thumb" alt="Event Banner" />
+          <div class="image-card-info">
+            <p id="ev-image-filename" style="margin-bottom: 0.25rem; font-weight: 700;">banner.jpg</p>
+            <div class="focal-badge" id="ev-focal-badge" style="background: var(--primary); color: white;">🎯 Focus: Center (50% 50%)</div>
+          </div>
+          <div class="image-card-actions" style="display: flex; gap: 0.5rem;">
+            <button class="btn-focal" id="ev-open-focal-modal" style="flex: 1;">🎯 Set Focal Point</button>
+            <button class="btn-remove-img" id="ev-remove-image-btn" style="flex: 1;">✕ Remove</button>
+          </div>
+          <input type="hidden" id="ev-image-url" />
         </div>
-        <div class="image-card-actions">
-          <button class="btn-remove-img" id="ev-remove-image-btn" style="width: 100%;">✕ Change Image</button>
-        </div>
-        <input type="hidden" id="ev-image-url" />
-      </div>
 
       <div class="section-label">4. Conversion Links</div>
 
@@ -1112,8 +1118,9 @@
         </div>
       </div>
 
-      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-muted);">
-        <button class="btn-publish" onclick="saveEvent()" id="ev-save-btn" style="width: 100%; height: 4rem; font-size: 1.1rem;">🚀 Update Homepage Event</button>
+      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-muted); display: flex; gap: 1rem;">
+        <button class="btn-publish" onclick="saveEvent()" id="ev-save-btn" style="flex: 3; height: 4rem; font-size: 1.1rem;">🚀 Update Homepage Event</button>
+        <button class="btn-publish" onclick="deleteEvent()" style="flex: 1; height: 4rem; font-size: 1.1rem; background: #333; color: #ff4444; border-color: #444;">🗑️ Clear Event</button>
       </div>
     </main>
 
@@ -1507,18 +1514,23 @@
 
   // Click to set focal point inside modal
   document.getElementById('modal-overlay').addEventListener('click', (e) => {
-    const wrap = document.getElementById('modal-image-wrap');
-    const rect = wrap.getBoundingClientRect();
-    // The image may be letterboxed, get actual img dimensions
     const img = document.getElementById('modal-img');
     const imgRect = img.getBoundingClientRect();
     const x = Math.round((e.clientX - imgRect.left) / imgRect.width * 100);
     const y = Math.round((e.clientY - imgRect.top) / imgRect.height * 100);
     const cx = Math.max(0, Math.min(100, x));
     const cy = Math.max(0, Math.min(100, y));
-    focalPoint = `${cx}% ${cy}%`;
+    const pointStr = `${cx}% ${cy}%`;
+    
+    if (focalContext === 'event') {
+      evFocalPoint = pointStr;
+      document.getElementById('ev-focal-badge').textContent = `🎯 Focus: ${pointStr}`;
+    } else {
+      focalPoint = pointStr;
+      document.getElementById('focal-badge').textContent = `🎯 Focus: ${pointStr}`;
+    }
+    
     updateModalDot(cx, cy);
-    document.getElementById('focal-badge').textContent = `🎯 Focus: ${cx}% ${cy}%`;
   });
 
   function updateModalDot(x, y) {
@@ -1724,16 +1736,19 @@
   }
   // ===== EVENT MANAGEMENT =====
   let evUploadedPath = '';
+  let evFocalPoint = '50% 50%';
+  let focalContext = 'post'; // 'post' or 'event'
 
   async function loadEvent() {
     try {
       const res = await fetch('/api/event');
       const data = await res.json();
-      if (data && !data.error) {
+      if (data && !data.error && data.title) {
         document.getElementById('ev-title').value = data.title || '';
         document.getElementById('ev-date').value = data.date_display || '';
         document.getElementById('ev-location').value = data.location || '';
         evUploadedPath = data.image || '';
+        evFocalPoint = data.image_focus || '50% 50%';
         document.getElementById('ev-image-url').value = evUploadedPath;
         document.getElementById('ev-ticket').value = data.ticket_link || '';
         document.getElementById('ev-watch').value = data.watch_link || '';
@@ -1743,9 +1758,14 @@
           document.getElementById('ev-image-card').classList.add('visible');
           document.getElementById('ev-image-thumb').src = evUploadedPath;
           document.getElementById('ev-image-filename').textContent = evUploadedPath.split('/').pop();
+          document.getElementById('ev-focal-badge').textContent = `🎯 Focus: ${evFocalPoint}`;
         }
         
         updateEventPreview(data);
+      } else {
+        // Empty state
+        document.getElementById('event-live-card').style.opacity = '0.3';
+        document.getElementById('prev-ev-title').textContent = '(No Active Event)';
       }
     } catch (e) { console.error('Failed to load event data', e); }
   }
@@ -1771,11 +1791,13 @@
         const data = await res.json();
         if (data.success) {
           evUploadedPath = data.path;
+          evFocalPoint = '50% 50%';
           document.getElementById('ev-image-url').value = data.path;
           document.getElementById('ev-upload-area').style.display = 'none';
           document.getElementById('ev-image-thumb').src = ev.target.result;
           document.getElementById('ev-image-filename').textContent = file.name;
           document.getElementById('ev-image-card').classList.add('visible');
+          document.getElementById('ev-focal-badge').textContent = '🎯 Focus: Center (50% 50%)';
           showToast('✅ Banner uploaded!', 'success');
         }
       } catch (err) { showToast('Upload failed', 'error'); }
@@ -1791,8 +1813,26 @@
     document.getElementById('ev-image-input').value = '';
   });
 
+  // Focal Point Integration for Event
+  document.getElementById('ev-open-focal-modal').addEventListener('click', () => {
+    focalContext = 'event';
+    document.getElementById('modal-img').src = evUploadedPath;
+    const parts = evFocalPoint.split(' ');
+    updateModalDot(parseInt(parts[0]) || 50, parseInt(parts[1]) || 50);
+    document.getElementById('focal-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  });
+
+  // Modify the existing modal-overlay click to support context
+  document.getElementById('modal-overlay').removeEventListener('click', handleFocalClick); // We'll need to refactor
+  
+  // Actually, I'll just update my previous modal click logic to check context
+  // I'll do this in a separate chunk to be clean.
+  
   function updateEventPreview(data) {
+    document.getElementById('event-live-card').style.opacity = '1';
     document.getElementById('prev-ev-img').src = data.image || '/assets/hero_banner.jpg';
+    document.getElementById('prev-ev-img').style.objectPosition = data.image_focus || 'center';
     document.getElementById('prev-ev-title').textContent = data.title || 'No Title';
     document.getElementById('prev-ev-date').textContent = data.date_display || 'No Date';
     document.getElementById('prev-ev-loc').textContent = data.location || 'No Location';
@@ -1800,18 +1840,18 @@
 
   async function saveEvent() {
     const payload = {
-      title: document.getElementById('ev-title').value,
-      date_display: document.getElementById('ev-date').value,
-      location: document.getElementById('ev-location').value,
+      title: document.getElementById('ev-title').value.trim(),
+      date_display: document.getElementById('ev-date').value.trim(),
+      location: document.getElementById('ev-location').value.trim(),
       image: evUploadedPath,
-      ticket_link: document.getElementById('ev-ticket').value,
-      watch_link: document.getElementById('ev-watch').value
+      image_focus: evFocalPoint,
+      ticket_link: document.getElementById('ev-ticket').value.trim(),
+      watch_link: document.getElementById('ev-watch').value.trim()
     };
+    if (!payload.title && !payload.image) return deleteEvent();
 
     const btn = document.getElementById('ev-save-btn');
-    btn.disabled = true;
-    btn.textContent = 'Saving...';
-
+    btn.disabled = true; btn.textContent = 'Saving...';
     try {
       const res = await fetch('/api/event', {
         method: 'POST',
@@ -1820,15 +1860,25 @@
       });
       const data = await res.json();
       if (data.success) {
-        showToast('✅ Next event updated! Site will rebuild in a minute.', 'success');
+        showToast('✅ Homepage event updated!', 'success');
         updateEventPreview(payload);
-      } else {
-        showToast('Error: ' + data.error, 'error');
       }
-    } catch (e) { showToast('Network error.', 'error'); }
-    
-    btn.disabled = false;
-    btn.textContent = '💾 Update Hero Event';
+    } catch (e) { showToast('Error saving.', 'error'); }
+    btn.disabled = false; btn.textContent = '🚀 Update Homepage Event';
+  }
+
+  async function deleteEvent() {
+    if (!confirm('Are you sure you want to remove the current event from the homepage?')) return;
+    const empty = { title: "", date_display: "", location: "", image: "", image_focus: "", ticket_link: "", watch_link: "" };
+    try {
+      await fetch('/api/event', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
+        body: JSON.stringify(empty)
+      });
+      showToast('🗑️ Event removed. Homepage will only show featured news.', 'success');
+      location.reload();
+    } catch (e) { showToast('Failed to clear event.', 'error'); }
   }
 
   // Initial load

@@ -86,9 +86,10 @@
 <section class="relative w-full h-[80vh] md:min-h-screen max-h-[900px] bg-black overflow-hidden">
   <div class="hero-carousel" id="hero-carousel">
     
+    {% if event.title %}
     <!-- Slide 1: Upcoming Event -->
     <div class="hero-slide active" data-slide="0">
-      <img src="{{ event.image }}" alt="{{ event.title }}" class="absolute inset-0 w-full h-full object-cover object-[center_top] md:object-center">
+      <img src="{{ event.image }}" alt="{{ event.title }}" class="absolute inset-0 w-full h-full object-cover" style="object-position: {{ event.image_focus | default('center') }};">
       <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent pointer-events-none"></div>
       <div class="absolute bottom-0 left-0 w-full z-20 p-4 md:p-12 lg:p-20">
         <div class="max-w-4xl space-y-2 md:space-y-4">
@@ -111,6 +112,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
 
     <!-- Slide 2: Featured News -->
     <div class="hero-slide" data-slide="1">
@@ -135,13 +137,16 @@
     </div>
 
     <!-- Carousel Nav -->
-    <div class="absolute bottom-10 right-10 z-30 flex gap-2">
-      <button onclick="setSlide(0)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white transition-colors hero-dot active" id="dot-0"></button>
-      <button onclick="setSlide(1)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white transition-colors hero-dot" id="dot-1"></button>
+    <div class="absolute bottom-10 right-10 z-30 flex gap-3">
+      {% if event.title %}
+        <button onclick="setSlide(0)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white transition-all hero-dot active" id="dot-0"></button>
+        <button onclick="setSlide(1)" class="w-3 h-3 rounded-full bg-white/30 hover:bg-white transition-all hero-dot" id="dot-1"></button>
+      {% endif %}
     </div>
   </div>
 </section>
 <!-- Upcoming Events -->
+{% if event.title %}
 <section class="py-24 bg-background-dark">
 <div class="max-w-7xl mx-auto px-6 md:px-12">
 <div class="flex items-end justify-between mb-12">
@@ -154,7 +159,7 @@
 <div class="flex justify-center">
 <div class="w-full max-w-5xl group relative overflow-hidden rounded-xl bg-surface border border-border-muted flex flex-col md:flex-row h-full shadow-2xl">
 <div class="w-full md:w-1/2 overflow-hidden h-64 md:h-auto">
-<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" src="{{ event.image }}" style=""/>
+<img class="w-full h-full object-cover grayscale transition-all duration-700 group-hover:grayscale-0 group-hover:scale-105" src="{{ event.image }}" style="object-position: {{ event.image_focus | default('center') }};"/>
 </div>
 <div class="p-8 flex flex-col justify-between flex-1">
 <div>
@@ -323,28 +328,43 @@
   const heroDots = document.querySelectorAll('.hero-dot');
   const slideCount = heroSlides.length;
 
+  // Initialize: if event is missing, the first available slide (News) is active
+  if (slideCount > 0) {
+    heroSlides.forEach((s, idx) => {
+      if (idx === 0) s.classList.add('active');
+      else s.classList.remove('active');
+    });
+  }
+
   function setSlide(idx) {
+    if (idx >= slideCount) return;
     heroSlides.forEach(s => s.classList.remove('active'));
-    heroDots.forEach(d => d.classList.remove('active', 'bg-white'));
-    heroDots.forEach(d => d.classList.add('bg-white/30'));
+    heroDots.forEach(d => {
+      d.classList.remove('active', 'bg-white');
+      d.classList.add('bg-white/30');
+    });
     
     heroSlides[idx].classList.add('active');
-    heroDots[idx].classList.add('active', 'bg-white');
-    heroDots[idx].classList.remove('bg-white/30');
+    if (heroDots[idx]) {
+      heroDots[idx].classList.add('active', 'bg-white');
+      heroDots[idx].classList.remove('bg-white/30');
+    }
     currentHeroSlide = idx;
   }
 
   function nextSlide() {
+    if (slideCount <= 1) return;
     let next = (currentHeroSlide + 1) % slideCount;
     setSlide(next);
   }
 
   // Auto cycle every 6 seconds
-  let heroInterval = setInterval(nextSlide, 6000);
+  let heroInterval = (slideCount > 1) ? setInterval(nextSlide, 6000) : null;
 
   // Pause on hover
   const carousel = document.getElementById('hero-carousel');
-  carousel.addEventListener('mouseenter', () => clearInterval(heroInterval));
-  carousel.addEventListener('mouseleave', () => heroInterval = setInterval(nextSlide, 6000));
+  carousel.addEventListener('mouseenter', () => { if(heroInterval) clearInterval(heroInterval); });
+  carousel.addEventListener('mouseleave', () => { if(slideCount > 1) heroInterval = setInterval(nextSlide, 6000); });
 </script>
 </body></html>
+```
