@@ -2,6 +2,7 @@
 module.exports = function(eleventyConfig) {
     // Pass through normal files
     eleventyConfig.addPassthroughCopy("src/assets");
+    eleventyConfig.addPassthroughCopy("src/admin");
     
     // Add date filter - handles format strings used in templates
     eleventyConfig.addFilter("date", (dateObj, format) => {
