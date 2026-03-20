@@ -1085,7 +1085,7 @@
          <div class="upload-area" id="ev-upload-area" onclick="document.getElementById('ev-image-input').click()">
            <div id="ev-upload-placeholder">
              <span class="material-symbols-outlined" style="font-size:3rem; color:var(--primary); margin-bottom:1rem;">add_photo_alternate</span>
-             <p>Click or drag to upload event banner</p>
+             <p>Event Banner (Recommended: 1200x800)</p>
              <span style="font-size:0.7rem; color:var(--muted);">PNG, JPG (Max 5MB)</span>
            </div>
            <input type="file" id="ev-image-input" accept="image/*" style="display:none;" />
@@ -1096,12 +1096,14 @@
              <img id="ev-image-thumb" src="" alt="Thumbnail" />
              <div class="image-details">
                <span id="ev-image-filename" class="filename">banner.jpg</span>
-               <span class="status">✅ Ready to save</span>
+               <span class="status" style="color:var(--primary);">✅ Ready to save</span>
              </div>
            </div>
-           <button class="remove-btn" id="ev-remove-image-btn" title="Remove image">
-             <span class="material-symbols-outlined">delete</span>
-           </button>
+           <div class="image-actions">
+             <button class="remove-btn" id="ev-remove-image-btn" title="Remove image">
+               <span class="material-symbols-outlined">delete_forever</span>
+             </button>
+           </div>
          </div>
          <input type="hidden" id="ev-image-url" />
        </div>
