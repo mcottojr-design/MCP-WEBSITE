@@ -90,6 +90,8 @@ module.exports = async function handler(req, res) {
                 title: fm.title || file.name.replace(".md", ""),
                 date: fm.date || "",
                 category: fm.category || "",
+                image: fm.image || "",
+                excerpt: fm.excerpt || "",
                 draft: isDraft,
               };
             }
@@ -101,6 +103,8 @@ module.exports = async function handler(req, res) {
             title: file.name.replace(".md", ""),
             date: "",
             category: "",
+            image: "",
+            excerpt: "",
             draft: isDraft,
           };
         })
