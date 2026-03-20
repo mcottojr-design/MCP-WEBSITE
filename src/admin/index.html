@@ -168,17 +168,25 @@
     .sidebar {
       background: var(--surface);
       border-right: 1px solid var(--border);
-      padding: 1.5rem;
-      overflow-y: auto;
+      padding: 1.5rem 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar-top {
+      padding: 0 1.25rem 1rem;
+      border-bottom: 1px solid var(--border);
+      flex-shrink: 0;
     }
 
     .sidebar h2 {
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
       color: var(--muted);
-      margin-bottom: 1rem;
+      margin-bottom: 0.6rem;
     }
 
     .new-post-btn {
@@ -209,10 +217,8 @@
       font-size: 0.75rem;
       font-weight: 600;
       cursor: pointer;
-      margin-top: auto;
       transition: all 0.2s;
     }
-
     .logout-btn:hover { color: var(--primary); border-color: var(--primary); }
 
     /* Editor panel */
@@ -657,17 +663,23 @@
   <div class="main-layout">
     <!-- Sidebar -->
     <aside class="sidebar">
-      <button class="new-post-btn" id="clear-btn">✏️ New Post</button>
-      <h2>Quick Tips</h2>
-      <ul style="color: var(--muted); font-size: 0.8rem; line-height: 2; list-style: none;">
-        <li>📸 Upload fight posters as Featured Image</li>
-        <li>📝 Paste press releases into the body</li>
-        <li>💾 Draft = saved but not on website</li>
-        <li>📰 Publish = goes live in ~60 seconds</li>
-        <li>🌐 View live site at the main URL</li>
-      </ul>
-      <br/><br/>
-      <button class="logout-btn" id="logout-btn">Log Out</button>
+      <div class="sidebar-top">
+        <button class="new-post-btn" id="clear-btn">✏️ New Post</button>
+      </div>
+
+      <div class="posts-scroll" id="posts-scroll">
+        <div class="posts-header">
+          <h2>Post History</h2>
+          <button class="refresh-btn" id="refresh-posts-btn" title="Refresh">↻</button>
+        </div>
+        <div id="posts-list">
+          <div class="posts-empty">Loading posts...</div>
+        </div>
+      </div>
+
+      <div class="sidebar-bottom">
+        <button class="logout-btn" id="logout-btn">Log Out</button>
+      </div>
     </aside>
 
     <!-- Editor -->
@@ -837,6 +849,7 @@
   function showDashboard() {
     document.getElementById('login-screen').style.display = 'none';
     document.getElementById('dashboard').style.display = 'block';
+    loadPosts();
   }
 
   document.getElementById('logout-btn').addEventListener('click', () => {
@@ -844,6 +857,84 @@
     sessionToken = '';
     location.reload();
   });
+
+  // ===== POST HISTORY =====
+  document.getElementById('refresh-posts-btn').addEventListener('click', loadPosts);
+
+  async function loadPosts() {
+    const btn = document.getElementById('refresh-posts-btn');
+    btn.classList.add('spinning');
+    const list = document.getElementById('posts-list');
+    list.innerHTML = '<div class="posts-empty">Loading...</div>';
+
+    try {
+      const res = await fetch('/api/posts', {
+        headers: { 'Authorization': `Bearer ${sessionToken}` }
+      });
+      const data = await res.json();
+      if (!data.posts || data.posts.length === 0) {
+        list.innerHTML = '<div class="posts-empty">No posts found.</div>';
+      } else {
+        list.innerHTML = data.posts.map((post, i) => `
+          <div class="post-item" id="post-item-${i}">
+            <div class="post-item-title" title="${post.title}">${post.title}</div>
+            <div class="post-item-meta">
+              <span class="post-date">${post.date || '—'}</span>
+              <span class="post-badge ${post.draft ? 'draft' : 'live'}">${post.draft ? 'Draft' : 'Live'}</span>
+              <button class="delete-btn" onclick="askDelete(${i})" title="Delete">🗑️</button>
+            </div>
+            <div class="delete-confirm" id="confirm-${i}">
+              <strong>Delete this post?</strong><br/>This cannot be undone.
+              <div class="confirm-btns">
+                <button class="btn-confirm-yes" onclick="confirmDelete(${i}, '${post.path}', '${post.sha}')">Yes, Delete</button>
+                <button class="btn-confirm-no" onclick="cancelDelete(${i})">Cancel</button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    } catch (err) {
+      list.innerHTML = '<div class="posts-empty">Failed to load posts.</div>';
+    }
+    btn.classList.remove('spinning');
+  }
+
+  function askDelete(idx) {
+    // Close all others first
+    document.querySelectorAll('.delete-confirm').forEach(el => el.classList.remove('show'));
+    document.getElementById(`confirm-${idx}`)?.classList.add('show');
+  }
+
+  function cancelDelete(idx) {
+    document.getElementById(`confirm-${idx}`)?.classList.remove('show');
+  }
+
+  async function confirmDelete(idx, path, sha) {
+    const item = document.getElementById(`post-item-${idx}`);
+    if (!item) return;
+    item.style.opacity = '0.4';
+    item.style.pointerEvents = 'none';
+    try {
+      const res = await fetch('/api/delete', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${sessionToken}` },
+        body: JSON.stringify({ path, sha })
+      });
+      const data = await res.json();
+      if (data.success) {
+        item.remove();
+        showToast('🗑️ Post deleted. Site rebuilding...', 'success');
+      } else {
+        item.style.opacity = '1';
+        item.style.pointerEvents = '';
+        showToast('Delete failed: ' + (data.error || 'Unknown error'), 'error');
+      }
+    } catch (err) {
+      item.style.opacity = '1';
+      item.style.pointerEvents = '';
+      showToast('Network error during delete.', 'error');
+    }
+  }
 
   // ===== IMAGE UPLOAD =====
   document.getElementById('image-input').addEventListener('change', async (e) => {
