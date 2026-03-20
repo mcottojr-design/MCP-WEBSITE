@@ -6,12 +6,15 @@
   <meta name="robots" content="noindex, nofollow" />
   <title>MCP News Admin | Miguel Cotto Promotions</title>
   <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+  <!-- This MUST be set before the CMS script loads to prevent auto config.yml fetch -->
+  <script>window.CMS_MANUAL_INIT = true;</script>
 </head>
 <body>
   <script src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
   <script>
     CMS.init({
       config: {
+        load_config_file: false,
         backend: {
           name: "github",
           repo: "mcottojr-design/MCP-WEBSITE",
