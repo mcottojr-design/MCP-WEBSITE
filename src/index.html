@@ -1,36 +1,7 @@
-<!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Miguel Cotto Promotions | Elite Boxing Events</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#d72323",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#120909",
-                        "surface": "#201212",
-                        "border-muted": "#452626",
-                    },
-                    fontFamily: {
-                        "display": ["Space Grotesk", "sans-serif"]
-                    },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
-                },
-            },
-        }
-    </script>
-<style>
-  .no-scrollbar::-webkit-scrollbar { display: none; } 
-  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+---
+layout: layouts/base.njk
+title: "Miguel Cotto Promotions | Elite Boxing Events"
+extra_css: |
   .hero-carousel { position: relative; height: 100%; width: 100%; overflow: hidden; }
   .hero-slide { 
     position: absolute; inset: 0; opacity: 0; visibility: hidden; 
@@ -41,38 +12,7 @@
     opacity: 1; visibility: visible; transform: scale(1);
     z-index: 10;
   }
-</style>
-</head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display">
-<!-- Top Navigation -->
-<header class="sticky top-0 z-50 w-full border-b border-border-muted bg-background-dark/95 backdrop-blur-md px-6 md:px-12 py-4">
-<div class="max-w-7xl mx-auto flex items-center justify-between">
-<div class="flex items-center gap-8">
-<a class="flex items-center" href="index.html">
-<img src="/assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[58px] md:h-[69px] w-auto object-contain" />
-</a>
-<nav class="hidden lg:flex items-center gap-6">
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="events.html" style="">Events</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="boxers.html" style="">Boxers</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="news.html" style="">News</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Videos</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="about.html" style="">About Us</a>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<div class="hidden md:flex items-center bg-surface border border-border-muted rounded px-3 py-1.5">
-<span class="material-symbols-outlined text-slate-400 text-sm" style="">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-sm text-white placeholder-slate-500 w-32 lg:w-48" placeholder="Search fighters..." type="text"/>
-</div>
-<button class="bg-primary hover:bg-red-700 text-white text-xs font-bold py-2.5 px-6 rounded transition-all uppercase tracking-wider" onclick="window.location.href='events.html'" style="">
-                    Tickets
-                </button>
-<button class="bg-surface border border-border-muted hover:bg-border-muted text-white text-xs font-bold py-2.5 px-4 rounded transition-all" style="">
-<span class="material-symbols-outlined text-base align-middle" style="">play_circle</span>
-</button>
-</div>
-</div>
-</header>
+---
 {% set featured = null %}
 {% for p in collections.post | reverse %}
   {% if not featured and p.data.featured %}
@@ -82,6 +22,7 @@
 {% if not featured %}
   {% set featured = collections.post | reverse | first %}
 {% endif %}
+
 <!-- Hero Section -->
 <section class="relative w-full h-[80vh] md:min-h-screen max-h-[900px] bg-black overflow-hidden">
   <div class="hero-carousel" id="hero-carousel">
@@ -145,16 +86,17 @@
     </div>
   </div>
 </section>
+
 <!-- Upcoming Events -->
 {% if event.title %}
 <section class="py-24 bg-background-dark">
 <div class="max-w-7xl mx-auto px-6 md:px-12">
 <div class="flex items-end justify-between mb-12">
 <div>
-<h2 class="text-primary text-sm font-bold tracking-[0.4em] uppercase mb-2" style="">Next Fight Night</h2>
-<h3 class="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter" style="">Upcoming Events</h3>
+<h2 class="text-primary text-sm font-bold tracking-[0.4em] uppercase mb-2">Next Fight Night</h2>
+<h3 class="text-4xl md:text-5xl font-black text-white uppercase tracking-tighter">Upcoming Events</h3>
 </div>
-<a class="hidden md:block text-slate-400 hover:text-white transition-colors uppercase text-sm font-bold tracking-widest border-b border-primary pb-1" href="events.html" style="">View Full Calendar</a>
+<a class="hidden md:block text-slate-400 hover:text-white transition-colors uppercase text-sm font-bold tracking-widest border-b border-primary pb-1" href="/events.html">View Full Calendar</a>
 </div>
 <div class="flex justify-center">
 <div class="w-full max-w-5xl group relative overflow-hidden rounded-xl bg-surface border border-border-muted flex flex-col md:flex-row h-full shadow-2xl">
@@ -164,27 +106,29 @@
 <div class="p-8 flex flex-col justify-between flex-1">
 <div>
 <div class="flex items-center gap-2 mb-4">
-<span class="material-symbols-outlined text-primary" style="">calendar_today</span>
-<span class="text-slate-400 font-bold uppercase tracking-widest text-xs" style="">{{ event.date_display }}</span>
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="text-slate-400 font-bold uppercase tracking-widest text-xs">{{ event.date_display }}</span>
 </div>
-<h4 class="text-3xl font-black text-white uppercase leading-tight mb-4" style="">{{ event.title | safe | nl2br }}</h4>
-<p class="text-slate-400 text-sm mb-6 leading-relaxed" style="">Witness the raw intensity of professional boxing from the island's hottest upcoming talents. An unforgettable night of fighting displaying the next generation of champions.</p>
+<h4 class="text-3xl font-black text-white uppercase leading-tight mb-4">{{ event.title | safe | nl2br }}</h4>
+<p class="text-slate-400 text-sm mb-6 leading-relaxed">Witness the raw intensity of professional boxing from the island's hottest upcoming talents. An unforgettable night of fighting displaying the next generation of champions.</p>
 <div class="flex items-center gap-4 text-xs font-bold text-slate-300">
-<span class="bg-primary/20 text-primary px-3 py-1 rounded" style="">MAIN EVENT</span>
+<span class="bg-primary/20 text-primary px-3 py-1 rounded">MAIN EVENT</span>
 </div>
 </div>
 <div class="mt-8 flex items-center justify-between border-t border-border-muted pt-6">
 <div class="flex flex-col">
-<span class="text-[10px] text-slate-500 uppercase tracking-widest" style="">Venue</span>
-<span class="text-white font-bold" style="">{{ event.location }}</span>
+<span class="text-[10px] text-slate-500 uppercase tracking-widest">Venue</span>
+<span class="text-white font-bold">{{ event.location }}</span>
 </div>
-<button class="bg-primary text-white text-xs font-bold px-6 py-3 rounded-lg uppercase tracking-widest hover:bg-red-700" onclick="window.open('{{ event.ticket_link }}')" style="">Get Tickets</button>
+<button class="bg-primary text-white text-xs font-bold px-6 py-3 rounded-lg uppercase tracking-widest hover:bg-red-700" onclick="window.open('{{ event.ticket_link }}')">Get Tickets</button>
+</div>
 </div>
 </div>
 </div>
 </div>
 </section>
 {% endif %}
+
 <!-- Boxers Directory -->
 <section class="py-24 bg-surface">
 <div class="max-w-7xl mx-auto px-6 md:px-12">
@@ -193,82 +137,53 @@
 <div class="flex flex-nowrap md:grid overflow-x-auto md:overflow-visible snap-x snap-mandatory no-scrollbar md:grid-cols-2 lg:grid-cols-3 gap-8 pb-8 md:pb-0">
 
 <div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted snap-center shrink-0 w-[280px] md:w-auto">
-<img class="w-full h-full object-cover grayscale object-center  transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for Oscar Collazo" src="/assets/boxers/oscar-collazo.png" style=""/>
+<img class="w-full h-full object-cover grayscale object-center  transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for Oscar Collazo" src="/assets/boxers/oscar-collazo.png" />
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90 pointer-events-none"></div>
 <div class="absolute bottom-0 left-0 right-0 p-6">
-<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1" style="">Mini-Flyweight</p>
-<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors" style="">Oscar Collazo</h5>
-<p class="text-slate-400 text-xs mt-2 italic" style="">"El Pupilo"</p>
+<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1">Mini-Flyweight</p>
+<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors">Oscar Collazo</h5>
+<p class="text-slate-400 text-xs mt-2 italic">"El Pupilo"</p>
 </div>
 </div>
 
 <div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted snap-center shrink-0 w-[280px] md:w-auto">
-<img class="w-full h-full object-cover grayscale object-center  transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for Belisa López De Jesús" src="/assets/boxers/belisa-lopez-de-jesus.png" style=""/>
+<img class="w-full h-full object-cover grayscale object-center  transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for Belisa López De Jesús" src="/assets/boxers/belisa-lopez-de-jesus.png" />
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90 pointer-events-none"></div>
 <div class="absolute bottom-0 left-0 right-0 p-6">
-<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1" style="">Mini-Flyweight</p>
-<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors" style="">Belisa López De Jesús</h5>
-<p class="text-slate-400 text-xs mt-2 italic" style=""></p>
+<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1">Mini-Flyweight</p>
+<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors">Belisa López De Jesús</h5>
 </div>
 </div>
 
 <div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted snap-center shrink-0 w-[280px] md:w-auto">
-<img class="w-full h-full object-cover grayscale object-center  transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for Jerryanis Morales" src="https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80" style=""/>
+<img class="w-full h-full object-cover grayscale object-center" data-alt="Image for Jerryanis Morales" src="https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80" />
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90 pointer-events-none"></div>
 <div class="absolute bottom-0 left-0 right-0 p-6">
-<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1" style="">Jr. Flyweight</p>
-<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors" style="">Jerryanis Morales</h5>
-<p class="text-slate-400 text-xs mt-2 italic" style="">"La Yeya"</p>
+<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1">Jr. Flyweight</p>
+<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors">Jerryanis Morales</h5>
+<p class="text-slate-400 text-xs mt-2 italic">"La Yeya"</p>
 </div>
 </div>
 
-<div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted snap-center shrink-0 w-[280px] md:w-auto">
-<img class="w-full h-full object-cover grayscale object-center  transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for Kenny Romero" src="/assets/boxers/kenny-romero.png" style=""/>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90 pointer-events-none"></div>
-<div class="absolute bottom-0 left-0 right-0 p-6">
-<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1" style="">Jr. Flyweight</p>
-<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors" style="">Kenny Romero</h5>
-<p class="text-slate-400 text-xs mt-2 italic" style=""></p>
-</div>
-</div>
-
-<div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted snap-center shrink-0 w-[280px] md:w-auto">
-<img class="w-full h-full object-cover grayscale object-center  transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for Angel Acosta" src="/assets/boxers/angel-acosta.png" style=""/>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90 pointer-events-none"></div>
-<div class="absolute bottom-0 left-0 right-0 p-6">
-<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1" style="">Flyweight</p>
-<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors" style="">Angel Acosta</h5>
-<p class="text-slate-400 text-xs mt-2 italic" style="">"Tito"</p>
-</div>
-</div>
-
-<div class="group relative aspect-[3/4] overflow-hidden rounded-lg bg-background-dark border border-border-muted snap-center shrink-0 w-[280px] md:w-auto">
-<img class="w-full h-full object-cover grayscale object-center  transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0" data-alt="Image for Billy Rodríguez" src="/assets/boxers/billy-rodriguez.png" style=""/>
-<div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-90 pointer-events-none"></div>
-<div class="absolute bottom-0 left-0 right-0 p-6">
-<p class="text-primary text-[10px] font-bold tracking-widest uppercase mb-1" style="">Flyweight</p>
-<h5 class="text-xl font-black text-white uppercase tracking-tighter leading-none group-hover:text-primary transition-colors" style="">Billy Rodríguez</h5>
-<p class="text-slate-400 text-xs mt-2 italic" style="">"The Kid"</p>
-</div>
-</div>
 </div>
 <div class="mt-16 text-center">
-<button class="border border-primary text-primary hover:bg-primary hover:text-white font-bold py-4 px-12 rounded-lg transition-all uppercase tracking-widest" onclick="window.location.href='boxers.html'" style="">
+<button class="border border-primary text-primary hover:bg-primary hover:text-white font-bold py-4 px-12 rounded-lg transition-all uppercase tracking-widest" onclick="window.location.href='/boxers.html'">
                     See Full Roster
                 </button>
 </div>
 </div>
 </section>
+
 <!-- Latest News -->
 <section class="py-24 bg-background-dark">
 <div class="max-w-7xl mx-auto px-6 md:px-12">
 <div class="grid grid-cols-1 lg:grid-cols-4 gap-12">
 <div class="lg:col-span-1">
-<h2 class="text-primary text-sm font-bold tracking-[0.4em] uppercase mb-2" style="">Newsroom</h2>
-<h3 class="text-4xl font-black text-white uppercase tracking-tighter mb-6" style="">Latest Updates</h3>
-<p class="text-slate-400 text-sm leading-relaxed mb-8" style="">Stay informed about upcoming bouts, training camp insights, and championship results.</p>
-<button class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2 group" onclick="window.location.href='news.html'" style="">
-                        Browse All News <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform" style="">arrow_forward</span>
+<h2 class="text-primary text-sm font-bold tracking-[0.4em] uppercase mb-2">Newsroom</h2>
+<h3 class="text-4xl font-black text-white uppercase tracking-tighter mb-6">Latest Updates</h3>
+<p class="text-slate-400 text-sm leading-relaxed mb-8">Stay informed about upcoming bouts, training camp insights, and championship results.</p>
+<button class="text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2 group" onclick="window.location.href='/news.html'">
+                        Browse All News <span class="material-symbols-outlined text-primary group-hover:translate-x-1 transition-transform">arrow_forward</span>
 </button>
 </div>
 <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -285,50 +200,14 @@
 </div>
 </div>
 </section>
-<!-- Footer -->
-<footer class="bg-surface py-20 border-t border-border-muted">
-<div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
-<div class="flex items-center justify-center mb-10">
-<img src="/assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[69px] md:h-[92px] w-auto object-contain" />
-</div>
-<nav class="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-12">
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="events.html" style="">Events</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="boxers.html" style="">Boxers</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="news.html" style="">News</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Contact</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Shop</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Partners</a>
-</nav>
-<div class="flex gap-6 mb-12">
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">alternate_email</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">smart_display</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">photo_camera</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">share</span>
-</a>
-</div>
-<div class="text-center">
-<p class="text-slate-500 text-[10px] tracking-widest uppercase mb-2" style="">© 2024 Miguel Cotto Promotions. All rights reserved.</p>
-<div class="flex gap-4 justify-center text-[10px] tracking-widest uppercase font-bold text-slate-400">
-<a class="hover:text-primary" href="index.html" style="">Privacy Policy</a>
-<a class="hover:text-primary" href="index.html" style="">Terms of Service</a>
-</div>
-</div>
-</div>
-</footer>
+
+{% block scripts %}
 <script>
   let currentHeroSlide = 0;
   const heroSlides = document.querySelectorAll('.hero-slide');
   const heroDots = document.querySelectorAll('.hero-dot');
   const slideCount = heroSlides.length;
 
-  // Initialize: if event is missing, the first available slide (News) is active
   if (slideCount > 0) {
     heroSlides.forEach((s, idx) => {
       if (idx === 0) s.classList.add('active');
@@ -358,13 +237,11 @@
     setSlide(next);
   }
 
-  // Auto cycle every 6 seconds
   let heroInterval = (slideCount > 1) ? setInterval(nextSlide, 6000) : null;
-
-  // Pause on hover
   const carousel = document.getElementById('hero-carousel');
-  carousel.addEventListener('mouseenter', () => { if(heroInterval) clearInterval(heroInterval); });
-  carousel.addEventListener('mouseleave', () => { if(slideCount > 1) heroInterval = setInterval(nextSlide, 6000); });
+  if (carousel) {
+      carousel.addEventListener('mouseenter', () => { if(heroInterval) clearInterval(heroInterval); });
+      carousel.addEventListener('mouseleave', () => { if(slideCount > 1) heroInterval = setInterval(nextSlide, 6000); });
+  }
 </script>
-</body></html>
-```
+{% endblock %}

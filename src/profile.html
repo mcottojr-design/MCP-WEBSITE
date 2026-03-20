@@ -1,73 +1,12 @@
-<!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<title>Carlos Ortiz | Miguel Cotto Promotions</title>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#d72323",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#201212",
-                    },
-                    fontFamily: {
-                        "display": ["Space Grotesk"]
-                    },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-                },
-            },
-        }
-    </script>
-<style>
-        body {
-            font-family: 'Space Grotesk', sans-serif;
-        }
-    </style>
-</head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased overflow-x-hidden">
-<div class="relative flex min-h-screen w-full flex-col">
-<!-- Top Navigation -->
-<header class="sticky top-0 z-50 w-full border-b border-border-muted bg-background-dark/95 backdrop-blur-md px-6 md:px-12 py-4">
-<div class="max-w-7xl mx-auto flex items-center justify-between">
-<div class="flex items-center gap-8">
-<a class="flex items-center" href="index.html">
-<img src="/assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[58px] md:h-[69px] w-auto object-contain" />
-</a>
-<nav class="hidden lg:flex items-center gap-6">
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="events.html" style="">Events</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="boxers.html" style="">Boxers</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="news.html" style="">News</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Videos</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="about.html" style="">About Us</a>
-</nav>
-</div>
-<div class="flex items-center gap-4">
-<div class="hidden md:flex items-center bg-surface border border-border-muted rounded px-3 py-1.5">
-<span class="material-symbols-outlined text-slate-400 text-sm" style="">search</span>
-<input class="bg-transparent border-none focus:ring-0 text-sm text-white placeholder-slate-500 w-32 lg:w-48" placeholder="Search fighters..." type="text"/>
-</div>
-<button class="bg-primary hover:bg-red-700 text-white text-xs font-bold py-2.5 px-6 rounded transition-all uppercase tracking-wider" onclick="window.location.href='events.html'" style="">
-                    Tickets
-                </button>
-<button class="bg-surface border border-border-muted hover:bg-border-muted text-white text-xs font-bold py-2.5 px-4 rounded transition-all" style="">
-<span class="material-symbols-outlined text-base align-middle" style="">play_circle</span>
-</button>
-</div>
-</div>
-</header>
+---
+layout: layouts/base.njk
+title: "Carlos Ortiz | Miguel Cotto Promotions"
+---
 <main class="flex-grow">
 <!-- Hero Section -->
 <section class="relative w-full h-[716px] min-h-[600px] flex items-end overflow-hidden">
 <div class="absolute inset-0 z-0">
-<div class="w-full h-full bg-cover bg-center" data-alt="Professional boxer posing in a dramatic low light setting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB9Wm0VkgZMj9Y4KN2mZXpQk05AMWlGBxSt2j2FFw33l7bTdAIQhmXcgKLkSe2CHllgyi6fdYmM9VnIb5vHyJhcu9i5KxQmprsBxR3Q6ttasTx0GlHJjEcEmKHfaxe8R_DjqZA69Mh-wGUS3Dpr_zs9Mm2EesLKZ9Iuc0AtkyWg0Fz4IpzVlMcx4uP5ormutO-29EnLQhtbfwElDmBP_KXt3dZamBZAaDpg9RUEVhPnz70h_uqWRdOqz7_nBqfS7Btf4JFsdP8cbvA')"></div>
+<div class="w-full h-full bg-cover bg-center" data-alt="Professional boxer posing in a dramatic low light setting" style="background-image: url('https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80')"></div>
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/60 to-transparent"></div>
 <div class="absolute inset-0 bg-gradient-to-r from-background-dark via-transparent to-transparent"></div>
 </div>
@@ -87,13 +26,13 @@
 <span class="text-xs uppercase tracking-widest text-slate-400">Power Rating</span>
 </div>
 <div class="ml-auto flex items-center gap-6">
-<a class="text-slate-100 hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" href="index.html">
+<a class="text-slate-100 hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" href="/#images">
 <span class="material-symbols-outlined text-[24px]">camera_alt</span>
 </a>
-<a class="text-slate-100 hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" href="index.html">
+<a class="text-slate-100 hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" href="/news.html">
 <span class="material-symbols-outlined text-[24px]">close</span>
 </a>
-<a class="text-slate-100 hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" href="index.html">
+<a class="text-slate-100 hover:text-primary transition-colors flex items-center justify-center p-2 rounded-full border border-white/10 bg-white/5 backdrop-blur-sm" href="/#videos">
 <span class="material-symbols-outlined text-[24px]">smart_display</span>
 </a>
 </div>
@@ -188,42 +127,3 @@
 </div>
 </section>
 </main>
-<!-- Footer -->
-<footer class="bg-surface py-20 border-t border-border-muted">
-<div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
-<div class="flex items-center justify-center mb-10">
-<img src="/assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[69px] md:h-[92px] w-auto object-contain" />
-</div>
-<nav class="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-12">
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="events.html" style="">Events</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="boxers.html" style="">Boxers</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="news.html" style="">News</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Contact</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Shop</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Partners</a>
-</nav>
-<div class="flex gap-6 mb-12">
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">alternate_email</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">smart_display</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">photo_camera</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">share</span>
-</a>
-</div>
-<div class="text-center">
-<p class="text-slate-500 text-[10px] tracking-widest uppercase mb-2" style="">© 2024 Miguel Cotto Promotions. All rights reserved.</p>
-<div class="flex gap-4 justify-center text-[10px] tracking-widest uppercase font-bold text-slate-400">
-<a class="hover:text-primary" href="index.html" style="">Privacy Policy</a>
-<a class="hover:text-primary" href="index.html" style="">Terms of Service</a>
-</div>
-</div>
-</div>
-</footer>
-</div>
-</body></html>

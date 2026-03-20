@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>{{ title | default("Miguel Cotto Promotions | Elite Boxing Events") }}</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#d72323",
+                        "background-light": "#f8f6f6",
+                        "background-dark": "#120909",
+                        "surface": "#201212",
+                        "border-muted": "#452626",
+                    },
+                    fontFamily: {
+                        "display": ["Space Grotesk", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+    <style>
+      .no-scrollbar::-webkit-scrollbar { display: none; } 
+      .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+      {{ extra_css | safe }}
+    </style>
+    {% block head %}{% endblock %}
+</head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 font-display flex flex-col min-h-screen">
+
+    <!-- Top Navigation -->
+    <header class="sticky top-0 z-50 w-full border-b border-border-muted bg-background-dark/95 backdrop-blur-md px-6 md:px-12 py-4">
+        <div class="max-w-7xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-8">
+                <a class="flex items-center" href="/">
+                    <img src="/assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[58px] md:h-[69px] w-auto object-contain" />
+                </a>
+                <nav class="hidden lg:flex items-center gap-6">
+                    <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/events' in page.url %}text-primary{% endif %}" href="/events.html">Events</a>
+                    <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/boxers' in page.url or '/profile' in page.url %}text-primary{% endif %}" href="/boxers.html">Boxers</a>
+                    <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/news' in page.url %}text-primary{% endif %}" href="/news.html">News</a>
+                    <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/#videos">Videos</a>
+                    <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/about' in page.url %}text-primary{% endif %}" href="/about.html">About Us</a>
+                </nav>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="hidden md:flex items-center bg-surface border border-border-muted rounded px-3 py-1.5">
+                    <span class="material-symbols-outlined text-slate-400 text-sm">search</span>
+                    <input class="bg-transparent border-none focus:ring-0 text-sm text-white placeholder-slate-500 w-32 lg:w-48" placeholder="Search fighters..." type="text"/>
+                </div>
+                <button class="bg-primary hover:bg-red-700 text-white text-xs font-bold py-2.5 px-6 rounded transition-all uppercase tracking-wider" onclick="window.location.href='/events.html'">
+                    Tickets
+                </button>
+                <button class="bg-surface border border-border-muted hover:bg-border-muted text-white text-xs font-bold py-2.5 px-4 rounded transition-all">
+                    <span class="material-symbols-outlined text-base align-middle">play_circle</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        {{ content | safe }}
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-surface py-20 border-t border-border-muted mt-auto">
+        <div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
+            <div class="flex items-center justify-center mb-10">
+                <img src="/assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[69px] md:h-[92px] w-auto object-contain" />
+            </div>
+            <nav class="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-12">
+                <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/events.html">Events</a>
+                <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/boxers.html">Boxers</a>
+                <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/news.html">News</a>
+                <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/index.html">Contact</a>
+                <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/index.html">Shop</a>
+                <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/index.html">Partners</a>
+            </nav>
+            <div class="flex gap-6 mb-12">
+                <a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="#">
+                    <span class="material-symbols-outlined text-sm">alternate_email</span>
+                </a>
+                <a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="#">
+                    <span class="material-symbols-outlined text-sm">smart_display</span>
+                </a>
+                <a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="#">
+                    <span class="material-symbols-outlined text-sm">photo_camera</span>
+                </a>
+                <a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="#">
+                    <span class="material-symbols-outlined text-sm">share</span>
+                </a>
+            </div>
+            <div class="text-center">
+                <p class="text-slate-500 text-[10px] tracking-widest uppercase mb-2">© {{ page.date | date('YYYY') if page.date else '2024' }} Miguel Cotto Promotions. All rights reserved.</p>
+                <div class="flex gap-4 justify-center text-[10px] tracking-widest uppercase font-bold text-slate-400">
+                    <a class="hover:text-primary" href="/index.html">Privacy Policy</a>
+                    <a class="hover:text-primary" href="/index.html">Terms of Service</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    {% block scripts %}{% endblock %}
+</body>
+</html>

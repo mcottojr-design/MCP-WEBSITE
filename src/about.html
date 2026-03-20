@@ -1,73 +1,14 @@
-<!DOCTYPE html>
-
-<html class="dark" lang="en"><head>
-<meta charset="utf-8"/>
-<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
-<script id="tailwind-config">
-        tailwind.config = {
-            darkMode: "class",
-            theme: {
-                extend: {
-                    colors: {
-                        "primary": "#d72323",
-                        "background-light": "#f8f6f6",
-                        "background-dark": "#201212",
-                    },
-                    fontFamily: {
-                        "display": ["Space Grotesk"]
-                    },
-                    borderRadius: {"DEFAULT": "0.125rem", "lg": "0.25rem", "xl": "0.5rem", "full": "0.75rem"},
-                },
-            },
-        }
-    </script>
-<style>
-        body {
-            font-family: "Space Grotesk", sans-serif;
-        }
-    </style>
-</head>
-<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 antialiased">
-<!-- Top Navigation Bar -->
-<header class="sticky top-0 z-50 bg-background-light/90 dark:bg-background-dark/90 backdrop-blur-md border-b border-primary/20">
-<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-<div class="flex items-center justify-between h-20">
-<div class="flex items-center gap-4">
-<div class="size-8 text-primary">
-<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.57829 8.57829C5.52816 11.6284 3.451 15.5145 2.60947 19.7452C1.76794 23.9758 2.19984 28.361 3.85056 32.3462C5.50128 36.3314 8.29667 39.7376 11.8832 42.134C15.4698 44.5305 19.6865 45.8096 24 45.8096C28.3135 45.8096 32.5302 44.5305 36.1168 42.134C39.7033 39.7375 42.4987 36.3314 44.1494 32.3462C45.8002 28.361 46.2321 23.9758 45.3905 19.7452C44.549 15.5145 42.4718 11.6284 39.4217 8.57829L24 24L8.57829 8.57829Z" fill="currentColor"></path>
-</svg>
-</div>
-<h2 class="text-slate-900 dark:text-white text-xl font-bold tracking-tight uppercase">Miguel Cotto <span class="text-primary">Promotions</span></h2>
-</div>
-<nav class="hidden md:flex items-center gap-8">
-<a class="text-sm font-medium hover:text-primary transition-colors" href="index.html">Events</a>
-<a class="text-sm font-medium hover:text-primary transition-colors" href="index.html">News</a>
-<a class="text-sm font-medium text-primary border-b-2 border-primary" href="index.html">About</a>
-<a class="text-sm font-medium hover:text-primary transition-colors" href="index.html">Contact</a>
-</nav>
-<div class="flex items-center gap-4">
-<button class="p-2 rounded-lg bg-primary/10 text-primary hover:bg-primary/20 transition-all">
-<span class="material-symbols-outlined">menu</span>
-</button>
-<div class="size-10 rounded-full bg-primary/20 border border-primary/30 flex items-center justify-center overflow-hidden">
-<img alt="Profile" data-alt="User profile avatar close up" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCsyc6mYdhyc8HJNqmUtFPW7gNmCqnLXdsYf3jATmdbSb1juOK_IpJbJuMZIfy1pcOmTaSreDku0famHcJw5GmvFjcv4-keWPxhfh-MeRteAU9jqkYBoKEhPi0kfBQNrpJ3yZePQVToIcHlctlVZZv7FYQ_QYQ6CmVt80g81z2fYO-hoXqfDo3OS-qCDgyXUSevbdkgApQNtVKydUcHYYSL-h6qxF2a5cjn5U4nRqPKsy8EXcHfSOPeu_A2o7vgE66sQTLlUUx0cVY"/>
-</div>
-</div>
-</div>
-</div>
-</header>
+---
+layout: layouts/base.njk
+title: "About Us | Miguel Cotto Promotions"
+---
 <main>
 <!-- Hero Section -->
 <section class="relative min-h-[716px] flex items-center justify-center overflow-hidden">
 <div class="absolute inset-0 z-0">
 <div class="absolute inset-0 bg-gradient-to-t from-background-dark via-background-dark/60 to-transparent z-10"></div>
 <div class="absolute inset-0 bg-gradient-to-r from-background-dark/80 via-transparent to-background-dark/80 z-10"></div>
-<img alt="Miguel Cotto Professional Boxing" class="w-full h-full object-cover" data-alt="Professional boxer in a dark moody arena stance" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi17Z2_N6Bl14NNIPLdujy14ltyF6VpSgHzI8Ypwh7agUg-c5DBiaO7QcvneukyASkfjbRYKwYJWTEPjuZ2qxxaFd-HakiXX0eFwqasw4xDgNsjhc1mQ_tt21lKeWeYRiZBl-G9NUyp8KDEfH-uNrplRzqJnvKlnW8HGVXfJOosRtGwFivFlbs8D7sMz_-pSfxzVKQjdBzTxShXHOE3mjwlHh3iYlgbd8outcGiUNpzIdmNXfbubkbKW4OMoMtuXO4evWWcJuaviY"/>
+<img alt="Miguel Cotto Professional Boxing" class="w-full h-full object-cover" data-alt="Professional boxer in a dark moody arena stance" src="https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80"/>
 </div>
 <div class="relative z-20 max-w-5xl px-4 text-center">
 <h1 class="text-4xl md:text-7xl font-black text-white uppercase tracking-tighter mb-6">
@@ -77,7 +18,7 @@
                     Dedicated to the promotion and production of high-quality professional boxing events.
                 </p>
 <div class="mt-10 flex flex-col sm:flex-row gap-4 justify-center">
-<button class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-lg font-bold uppercase tracking-widest transition-all">
+<button class="bg-primary hover:bg-primary/90 text-white px-10 py-4 rounded-lg font-bold uppercase tracking-widest transition-all" onclick="window.location.href='/events.html'">
                         Upcoming Fights
                     </button>
 <button class="bg-white/10 hover:bg-white/20 backdrop-blur-sm text-white border border-white/30 px-10 py-4 rounded-lg font-bold uppercase tracking-widest transition-all">
@@ -113,7 +54,7 @@
 </div>
 <div class="relative group">
 <div class="absolute -inset-4 bg-primary/20 rounded-xl blur-xl group-hover:bg-primary/30 transition-all"></div>
-<img alt="Boxing Gym" class="relative rounded-xl w-full h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-500" data-alt="Gritty boxing gym interior with punching bags" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCNZ2qhGwr3lEoWP624GFkr8eE60pkoCh2QWt8V3dS94Yu_eBOlXkWMxBoxgbhA3XDHxRAnl4oQn_mUChHRmfNQroOMB9sdOW-GcZFMhWVZMEjcUMVpwNDS9UIsmaUompNAscyJUgqd5nLmWcz6KAwwgJ-t_aQeyD14y1hh8IwzIF5PB1F7Eb9crDaj3g7ecWgdUXD54cKeAUjAFh473zK9QhFc9qSx9vYf2bVFIc2wQXepFO70ItgaX60ixeiG4Q5WSzH9sZ9a8-I"/>
+<img alt="Boxing Gym" class="relative rounded-xl w-full h-[500px] object-cover grayscale hover:grayscale-0 transition-all duration-500" data-alt="Gritty boxing gym interior with punching bags" src="https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80"/>
 </div>
 </div>
 </section>
@@ -125,7 +66,7 @@
 <div class="max-w-7xl mx-auto px-4 grid lg:grid-cols-12 gap-12 items-center">
 <div class="lg:col-span-5">
 <div class="aspect-[4/5] overflow-hidden rounded-xl border-4 border-primary/30">
-<img alt="Miguel Cotto Portrait" class="w-full h-full object-cover" data-alt="Close up professional portrait of a boxing promoter" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDi00HkuFPo_wEPwtWW4lzlzHc7YqCX71LFyHrWSWWUIBltWyKgRA0tyxDh6wLOWi-qA3iMO3cg9RCvE3wIq1FAk13gVY6GGP2f1BXLFr0GCVqo8rhSJBhBoFd_tVulnJdccB48Q8-H_wpryneskRLb5Hnal7W3_b3cba1VpW9yRbLqR2CijyY9f_S9cSEHj8LjAaPhnz0VMabDMHcHHWB3sjVOKeKwzmLICQOXM_rqRDpQkbmZqwly4gabLFNrT9sbwaN19csqr4Q"/>
+<img alt="Miguel Cotto Portrait" class="w-full h-full object-cover" data-alt="Close up professional portrait of a boxing promoter" src="https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80"/>
 </div>
 </div>
 <div class="lg:col-span-7 space-y-6">
@@ -182,41 +123,3 @@
 </div>
 </section>
 </main>
-<!-- Footer -->
-<footer class="bg-surface py-20 border-t border-border-muted">
-<div class="max-w-7xl mx-auto px-6 md:px-12 flex flex-col items-center">
-<div class="flex items-center justify-center mb-10">
-<img src="/assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[69px] md:h-[92px] w-auto object-contain" />
-</div>
-<nav class="flex flex-wrap justify-center gap-x-12 gap-y-6 mb-12">
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="events.html" style="">Events</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="boxers.html" style="">Boxers</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="news.html" style="">News</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Contact</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Shop</a>
-<a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="index.html" style="">Partners</a>
-</nav>
-<div class="flex gap-6 mb-12">
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">alternate_email</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">smart_display</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">photo_camera</span>
-</a>
-<a class="w-10 h-10 rounded-full bg-border-muted flex items-center justify-center hover:bg-primary transition-colors" href="index.html" style="">
-<span class="material-symbols-outlined text-sm" style="">share</span>
-</a>
-</div>
-<div class="text-center">
-<p class="text-slate-500 text-[10px] tracking-widest uppercase mb-2" style="">© 2024 Miguel Cotto Promotions. All rights reserved.</p>
-<div class="flex gap-4 justify-center text-[10px] tracking-widest uppercase font-bold text-slate-400">
-<a class="hover:text-primary" href="index.html" style="">Privacy Policy</a>
-<a class="hover:text-primary" href="index.html" style="">Terms of Service</a>
-</div>
-</div>
-</div>
-</footer>
-</body></html>
