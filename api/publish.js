@@ -61,7 +61,7 @@ module.exports = async function handler(req, res) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
-  const { title, date, author, category, image, excerpt, body, draft } = req.body;
+  const { title, date, author, category, image, image_focus, excerpt, body, draft } = req.body;
   if (!title || !body) return res.status(400).json({ error: "Title and body are required" });
 
   const postDate = date || new Date().toISOString().slice(0, 10);
@@ -78,6 +78,7 @@ title: "${title.replace(/"/g, '\\"')}"
 date: ${postDate}
 author: "${author || "MCP Staff"}"
 image: "${image || ""}"
+image_focus: "${image_focus || "50% 50%"}"
 category: "${category || "Announcement"}"
 excerpt: "${(excerpt || "").replace(/"/g, '\\"')}"
 ---
