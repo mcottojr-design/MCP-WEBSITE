@@ -287,103 +287,200 @@
     .upload-placeholder p { color: var(--muted); font-size: 0.85rem; margin-top: 0.5rem; }
     .upload-placeholder span { font-size: 2rem; }
 
-    /* Focal point picker */
-    .focal-container {
-      position: relative;
-      cursor: crosshair;
+    /* Image card (shown after upload) */
+    .image-card {
       display: none;
+      background: var(--surface2);
+      border: 1px solid var(--border);
       border-radius: 8px;
-      overflow: hidden;
-      user-select: none;
+      padding: 0.75rem;
+      flex-direction: row;
+      align-items: center;
+      gap: 1rem;
     }
 
-    .focal-container img {
-      width: 100%;
-      max-height: 320px;
-      object-fit: cover;
-      display: block;
-      pointer-events: none;
+    .image-card.visible { display: flex; }
+
+    .image-thumb {
+      width: 90px;
+      height: 72px;
+      object-fit: contain;
+      border-radius: 6px;
+      background: var(--bg);
+      flex-shrink: 0;
     }
 
-    .focal-overlay {
-      position: absolute;
-      inset: 0;
-      background: rgba(0,0,0,0.15);
-    }
-
-    .focal-dot {
-      position: absolute;
-      width: 26px; height: 26px;
-      border-radius: 50%;
-      border: 3px solid white;
-      background: rgba(215,35,35,0.85);
-      transform: translate(-50%, -50%);
-      pointer-events: none;
-      box-shadow: 0 0 0 2px rgba(0,0,0,0.5), 0 0 12px rgba(215,35,35,0.6);
-      transition: left 0.1s, top 0.1s;
-    }
-
-    .focal-crosshair-h {
-      position: absolute;
-      top: 50%; left: 0; right: 0;
-      height: 1px;
-      background: rgba(255,255,255,0.3);
-      pointer-events: none;
-      transition: top 0.1s;
-    }
-
-    .focal-crosshair-v {
-      position: absolute;
-      left: 50%; top: 0; bottom: 0;
-      width: 1px;
-      background: rgba(255,255,255,0.3);
-      pointer-events: none;
-      transition: left 0.1s;
-    }
-
-    .focal-hint {
-      position: absolute;
-      bottom: 10px; left: 0; right: 0;
-      text-align: center;
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.8);
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      pointer-events: none;
-      text-shadow: 0 1px 4px rgba(0,0,0,0.8);
-    }
-
-    .focal-label {
-      position: absolute;
-      top: 10px; right: 10px;
-      background: rgba(0,0,0,0.6);
-      color: white;
+    .image-card-info { flex: 1; min-width: 0; }
+    .image-card-info p { font-size: 0.8rem; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .image-card-info .focal-badge {
+      display: inline-block;
+      margin-top: 0.35rem;
       font-size: 0.7rem;
       font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      padding: 0.25rem 0.6rem;
+      letter-spacing: 0.05em;
+      color: var(--primary);
+      background: rgba(215,35,35,0.12);
+      padding: 0.2rem 0.5rem;
       border-radius: 4px;
-      pointer-events: none;
     }
 
-    .change-img-btn {
-      position: absolute;
-      bottom: 10px; right: 10px;
-      background: rgba(0,0,0,0.7);
+    .image-card-actions { display: flex; flex-direction: column; gap: 0.4rem; flex-shrink: 0; }
+
+    .btn-focal {
+      padding: 0.4rem 0.9rem;
+      background: var(--primary);
       color: white;
-      border: 1px solid rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 6px;
+      font-family: inherit;
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.2s;
+    }
+    .btn-focal:hover { background: var(--primary-hover); }
+
+    .btn-remove-img {
+      padding: 0.4rem 0.9rem;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
       border-radius: 6px;
       font-family: inherit;
       font-size: 0.72rem;
       font-weight: 600;
-      padding: 0.3rem 0.7rem;
       cursor: pointer;
-      z-index: 10;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .btn-remove-img:hover { color: var(--primary); border-color: var(--primary); }
+
+    /* Focal Point MODAL */
+    #focal-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      z-index: 9000;
+      background: rgba(0,0,0,0.92);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+    #focal-modal.open { display: flex; }
+
+    .modal-header {
+      width: 100%;
+      max-width: 900px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
     }
 
-    .change-img-btn:hover { background: var(--primary); border-color: var(--primary); }
+    .modal-title {
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .modal-close {
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      transition: background 0.2s;
+    }
+    .modal-close:hover { background: var(--primary); border-color: var(--primary); }
+
+    .modal-image-wrap {
+      position: relative;
+      max-width: 900px;
+      width: 100%;
+      cursor: crosshair;
+      border-radius: 8px;
+      overflow: hidden;
+      line-height: 0;
+    }
+
+    .modal-image-wrap img {
+      width: 100%;
+      max-height: 75vh;
+      object-fit: contain;
+      background: #0d0707;
+      display: block;
+      pointer-events: none;
+    }
+
+    .modal-overlay {
+      position: absolute;
+      inset: 0;
+    }
+
+    .modal-dot {
+      position: absolute;
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      border: 3px solid white;
+      background: rgba(215,35,35,0.9);
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      box-shadow: 0 0 0 2px rgba(0,0,0,0.6), 0 0 20px rgba(215,35,35,0.7);
+      transition: left 0.08s, top 0.08s;
+    }
+
+    .modal-crosshair-h {
+      position: absolute; left: 0; right: 0;
+      height: 1px; background: rgba(255,255,255,0.25);
+      pointer-events: none; transition: top 0.08s;
+    }
+    .modal-crosshair-v {
+      position: absolute; top: 0; bottom: 0;
+      width: 1px; background: rgba(255,255,255,0.25);
+      pointer-events: none; transition: left 0.08s;
+    }
+
+    .modal-footer {
+      max-width: 900px;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1rem;
+      gap: 1rem;
+    }
+
+    .modal-coords {
+      font-size: 0.8rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+    .modal-coords span { color: var(--primary); }
+
+    .btn-modal-done {
+      padding: 0.6rem 2rem;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-family: inherit;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .btn-modal-done:hover { background: var(--primary-hover); }
 
     /* Quill editor */
     .quill-wrapper {
@@ -554,16 +651,36 @@
         </div>
       </div>
 
-      <!-- Focal point picker (shown after upload) -->
-      <div class="focal-container" id="focal-container">
-        <img id="focal-preview" alt="Focal point preview" />
-        <div class="focal-overlay" id="focal-overlay"></div>
-        <div class="focal-crosshair-h" id="focal-h"></div>
-        <div class="focal-crosshair-v" id="focal-v"></div>
-        <div class="focal-dot" id="focal-dot" style="left:50%;top:50%;"></div>
-        <div class="focal-label">🎯 Click to set focal point</div>
-        <div class="focal-hint">Current focus: <span id="focal-coords">Center (50% 50%)</span></div>
-        <button class="change-img-btn" onclick="document.getElementById('image-input').click(); event.stopPropagation();">🔄 Change Image</button>
+      <!-- Image card (shown after upload) -->
+      <div class="image-card" id="image-card">
+        <img class="image-thumb" id="image-thumb" alt="Uploaded image" />
+        <div class="image-card-info">
+          <p id="image-filename">Image uploaded</p>
+          <div class="focal-badge" id="focal-badge">🎯 Focus: Center (50% 50%)</div>
+        </div>
+        <div class="image-card-actions">
+          <button class="btn-focal" id="open-focal-modal">🎯 Set Focal Point</button>
+          <button class="btn-remove-img" id="remove-image-btn">✕ Remove Image</button>
+        </div>
+      </div>
+
+      <!-- Focal Point Modal -->
+      <div id="focal-modal">
+        <div class="modal-header">
+          <span class="modal-title">🎯 Click anywhere on the image to set the focal point</span>
+          <button class="modal-close" id="close-focal-modal">✕</button>
+        </div>
+        <div class="modal-image-wrap" id="modal-image-wrap">
+          <img id="modal-img" alt="Set focal point" />
+          <div class="modal-overlay" id="modal-overlay"></div>
+          <div class="modal-crosshair-h" id="modal-ch"></div>
+          <div class="modal-crosshair-v" id="modal-cv"></div>
+          <div class="modal-dot" id="modal-dot" style="left:50%;top:50%;"></div>
+        </div>
+        <div class="modal-footer">
+          <span class="modal-coords">Focus point: <span id="modal-coords-text">50% 50%</span></span>
+          <button class="btn-modal-done" id="modal-done-btn">✓ Done</button>
+        </div>
       </div>
 
       <div class="section-label">Article Body *</div>
@@ -679,17 +796,17 @@
         const data = await res.json();
         if (data.success) {
           uploadedImagePath = data.path;
-          // Show focal picker, hide upload box
+          // Show the image card
           document.getElementById('upload-placeholder').style.display = 'none';
           document.getElementById('upload-area').style.display = 'none';
-          const focalContainer = document.getElementById('focal-container');
-          const focalPreview = document.getElementById('focal-preview');
-          focalPreview.src = ev.target.result;
-          focalContainer.style.display = 'block';
-          // Reset focal point to center
+          document.getElementById('image-thumb').src = ev.target.result;
+          document.getElementById('modal-img').src = ev.target.result;
+          document.getElementById('image-filename').textContent = file.name;
+          document.getElementById('image-card').classList.add('visible');
+          // Reset focal to center
           focalPoint = '50% 50%';
-          updateFocalDot(50, 50);
-          showToast('✅ Image uploaded! Click to set focal point.', 'success');
+          updateModalDot(50, 50);
+          showToast('✅ Image uploaded! Set your focal point when ready.', 'success');
         } else {
           showToast('Upload failed: ' + (data.error || 'Unknown error'), 'error');
         }
@@ -700,22 +817,63 @@
     reader.readAsDataURL(file);
   });
 
-  // ===== FOCAL POINT PICKER =====
-  document.getElementById('focal-overlay').addEventListener('click', (e) => {
-    const rect = document.getElementById('focal-container').getBoundingClientRect();
-    const x = Math.round((e.clientX - rect.left) / rect.width * 100);
-    const y = Math.round((e.clientY - rect.top) / rect.height * 100);
-    focalPoint = `${x}% ${y}%`;
-    updateFocalDot(x, y);
+  // ===== FOCAL POINT MODAL =====
+  document.getElementById('open-focal-modal').addEventListener('click', () => {
+    document.getElementById('focal-modal').classList.add('open');
+    document.body.style.overflow = 'hidden';
   });
 
-  function updateFocalDot(x, y) {
-    document.getElementById('focal-dot').style.left = x + '%';
-    document.getElementById('focal-dot').style.top = y + '%';
-    document.getElementById('focal-h').style.top = y + '%';
-    document.getElementById('focal-v').style.left = x + '%';
-    document.getElementById('focal-coords').textContent = `${x}% ${y}%`;
+  function closeFocalModal() {
+    document.getElementById('focal-modal').classList.remove('open');
+    document.body.style.overflow = '';
   }
+
+  document.getElementById('close-focal-modal').addEventListener('click', closeFocalModal);
+  document.getElementById('modal-done-btn').addEventListener('click', closeFocalModal);
+
+  // Close on backdrop click
+  document.getElementById('focal-modal').addEventListener('click', (e) => {
+    if (e.target === document.getElementById('focal-modal')) closeFocalModal();
+  });
+
+  // Click to set focal point inside modal
+  document.getElementById('modal-overlay').addEventListener('click', (e) => {
+    const wrap = document.getElementById('modal-image-wrap');
+    const rect = wrap.getBoundingClientRect();
+    // The image may be letterboxed, get actual img dimensions
+    const img = document.getElementById('modal-img');
+    const imgRect = img.getBoundingClientRect();
+    const x = Math.round((e.clientX - imgRect.left) / imgRect.width * 100);
+    const y = Math.round((e.clientY - imgRect.top) / imgRect.height * 100);
+    const cx = Math.max(0, Math.min(100, x));
+    const cy = Math.max(0, Math.min(100, y));
+    focalPoint = `${cx}% ${cy}%`;
+    updateModalDot(cx, cy);
+    document.getElementById('focal-badge').textContent = `🎯 Focus: ${cx}% ${cy}%`;
+  });
+
+  function updateModalDot(x, y) {
+    // Position relative to the actual image within object-fit:contain
+    document.getElementById('modal-dot').style.left = x + '%';
+    document.getElementById('modal-dot').style.top = y + '%';
+    document.getElementById('modal-ch').style.top = y + '%';
+    document.getElementById('modal-cv').style.left = x + '%';
+    document.getElementById('modal-coords-text').textContent = `${x}% ${y}%`;
+  }
+
+  // ===== REMOVE IMAGE =====
+  document.getElementById('remove-image-btn').addEventListener('click', () => {
+    uploadedImagePath = '';
+    focalPoint = '50% 50%';
+    document.getElementById('image-card').classList.remove('visible');
+    document.getElementById('image-thumb').src = '';
+    document.getElementById('modal-img').src = '';
+    document.getElementById('image-input').value = '';
+    document.getElementById('upload-area').style.display = 'block';
+    document.getElementById('upload-placeholder').style.display = 'block';
+    document.getElementById('focal-badge').textContent = '🎯 Focus: Center (50% 50%)';
+    showToast('Image removed.', 'info');
+  });
 
   // ===== PUBLISH / DRAFT =====
   document.getElementById('publish-btn').addEventListener('click', () => submitPost(false));
@@ -776,12 +934,14 @@
     document.getElementById('f-category').selectedIndex = 0;
     document.getElementById('upload-placeholder').style.display = 'block';
     document.getElementById('upload-area').style.display = 'block';
-    document.getElementById('focal-container').style.display = 'none';
-    document.getElementById('focal-preview').src = '';
+    document.getElementById('image-card').classList.remove('visible');
+    document.getElementById('image-thumb').src = '';
+    document.getElementById('modal-img').src = '';
     document.getElementById('image-input').value = '';
     uploadedImagePath = '';
     focalPoint = '50% 50%';
-    updateFocalDot(50, 50);
+    updateModalDot(50, 50);
+    document.getElementById('focal-badge').textContent = '🎯 Focus: Center (50% 50%)';
     quill.setContents([]);
   }
 
