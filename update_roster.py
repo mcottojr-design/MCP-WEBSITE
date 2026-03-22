@@ -88,20 +88,20 @@ def update_file(path):
     <!-- Search -->
     <div class="relative flex-1">
         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">search</span>
-        <input class="w-full bg-surface-light border border-white/5 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all h-14 text-sm" placeholder="Search for a fighter..." type="text"/>
+        <input class="w-full bg-surface border border-border-muted rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-400 focus:outline-none focus:border-primary/60 transition-all h-14 text-sm font-display" placeholder="Search for a fighter..." type="text"/>
     </div>
     
     <!-- Filter Dropdown -->
     <div class="relative" id="division-dropdown">
-        <button id="dropdown-toggle" class="flex h-14 w-full md:w-64 items-center justify-between gap-x-2 rounded-xl bg-surface-light border border-white/5 px-5 text-slate-300 text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition-all shadow-xl">
+        <button id="dropdown-toggle" class="flex h-14 w-full md:w-64 items-center justify-between gap-x-2 rounded-lg bg-surface border border-border-muted px-5 text-slate-300 text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-primary/5 hover:border-primary/30 transition-all">
             <div class="flex items-center gap-3">
                 <span class="material-symbols-outlined text-primary text-xl">layers</span>
                 <span id="active-division-label">All Weights</span>
             </div>
-            <span class="material-symbols-outlined transition-transform duration-300" id="dropdown-arrow">expand_more</span>
+            <span class="material-symbols-outlined text-slate-500 transition-transform duration-300" id="dropdown-arrow">expand_more</span>
         </button>
         
-        <div id="dropdown-menu" class="absolute top-full left-0 right-0 mt-2 z-50 overflow-hidden rounded-xl bg-surface-light border border-white/10 shadow-2xl opacity-0 invisible scale-95 transition-all duration-200 origin-top">
+        <div id="dropdown-menu" class="absolute top-full left-0 right-0 mt-2 z-50 overflow-hidden rounded-lg bg-surface border border-border-muted shadow-2xl opacity-0 invisible scale-95 transition-all duration-200 origin-top">
             <div class="max-h-64 overflow-y-auto no-scrollbar">
                 {"".join(division_items)}
             </div>
