@@ -79,30 +79,30 @@ def update_file(path):
     if 'boxers.html' in path:
         unique_divisions = sorted(list(set([b['division'] for b in roster_data])))
         
-        division_items = ['<div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="all">All Weights</div>']
+        division_items = ['<div class="filter-item cursor-pointer px-4 py-3 hover:bg-[#d72323]/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="all">All Weights</div>']
         for div in unique_divisions:
-            division_items.append(f'<div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="{div}">{div}</div>')
+            division_items.append(f'<div class="filter-item cursor-pointer px-4 py-3 hover:bg-[#d72323]/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="{div}">{div}</div>')
         
         filter_html = f"""
 <div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
     <!-- Search -->
     <div class="relative flex-1">
         <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">search</span>
-        <input class="w-full bg-surface border border-border-muted rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-400 focus:outline-none focus:border-primary/60 transition-all h-14 text-sm font-display" placeholder="Search for a fighter..." type="text"/>
+        <input class="w-full bg-[#120909] border border-[#452626] rounded-lg py-4 pl-12 pr-4 text-white placeholder:text-slate-500 focus:outline-none focus:border-[#d72323]/60 transition-all h-14 text-sm font-display ring-0 outline-none" placeholder="Search for a fighter..." type="text"/>
     </div>
     
     <!-- Filter Dropdown -->
     <div class="relative" id="division-dropdown">
-        <button id="dropdown-toggle" class="flex h-14 w-full md:w-64 items-center justify-between gap-x-2 rounded-lg bg-surface border border-border-muted px-5 text-slate-300 text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-primary/5 hover:border-primary/30 transition-all">
+        <button id="dropdown-toggle" class="flex h-14 w-full md:w-64 items-center justify-between gap-x-2 rounded-lg bg-[#201212] border border-[#452626] px-5 text-slate-100 text-[11px] font-bold uppercase tracking-[0.2em] hover:bg-[#d72323]/10 hover:border-[#d72323]/40 transition-all shadow-2xl">
             <div class="flex items-center gap-3">
-                <span class="material-symbols-outlined text-primary text-xl">layers</span>
+                <span class="material-symbols-outlined text-[#d72323] text-xl">layers</span>
                 <span id="active-division-label">All Weights</span>
             </div>
             <span class="material-symbols-outlined text-slate-500 transition-transform duration-300" id="dropdown-arrow">expand_more</span>
         </button>
         
-        <div id="dropdown-menu" class="absolute top-full left-0 right-0 mt-2 z-50 overflow-hidden rounded-lg bg-surface border border-border-muted shadow-2xl opacity-0 invisible scale-95 transition-all duration-200 origin-top">
-            <div class="max-h-64 overflow-y-auto no-scrollbar">
+        <div id="dropdown-menu" class="absolute top-full left-0 right-0 mt-2 z-50 overflow-hidden rounded-lg bg-[#201212] border border-[#d72323]/30 shadow-[0_20px_50px_rgba(0,0,0,0.8)] opacity-0 invisible scale-95 transition-all duration-200 origin-top">
+            <div class="max-h-64 overflow-y-auto no-scrollbar bg-[#201212]">
                 {"".join(division_items)}
             </div>
         </div>
