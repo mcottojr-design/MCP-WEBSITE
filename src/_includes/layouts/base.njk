@@ -51,10 +51,12 @@
                     <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/about' in page.url %}text-primary{% endif %}" href="/about.html">About Us</a>
                 </nav>
             </div>
-            <div class="flex items-center gap-4">
-                <button class="bg-primary hover:bg-red-700 text-white text-xs font-bold py-2.5 px-6 rounded transition-all uppercase tracking-wider" onclick="window.location.href='/events.html'">
+            <div class="flex items-center gap-3">
+                <!-- Tickets: Desktop only -->
+                <button class="hidden lg:block bg-primary hover:bg-red-700 text-white text-xs font-bold py-2.5 px-6 rounded transition-all uppercase tracking-wider" onclick="window.location.href='/events.html'">
                     Tickets
                 </button>
+                <!-- Social Icons: Desktop only -->
                 <div class="hidden md:flex items-center gap-4 ml-2">
                     <a href="https://www.youtube.com/c/MiguelCottoPromotions" target="_blank" class="text-white hover:text-primary transition-colors">
                         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
@@ -66,9 +68,89 @@
                         <svg class="w-5 h-5 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
                     </a>
                 </div>
+                <!-- Hamburger: Mobile only -->
+                <button id="mobile-menu-btn" class="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-[5px] group" aria-label="Open menu">
+                    <span id="hb-top"    class="block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+                    <span id="hb-mid"    class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
+                    <span id="hb-bot"    class="block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+                </button>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+         class="fixed inset-0 z-[999] flex flex-col bg-background-dark/98 backdrop-blur-xl transition-all duration-300 ease-in-out opacity-0 pointer-events-none lg:hidden"
+         style="transform: translateX(100%);">
+        <!-- Close button -->
+        <div class="flex items-center justify-between px-6 py-6 border-b border-border-muted">
+            <a href="/">
+                <img src="/assets/logo.svg" alt="Miguel Cotto Promotions Logo" class="h-[52px] w-auto object-contain" />
+            </a>
+            <button id="mobile-menu-close" class="w-10 h-10 flex items-center justify-center text-white hover:text-primary transition-colors" aria-label="Close menu">
+                <span class="material-symbols-outlined text-3xl">close</span>
+            </button>
+        </div>
+        <!-- Nav Links -->
+        <nav class="flex flex-col px-8 pt-10 gap-1 flex-1">
+            <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/events' in page.url %}text-primary{% endif %}" href="/events.html">Events</a>
+            <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/boxers' in page.url or '/profile' in page.url %}text-primary{% endif %}" href="/boxers.html">Boxers</a>
+            <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/news' in page.url %}text-primary{% endif %}" href="/news.html">News</a>
+            <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50" href="/#videos">Videos</a>
+            <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/about' in page.url %}text-primary{% endif %}" href="/about.html">About Us</a>
+        </nav>
+        <!-- Tickets + Social -->
+        <div class="px-8 pb-12 pt-8 border-t border-border-muted flex flex-col gap-6">
+            <button class="w-full bg-primary hover:bg-red-700 text-white text-sm font-black py-4 px-6 rounded-lg transition-all uppercase tracking-widest flex items-center justify-center gap-2" onclick="window.location.href='/events.html'">
+                <span class="material-symbols-outlined">confirmation_number</span> Buy Tickets
+            </button>
+            <div class="flex items-center justify-center gap-6">
+                <a href="https://www.youtube.com/c/MiguelCottoPromotions" target="_blank" class="text-slate-400 hover:text-primary transition-colors">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/miguelcottopromotions/" target="_blank" class="text-slate-400 hover:text-primary transition-colors">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.981 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 1 0 0 12.324 6.162 6.162 0 0 0 0-12.324zM12 16a4 4 0 1 1 0-8 4 4 0 0 1 0 8zm6.406-11.845a1.44 1.44 0 1 0 0 2.881 1.44 1.44 0 0 0 0-2.881z"/></svg>
+                </a>
+                <a href="https://www.facebook.com/miguelcottopromotions/" target="_blank" class="text-slate-400 hover:text-primary transition-colors">
+                    <svg class="w-6 h-6 fill-current" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const mobileMenu = document.getElementById('mobile-menu');
+        const openBtn = document.getElementById('mobile-menu-btn');
+        const closeBtn = document.getElementById('mobile-menu-close');
+        const hbTop = document.getElementById('hb-top');
+        const hbMid = document.getElementById('hb-mid');
+        const hbBot = document.getElementById('hb-bot');
+
+        function openMenu() {
+            mobileMenu.style.transform = 'translateX(0)';
+            mobileMenu.style.opacity = '1';
+            mobileMenu.classList.remove('pointer-events-none');
+            document.body.style.overflow = 'hidden';
+            hbTop.style.transform = 'rotate(45deg) translate(4px, 4px)';
+            hbMid.style.opacity = '0';
+            hbMid.style.transform = 'scaleX(0)';
+            hbBot.style.transform = 'rotate(-45deg) translate(4px, -4px)';
+        }
+
+        function closeMenu() {
+            mobileMenu.style.transform = 'translateX(100%)';
+            mobileMenu.style.opacity = '0';
+            mobileMenu.classList.add('pointer-events-none');
+            document.body.style.overflow = '';
+            hbTop.style.transform = '';
+            hbMid.style.opacity = '';
+            hbMid.style.transform = '';
+            hbBot.style.transform = '';
+        }
+
+        openBtn.addEventListener('click', openMenu);
+        closeBtn.addEventListener('click', closeMenu);
+    </script>
 
     <main class="flex-grow">
         {{ content | safe }}
