@@ -7,11 +7,10 @@ author: "Miguel Cotto Promotions"
 image: "/assets/news/1774044147817-upload.jpg"
 image_focus: "50% 35%"
 category: "Press Release"
+featured: true
 excerpt: "LOS BOXEADORES ALBERTO MACHADO, WILLIAM 'PIRU' GUZMÁN, MALIK QUIÑONES Y JERRYANIS 'LA YEYA' MORALES DIJERON PRESENTE"
 gallery:
-  - "/assets/news/1774044162480-gallery-17mrl.jpg"
-  - "/assets/news/1774044163939-gallery-2zftz.jpg"
-  - "/assets/news/1774044165212-gallery-i3qmk.jpg"
+  []
 ---
 (**19 de Marzo de 2026 en Aibonito, P.R.)** - La Fundación El Ángel de Miguel Cotto celebró con éxito su primer fogueo 5K en la pista atlética Fernando Santiago de Aibonito, reuniendo a alrededor de 200 corredores entre niños, jóvenes y familias en una jornada dedicada al deporte, la convivencia y los hábitos saludables.
 
