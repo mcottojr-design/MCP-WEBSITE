@@ -7,7 +7,7 @@ author: "Miguel Cotto Promotions"
 image: "/assets/news/1774044147817-upload.jpg"
 image_focus: "50% 35%"
 category: "Press Release"
-featured: true
+featured: false
 excerpt: "LOS BOXEADORES ALBERTO MACHADO, WILLIAM 'PIRU' GUZMÁN, MALIK QUIÑONES Y JERRYANIS 'LA YEYA' MORALES DIJERON PRESENTE"
 gallery:
   []
