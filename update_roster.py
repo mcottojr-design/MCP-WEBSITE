@@ -3,30 +3,30 @@ import os
 import unicodedata
 
 roster_data = [
-    {"name": "Oscar Collazo", "alias": "El Pupilo", "division": "Mini-Flyweight", "weight": "105LBS"},
-    {"name": "Belisa López De Jesús", "alias": "", "division": "Mini-Flyweight", "weight": "105LBS"},
-    {"name": "Jerryanis Morales", "alias": "La Yeya", "division": "Jr. Flyweight", "weight": "108LBS"},
-    {"name": "Kenny Romero", "alias": "", "division": "Jr. Flyweight", "weight": "108LBS"},
-    {"name": "Angel Acosta", "alias": "Tito", "division": "Flyweight", "weight": "112LBS"},
-    {"name": "Billy Rodríguez", "alias": "The Kid", "division": "Flyweight", "weight": "112LBS"},
-    {"name": "Arely Muciño", "alias": "La Ametralladora", "division": "Flyweight", "weight": "112LBS"},
-    {"name": "Juan Carlos Camacho Jr.", "alias": "El Indio", "division": "Flyweight", "weight": "112LBS"},
-    {"name": "Malik Quiñones", "alias": "", "division": "Jr. Bantamweight", "weight": "115LBS"},
-    {"name": "Yadriel Cabán", "alias": "El Electrico", "division": "Jr. Bantamweight", "weight": "115LBS"},
-    {"name": "Jordy Cardona", "alias": "El Príncipe", "division": "Bantamweight", "weight": "118LBS"},
-    {"name": "José Sánchez", "alias": "Tito", "division": "Jr. Featherweight", "weight": "122LBS"},
-    {"name": "Yan Carlos Santana", "alias": "Dangerous", "division": "Featherweight", "weight": "126LBS"},
-    {"name": "Yadiel Alomar", "alias": "", "division": "Featherweight", "weight": "126LBS"},
-    {"name": "Bryan Chevalier", "alias": "Chary", "division": "Jr. Lightweight", "weight": "130LBS"},
-    {"name": "Christian Barreto", "alias": "El Capitán", "division": "Lightweight", "weight": "135LBS"},
-    {"name": "Willjay De la Paz", "alias": "", "division": "Lightweight", "weight": "135LBS"},
-    {"name": "Leonardo Sánchez", "alias": "Bazooka", "division": "Lightweight", "weight": "135LBS"},
-    {"name": "Yariel Santiago", "alias": "", "division": "Lightweight", "weight": "135LBS"},
-    {"name": "Harold Laguna", "alias": "", "division": "Lightweight", "weight": "135LBS"},
-    {"name": "Danielito Zorrilla", "alias": "El Zorro", "division": "Jr. Welterweight", "weight": "140LBS"},
-    {"name": "Alberto Machado", "alias": "El Explosivo", "division": "Jr. Welterweight", "weight": "140LBS"},
-    {"name": "Ryan Enoch Rodríguez", "alias": "", "division": "Jr. Welterweight", "weight": "140LBS"},
-    {"name": "Yair Gallardo", "alias": "Manotas", "division": "Light Heavyweight", "weight": "175LBS"}
+    {"name": "Oscar Collazo", "alias": "El Pupilo", "division": "Mini-Flyweight", "weight": "105LBS", "record": "14-0-0", "kos": "11"},
+    {"name": "Belisa López De Jesús", "alias": "", "division": "Mini-Flyweight", "weight": "105LBS", "record": "2-0-1", "kos": "0"},
+    {"name": "Jerryanis Morales", "alias": "La Yeya", "division": "Jr. Flyweight", "weight": "108LBS", "record": "0-0-0", "kos": "0"},
+    {"name": "Kenny Romero", "alias": "", "division": "Jr. Flyweight", "weight": "108LBS", "record": "4-1-0", "kos": "3"},
+    {"name": "Angel Acosta", "alias": "Tito", "division": "Flyweight", "weight": "112LBS", "record": "25-5-0", "kos": "23"},
+    {"name": "Billy Rodríguez", "alias": "The Kid", "division": "Flyweight", "weight": "112LBS", "record": "6-0-0", "kos": "3"},
+    {"name": "Arely Muciño", "alias": "La Ametralladora", "division": "Flyweight", "weight": "112LBS", "record": "32-5-2", "kos": "11"},
+    {"name": "Juan Carlos Camacho Jr.", "alias": "El Indio", "division": "Flyweight", "weight": "112LBS", "record": "19-2-0", "kos": "8"},
+    {"name": "Malik Quiñones", "alias": "", "division": "Jr. Bantamweight", "weight": "115LBS", "record": "4-1-0", "kos": "3"},
+    {"name": "Yadriel Cabán", "alias": "El Electrico", "division": "Jr. Bantamweight", "weight": "115LBS", "record": "3-0-0", "kos": "3"},
+    {"name": "Jordy Cardona", "alias": "El Príncipe", "division": "Bantamweight", "weight": "118LBS", "record": "10-0-0", "kos": "9"},
+    {"name": "José Sánchez", "alias": "Tito", "division": "Jr. Featherweight", "weight": "122LBS", "record": "15-0-0", "kos": "9"},
+    {"name": "Yan Carlos Santana", "alias": "Dangerous", "division": "Featherweight", "weight": "126LBS", "record": "16-0-0", "kos": "13"},
+    {"name": "Yadiel Alomar", "alias": "", "division": "Featherweight", "weight": "126LBS", "record": "6-0-0", "kos": "4"},
+    {"name": "Bryan Chevalier", "alias": "Chary", "division": "Jr. Lightweight", "weight": "130LBS", "record": "23-3-1", "kos": "16"},
+    {"name": "Christian Barreto", "alias": "El Capitán", "division": "Lightweight", "weight": "135LBS", "record": "15-0-0", "kos": "9"},
+    {"name": "Willjay De la Paz", "alias": "", "division": "Lightweight", "weight": "135LBS", "record": "1-0-0", "kos": "1"},
+    {"name": "Leonardo Sánchez", "alias": "Bazooka", "division": "Lightweight", "weight": "135LBS", "record": "10-0-0", "kos": "8"},
+    {"name": "Yariel Santiago", "alias": "", "division": "Lightweight", "weight": "135LBS", "record": "8-2-1", "kos": "2"},
+    {"name": "Harold Laguna", "alias": "", "division": "Lightweight", "weight": "135LBS", "record": "7-2-1", "kos": "4"},
+    {"name": "Danielito Zorrilla", "alias": "El Zorro", "division": "Jr. Welterweight", "weight": "140LBS", "record": "18-2-0", "kos": "14"},
+    {"name": "Alberto Machado", "alias": "El Explosivo", "division": "Jr. Welterweight", "weight": "140LBS", "record": "24-4-0", "kos": "20"},
+    {"name": "Ryan Enoch Rodríguez", "alias": "", "division": "Jr. Welterweight", "weight": "140LBS", "record": "7-0-0", "kos": "2"},
+    {"name": "Yair Gallardo", "alias": "Manotas", "division": "Light Heavyweight", "weight": "175LBS", "record": "10-0-0", "kos": "8"}
 ]
 
 placeholder_img = "https://images.unsplash.com/photo-1549719386-74dbba40f4ce?auto=format&fit=crop&q=80"
@@ -53,7 +53,7 @@ def get_boxer_card_boxers_page(boxer):
     final_img = f"/assets/boxers/{img_file}" if img_file else placeholder_img
     img_classes = "absolute inset-0 bg-cover bg-center group-hover:scale-110 transition-transform duration-500"
     if img_file and "yadiel-alomar" in img_file: img_classes = "absolute inset-0 bg-cover bg-top scale-90 group-hover:scale-95 transition-transform duration-500"
-    return f"""<div class="group flex flex-col bg-primary/5 border border-primary/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 shadow-xl"><div class="relative w-full aspect-[3/4] overflow-hidden"><div class="{img_classes}" data-alt="Image for {name_display}" style='background-image: url("{final_img}");'></div><div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80 pointer-events-none"></div></div><div class="p-5 flex flex-col gap-1"><h3 class="text-slate-100 text-xl font-bold uppercase italic tracking-tight group-hover:text-primary transition-colors">{name_display}</h3><p class="text-primary text-xs font-bold uppercase tracking-widest">{boxer['division']} / {boxer['weight']}</p><div class="flex items-center justify-between mt-2 border-t border-primary/10 pt-3"><div class="flex flex-col"><span class="text-slate-400 text-[10px] uppercase font-bold tracking-tighter">Record</span><span class="text-slate-100 font-bold">-- - -- - --</span></div><div class="flex flex-col items-end"><span class="text-slate-400 text-[10px] uppercase font-bold tracking-tighter">KOs</span><span class="text-slate-100 font-bold">--</span></div></div><a class="mt-4 flex items-center justify-center w-full bg-primary/20 hover:bg-primary text-slate-100 font-bold py-3 rounded text-xs uppercase tracking-widest transition-all" href="boxers.html">View Profile</a></div></div>"""
+    return f"""<div class="group flex flex-col bg-primary/5 border border-primary/10 rounded-xl overflow-hidden hover:border-primary/50 transition-all duration-300 shadow-xl"><div class="relative w-full aspect-[3/4] overflow-hidden"><div class="{img_classes}" data-alt="Image for {name_display}" style='background-image: url("{final_img}");'></div><div class="absolute inset-0 bg-gradient-to-t from-background-dark via-transparent to-transparent opacity-80 pointer-events-none"></div></div><div class="p-5 flex flex-col gap-1"><h3 class="text-slate-100 text-xl font-bold uppercase italic tracking-tight group-hover:text-primary transition-colors">{name_display}</h3><p class="text-primary text-xs font-bold uppercase tracking-widest">{boxer['division']} / {boxer['weight']}</p><div class="flex items-center justify-between mt-2 border-t border-primary/10 pt-3"><div class="flex flex-col"><span class="text-slate-400 text-[10px] uppercase font-bold tracking-tighter">Record</span><span class="text-slate-100 font-bold">{boxer['record']}</span></div><div class="flex flex-col items-end"><span class="text-slate-400 text-[10px] uppercase font-bold tracking-tighter">KOs</span><span class="text-slate-100 font-bold">{boxer['kos']}</span></div></div><a class="mt-4 flex items-center justify-center w-full bg-primary/20 hover:bg-primary text-slate-100 font-bold py-3 rounded text-xs uppercase tracking-widest transition-all" href="boxers.html">View Profile</a></div></div>"""
 
 def get_boxer_card_index_page(boxer):
     name_display = boxer['name']
