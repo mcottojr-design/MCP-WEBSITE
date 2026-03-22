@@ -17,8 +17,34 @@ title: "Boxer Roster | Miguel Cotto Promotions"
 </div>
 </div>
 <!-- Filters & Search Mobile -->
-<div class="px-6 md:px-10 py-6 flex flex-col gap-6">
-<div class="flex items-center gap-3 overflow-x-auto pb-4 scrollbar-hide no-scrollbar"><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary px-5 text-white text-sm font-bold uppercase tracking-wider" data-division="all">All Weights</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Bantamweight">Bantamweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Featherweight">Featherweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Flyweight">Flyweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Jr. Bantamweight">Jr. Bantamweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Jr. Featherweight">Jr. Featherweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Jr. Flyweight">Jr. Flyweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Jr. Lightweight">Jr. Lightweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Jr. Welterweight">Jr. Welterweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Light Heavyweight">Light Heavyweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Lightweight">Lightweight</button><button class="filter-btn flex h-10 shrink-0 items-center justify-center gap-x-2 rounded bg-primary/10 border border-primary/20 px-5 text-slate-100 text-sm font-medium hover:bg-primary/20 transition-colors uppercase tracking-wider" data-division="Mini-Flyweight">Mini-Flyweight</button></div>
+<div class="px-6 md:px-10 py-8">
+
+<div class="flex flex-col md:flex-row gap-4 items-stretch md:items-center">
+    <!-- Search -->
+    <div class="relative flex-1">
+        <span class="material-symbols-outlined absolute left-4 top-1/2 -translate-y-1/2 text-slate-500">search</span>
+        <input class="w-full bg-surface-light border border-white/5 rounded-xl py-4 pl-12 pr-4 text-white placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary/50 transition-all h-14 text-sm" placeholder="Search for a fighter..." type="text"/>
+    </div>
+    
+    <!-- Filter Dropdown -->
+    <div class="relative" id="division-dropdown">
+        <button id="dropdown-toggle" class="flex h-14 w-full md:w-64 items-center justify-between gap-x-2 rounded-xl bg-surface-light border border-white/5 px-5 text-slate-300 text-xs font-bold uppercase tracking-widest hover:bg-white/5 transition-all shadow-xl">
+            <div class="flex items-center gap-3">
+                <span class="material-symbols-outlined text-primary text-xl">layers</span>
+                <span id="active-division-label">All Weights</span>
+            </div>
+            <span class="material-symbols-outlined transition-transform duration-300" id="dropdown-arrow">expand_more</span>
+        </button>
+        
+        <div id="dropdown-menu" class="absolute top-full left-0 right-0 mt-2 z-50 overflow-hidden rounded-xl bg-surface-light border border-white/10 shadow-2xl opacity-0 invisible scale-95 transition-all duration-200 origin-top">
+            <div class="max-h-64 overflow-y-auto no-scrollbar">
+                <div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="all">All Weights</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Bantamweight">Bantamweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Featherweight">Featherweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Flyweight">Flyweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Jr. Bantamweight">Jr. Bantamweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Jr. Featherweight">Jr. Featherweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Jr. Flyweight">Jr. Flyweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Jr. Lightweight">Jr. Lightweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Jr. Welterweight">Jr. Welterweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Light Heavyweight">Light Heavyweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Lightweight">Lightweight</div><div class="filter-item cursor-pointer px-4 py-3 hover:bg-primary/20 text-slate-300 hover:text-white transition-colors uppercase tracking-widest text-[10px] font-bold" data-division="Mini-Flyweight">Mini-Flyweight</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
 </div>
 <!-- Fighter Grid -->
 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 px-6 md:px-10 pb-20">
@@ -49,47 +75,72 @@ title: "Boxer Roster | Miguel Cotto Promotions"
 </div>
 
 <script>
-const filterBtns = document.querySelectorAll(".filter-btn");
+const dropdownToggle = document.getElementById("dropdown-toggle");
+const dropdownMenu = document.getElementById("dropdown-menu");
+const dropdownArrow = document.getElementById("dropdown-arrow");
+const filterItems = document.querySelectorAll(".filter-item");
 const searchInputs = document.querySelectorAll('input[placeholder*="Search for a fighter"]');
 const cards = document.querySelectorAll(".boxer-card");
+const activeLabel = document.getElementById("active-division-label");
+
+let currentDivision = "all";
+
+function toggleDropdown() {
+    const isOpen = !dropdownMenu.classList.contains("invisible");
+    if (isOpen) {
+        dropdownMenu.classList.add("opacity-0", "invisible", "scale-95");
+        dropdownArrow.classList.remove("rotate-180");
+    } else {
+        dropdownMenu.classList.remove("opacity-0", "invisible", "scale-95");
+        dropdownArrow.classList.add("rotate-180");
+    }
+}
+
+dropdownToggle.addEventListener("click", toggleDropdown);
 
 function filterFighters() {
-    const activeBtn = document.querySelector(".filter-btn.bg-primary");
-    const division = activeBtn ? activeBtn.getAttribute("data-division") : "all";
     const searchTerm = searchInputs[0]?.value.toLowerCase() || "";
 
     cards.forEach(card => {
         const cardDivision = card.getAttribute("data-division");
         const cardName = card.querySelector("h3").innerText.toLowerCase();
         
-        const matchesDivision = division === "all" || cardDivision === division;
+        const matchesDivision = currentDivision === "all" || cardDivision === currentDivision;
         const matchesSearch = cardName.includes(searchTerm);
         
         if (matchesDivision && matchesSearch) {
             card.style.display = "flex";
+            card.style.opacity = "0";
+            setTimeout(() => card.style.opacity = "1", 10);
         } else {
             card.style.display = "none";
         }
     });
 }
 
-filterBtns.forEach(btn => {
-    btn.addEventListener("click", () => {
-        filterBtns.forEach(b => {
-            b.classList.remove("bg-primary", "text-white");
-            b.classList.add("bg-primary/10", "border-primary/20", "text-slate-100");
-        });
-        btn.classList.add("bg-primary", "text-white");
-        btn.classList.remove("bg-primary/10", "border-primary/20", "text-slate-100");
+filterItems.forEach(item => {
+    item.addEventListener("click", () => {
+        currentDivision = item.getAttribute("data-division");
+        activeLabel.innerText = item.innerText;
+        
+        filterItems.forEach(i => i.classList.remove("bg-primary", "text-white"));
+        item.classList.add("bg-primary", "text-white");
+        
+        toggleDropdown();
         filterFighters();
     });
 });
 
 searchInputs.forEach(input => {
-    input.addEventListener("input", (e) => {
-        searchInputs.forEach(si => { if(si !== input) si.value = e.target.value; });
-        filterFighters();
-    });
+    input.addEventListener("input", filterFighters);
+});
+
+// Close dropdown on click outside
+document.addEventListener("click", (e) => {
+    if (!document.getElementById("division-dropdown").contains(e.target)) {
+        dropdownMenu.classList.add("opacity-0", "invisible", "scale-95");
+        dropdownArrow.classList.remove("rotate-180");
+    }
 });
 </script>
 </main>
