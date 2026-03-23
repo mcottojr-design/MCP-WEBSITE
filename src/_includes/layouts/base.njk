@@ -4,6 +4,26 @@
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
     <title>{{ title | default("Miguel Cotto Promotions | Elite Boxing Events") }}</title>
+    
+    <!-- Standard SEO -->
+    <meta name="description" content="{{ excerpt | default(description | default('Welcome to Miguel Cotto Promotions. Discover the latest news, upcoming events, and our elite roster of boxers. The premier boxing promotion company in Puerto Rico.')) }}">
+    <meta name="robots" content="index, follow">
+    <meta name="author" content="Miguel Cotto Promotions">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="{{ 'article' if collections.post else 'website' }}">
+    <meta property="og:url" content="https://miguelcottopromotions.com{{ page.url }}">
+    <meta property="og:title" content="{{ title | default('Miguel Cotto Promotions | Elite Boxing Events') }}">
+    <meta property="og:description" content="{{ excerpt | default(description | default('Welcome to Miguel Cotto Promotions. Discover the latest news, upcoming events, and our elite roster of boxers. The premier boxing promotion company in Puerto Rico.')) }}">
+    <meta property="og:image" content="https://miguelcottopromotions.com{{ image | default('/assets/logo.svg') }}">
+    <meta property="og:site_name" content="Miguel Cotto Promotions">
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://miguelcottopromotions.com{{ page.url }}">
+    <meta name="twitter:title" content="{{ title | default('Miguel Cotto Promotions | Elite Boxing Events') }}">
+    <meta name="twitter:description" content="{{ excerpt | default(description | default('Welcome to Miguel Cotto Promotions. Discover the latest news, upcoming events, and our elite roster of boxers. The premier boxing promotion company in Puerto Rico.')) }}">
+    <meta name="twitter:image" content="https://miguelcottopromotions.com{{ image | default('/assets/logo.svg') }}">
     <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg">
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries,typography"></script>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
