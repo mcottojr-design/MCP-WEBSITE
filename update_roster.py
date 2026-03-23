@@ -5,7 +5,7 @@ import unicodedata
 roster_data = [
     {"name": "Oscar Collazo", "alias": "El Pupilo", "is_champion": True, "division": "Mini-Flyweight", "weight": "105LBS", "record": "14-0-0", "kos": "11"},
     {"name": "Belisa López De Jesús", "alias": "", "division": "Mini-Flyweight", "weight": "105LBS", "record": "2-0-1", "kos": "0"},
-    {"name": "Jerryanis Morales", "alias": "La Yeya", "division": "Jr. Flyweight", "weight": "108LBS", "record": "0-0-0", "kos": "0"},
+    {"name": "Jerryanys Morales", "alias": "La Yeya", "division": "Jr. Flyweight", "weight": "108LBS", "record": "0-0-0", "kos": "0"},
     {"name": "Kenny Romero", "alias": "", "division": "Jr. Flyweight", "weight": "108LBS", "record": "4-1-0", "kos": "3"},
     {"name": "Angel Acosta", "alias": "Tito", "division": "Flyweight", "weight": "112LBS", "record": "25-5-0", "kos": "23"},
     {"name": "Billy Rodríguez", "alias": "The Kid", "division": "Flyweight", "weight": "112LBS", "record": "6-0-0", "kos": "3"},
