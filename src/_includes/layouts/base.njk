@@ -47,7 +47,7 @@
                     <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/events' in page.url %}text-primary{% endif %}" href="/events.html">Events</a>
                     <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/boxers' in page.url or '/profile' in page.url %}text-primary{% endif %}" href="/boxers.html">Boxers</a>
                     <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/news' in page.url %}text-primary{% endif %}" href="/news.html">News</a>
-                    <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/#videos">Videos</a>
+                    <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/videos' in page.url %}text-primary{% endif %}" href="/videos.html">Videos</a>
                     <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/about' in page.url %}text-primary{% endif %}" href="/about.html">About Us</a>
                 </nav>
             </div>
@@ -96,7 +96,7 @@
             <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/events' in page.url %}text-primary{% endif %}" href="/events.html">Events</a>
             <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/boxers' in page.url or '/profile' in page.url %}text-primary{% endif %}" href="/boxers.html">Boxers</a>
             <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/news' in page.url %}text-primary{% endif %}" href="/news.html">News</a>
-            <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50" href="/#videos">Videos</a>
+            <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/videos' in page.url %}text-primary{% endif %}" href="/videos.html">Videos</a>
             <a class="text-3xl font-black uppercase italic tracking-tight text-white hover:text-primary transition-colors py-3 border-b border-border-muted/50 {% if '/about' in page.url %}text-primary{% endif %}" href="/about.html">About Us</a>
         </nav>
         <!-- Tickets + Social -->
@@ -166,7 +166,7 @@
                 <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/events.html">Events</a>
                 <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/boxers.html">Boxers</a>
                 <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/news.html">News</a>
-                <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/#videos">Videos</a>
+                <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase {% if '/videos' in page.url %}text-primary{% endif %}" href="/videos.html">Videos</a>
                 <a class="text-xs font-bold tracking-widest hover:text-primary transition-colors uppercase" href="/about.html">About Us</a>
             </nav>
             <div class="flex gap-6 mb-12">
